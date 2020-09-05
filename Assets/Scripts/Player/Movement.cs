@@ -75,7 +75,10 @@ public class Movement : MonoBehaviour
         float MoveSpeed = Input.GetKey(KeyCode.LeftShift) ? RunAcceleration : WalkAcceleration;
         if (Movement_Type == E_MovementType.Linear)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift)) { MoveSpeed = MaxSpeed; }
+            if (Input.GetKeyDown(KeyCode.LeftShift)) { MoveSpeed = MaxSpeed;
+
+
+            }
             Vector2 newMove = new Vector2(Dir * MoveSpeed, rb.velocity.y);
             rb.velocity = newMove;
         }
@@ -148,5 +151,10 @@ public class Movement : MonoBehaviour
             Gizmos.DrawLine(CurrentPos - RayCastOffset, CurrentPos + Vector3.down * GroundLength - RayCastOffset);
 
         }
+    }
+
+    public bool CheckGrounded()
+    {
+        return onGround;
     }
 }
