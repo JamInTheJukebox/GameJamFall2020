@@ -26,7 +26,7 @@ public class CharacterAnimation : MonoBehaviour
         {
             PlayIdleAnim();
         }
-        print(CurrentIdleTime);
+
         CurrentIdleTime += Time.deltaTime;
     }
 
