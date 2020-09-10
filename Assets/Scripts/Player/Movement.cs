@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    public float LinearDrag = 0.6f;
 
+    // This script is in charge of handling Horizontal Movement and Jumping.
+    private Rigidbody2D rb;
+    private SpecialCharacterMovement SpecMove;
+
+    public float LinearDrag = 0.6f;
+    
     [Header("Walking/Running")]
     public float WalkAcceleration = 5f;
     public float MaxWalkSpeed = 4f;
@@ -35,12 +39,29 @@ public class Movement : MonoBehaviour
     [SerializeField] float JumpDelay = 0.25f;
     [SerializeField] float MaxFallSpeed = 10f;
     private float JumpTimer = 0;
-
+    /*
+    [Header("Wall Jumping")]
+    public Transform WallCheck;
+    bool isTouchingWall;
+    bool isBoundedByWall;
+    public float SlideBreakTimer = 3f;          // Amount of time you must hold an input on a wall to break free from sliding.
+    private float CurrentSlideTimer;
+    bool isSlidingOnWall;
+    public float WallCheckRadius;
+    public float WallSlidingSpeed;
+    bool WallJumping;
+    public float xWallForce;
+    [Tooltip("When players want to break free, they will hit a directional input to break free from the wall slide.")]
+    public float WallJumpBreakThreshold;
+    */
     [Header("DebugTools")]
     [SerializeField] bool DrawGroundCheck = false;
+    //[SerializeField] bool DrawWallCheck = false;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        SpecMove = GetComponent<SpecialCharacterMovement>();
     }
 
     private void Update()
@@ -48,27 +69,97 @@ public class Movement : MonoBehaviour
         Dir = Input.GetAxis("Horizontal");
         onGround = Physics2D.Raycast(transform.position + RayCastOffset, Vector2.down, GroundLength, GroundLayer)
             || Physics2D.Raycast(transform.position - RayCastOffset, Vector2.down, GroundLength, GroundLayer);
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            JumpTimer = Time.time + JumpDelay;
+            JumpTimer = Time.time + JumpDelay;      // A jump timer allows for a treshold for timing jumps. When a player gets on the ground
+            // There is a chance that their input will be dropped due to them not being "technically" grounded yet. This timer allows for them to jump without being frame perfect.
         }
-    }
 
+       // WallJump();
+    }
+    /*
+    private void WallJump()
+    {
+        isTouchingWall = Physics2D.OverlapCircle(WallCheck.position, WallCheckRadius, GroundLayer);
+        if (!isSlidingOnWall && isTouchingWall && !onGround && Dir != 0 && rb.velocity.y < -0.1f)
+        {
+            isSlidingOnWall = true;
+            print("Setting True");
+        }
+        if (isSlidingOnWall)
+        {
+            float WallJumpDir = (WallCheck.position - transform.position).x;
+            int WallJumpDirection = (int) (WallJumpDir/Mathf.Abs(WallJumpDir));
+            print("WallJumpDir" + WallJumpDirection);
+            print("Dir"+ Mathf.Sign(Dir));
+            if((int)Dir != Mathf.Sign(WallJumpDirection))      // Character is trying to break free from a walljump
+            {
+                CurrentSlideTimer += Time.deltaTime;
+            }
+        }
+        if (CurrentSlideTimer >= SlideBreakTimer | onGround | !isTouchingWall)
+        {
+            print("Cancelling slide");
+            CurrentSlideTimer = 0;
+            isSlidingOnWall = false;
+            // make this a seconds time.
+        }
+
+        if(isSlidingOnWall)
+        {
+            float Y_Vel = rb.velocity.y;
+            if(Y_Vel > 0)
+            {
+                // do nothing
+            }
+            else if(Y_Vel <= 0)
+            {
+                rb.gravityScale = 1;
+                rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -WallSlidingSpeed, float.MaxValue));
+            }
+            // Call Jump here;
+        }
+
+        if(Input.GetKeyDown(KeyCode.Space) && (isSlidingOnWall || (isTouchingWall && rb.velocity.y > 0.1f)))
+        {
+            WallJumping = true;
+            //invoke
+        }
+        
+
+        if (WallJumping)
+        {
+            WallJumping = false;
+            float WallJumpDir = -(WallCheck.position - transform.position).x;
+            WallJumpDir /= Mathf.Abs(WallJumpDir);
+            print(WallJumpDir);
+            rb.AddForce(xWallForce * WallJumpDir * Vector2.right,ForceMode2D.Impulse);
+            Jump();
+        }
+        print(isSlidingOnWall);
+    }
+    */
+    
     private void FixedUpdate()
     {
         // You can easily detach
-        HorizontalMovement();
+        if(SpecMove.GetMode() == 0) // Applicable ONLY when the player is not climbing or WallJumping
+        {
+            HorizontalMovement();
+            ModifyPhysics();
+        }
+
         if (JumpTimer > Time.time && onGround)
         {
             Jump();
         }
-        ModifyPhysics();
         
         if(rb.velocity.y <= -MaxFallSpeed)
         {
             rb.velocity = new Vector2(rb.velocity.x, -MaxFallSpeed);
         }
     }
+
     private void HorizontalMovement()
     {
         float MaxSpeed = Input.GetKey(KeyCode.LeftShift) ? MaxRunSpeed : MaxWalkSpeed; 
@@ -149,8 +240,15 @@ public class Movement : MonoBehaviour
             Vector3 CurrentPos = transform.position;
             Gizmos.DrawLine(CurrentPos + RayCastOffset, CurrentPos + Vector3.down * GroundLength + RayCastOffset);
             Gizmos.DrawLine(CurrentPos - RayCastOffset, CurrentPos + Vector3.down * GroundLength - RayCastOffset);
-
         }
+        /*
+        if(DrawWallCheck)
+        {
+            Gizmos.color = (isSlidingOnWall) ? Color.blue : Color.red;
+            Vector3 CurrentPos = WallCheck.position;
+            Gizmos.DrawSphere(CurrentPos, WallCheckRadius);
+        }
+        */
     }
 
     public bool CheckGrounded()
