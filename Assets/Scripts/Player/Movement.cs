@@ -64,7 +64,7 @@ public class Movement : MonoBehaviour
     private void FixedUpdate()
     {
         // You can easily detach
-        if(SpecMove.GetMode() == 0) // Applicable ONLY when the player is not climbing or WallJumping
+        if(SpecMove.CurrentSpecialMove == 0) // Applicable ONLY when the player is not climbing or WallJumping
         {
             HorizontalMovement();
             ModifyPhysics();
