@@ -57,7 +57,7 @@ public class SpecialCharacterMovement : MonoBehaviour
 
     private void Update()
     {
-        Dir = Input.GetAxis("Horizontal");
+        Dir = Input.GetAxisRaw("Horizontal");
         OnGround = CharMovement.CheckGrounded();
         /*
         if (Input.GetKeyDown(KeyCode.Space))
