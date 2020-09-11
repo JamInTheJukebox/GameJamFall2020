@@ -64,12 +64,28 @@ public class SpecialCharacterMovement : MonoBehaviour
     private bool Ladder_ReachedTop = false;
     private bool Ladder_HasTop = true;
     private Transform LadderPos;
+    private bool Jumping = false;
+
+    [Header("ClimbDown")]                                   // When you want to climb down from a platform
+    public Transform BottomLadderCheck;
+    [SerializeField] float BottomLadderCheckRadius = 0.3f;
+    private bool ReadyToClimbDown = false;
     // TO DO:
     // JUMPING ON HORIZONTAL CLIMBABLE SURFACES SHOULD BE POSSIBLE? 
+
+    [Header("LedgeGrabbing")]
+    public float LedgeJumpImpulse = 15;
+    public float TimeRequiredToGrabLedge = 0.2f;
+    private float CurrentGrabTime = 0f;
+    private bool IsLedgeGrabbing = false;
+    private int LedgeJumpDir;
+    private bool CanLedgeGrabAgain = true;
+    public float TimeToRefreshLedgegrab;                // Ledgegrabs cannot be abused
 
     [Header("DebugTools")]
     [SerializeField] bool DrawWallCheck = false;
     [SerializeField] bool DrawLadderCeilCheck = false;
+    [SerializeField] bool DrawBottomLadderCheck = false;
 
     private void I_CurrentMoveChanged()
     {
@@ -110,13 +126,51 @@ public class SpecialCharacterMovement : MonoBehaviour
         }
         */
         int currentMode = (int)CurrentSpecialMove;
-        if (currentMode == 0 || currentMode == 1)
+        if (currentMode == 0 || currentMode == 1)                   // walljumping only
         {
             WallJump();
         }
-        if (currentMode == 0 || currentMode == 2)
+        if (currentMode == 0 || currentMode == 2)                   // climbing up and down only
         {
-            Climb();
+            /*
+            if (((Y_Dir > 0 && rb.velocity.y <= 0) | Input.GetKeyDown(KeyCode.W) | Input.GetKeyDown(KeyCode.UpArrow)) && CurrentSpecialMove == 0)                                                       // stretch goal: Make it so the user has to hit the key again to grab onto the ladder if they jump
+            {
+                CurrentSpecialMove = E_CurrentMode.Climbing;
+                Jumping = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Space) && (int)CurrentSpecialMove == 1)
+            {
+                Climbing_Initialized = false;
+                Jumping = true;
+                CurrentSpecialMove = 0;
+                Jump();
+            }*/
+ 
+            Climb();   
+        }
+
+        if(currentMode == 3)                   // LedgeGrabbing
+        {
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                float X_Force = 0;
+
+                if(Dir != 0)
+                {
+                    if(Dir * LedgeJumpDir > 0)
+                    {
+                        X_Force = xWallForce * Dir;
+                    }
+                    else
+                    {
+                        X_Force = xWallForce * Dir * 1 / 2;
+                    }
+                }
+                Jump(new Vector2(X_Force, LedgeJumpImpulse));
+                CurrentSpecialMove = 0;
+                CanLedgeGrabAgain = false;
+                Invoke("ResetLedgeGrab", TimeToRefreshLedgegrab);
+            }
         }
         print(CurrentSpecialMove);
     }
@@ -125,13 +179,39 @@ public class SpecialCharacterMovement : MonoBehaviour
     {
         if(collision.tag == LadderTag && collision.GetComponent<ClimbableSurface>() != null)
         {
-            ClimbableSurface newClimbable = collision.GetComponent<ClimbableSurface>();
             ReadyToClimb = true;
-            HorizontalClimbAllowed = newClimbable.Get_HorizAllowed();
-            Ladder_HasTop = newClimbable.Get_HasTop();
-            LadderPos = (Ladder_HasTop) ? collision.transform : null;
+            Climb_Init(collision);
         }
     }
+
+    private void OnTriggerStay2D(Collider2D collision)       // LEDGE GRABBING
+    {
+        if(isTouchingWall && CanLedgeGrabAgain)
+        {
+            if(collision.tag == "Ledge")
+            {
+                CurrentGrabTime += Time.deltaTime;
+                if(CurrentGrabTime >= TimeRequiredToGrabLedge)
+                {
+                    CurrentGrabTime = 0;
+                    CurrentSpecialMove = E_CurrentMode.Ledge_Grabbing;
+                    rb.velocity = Vector2.zero;
+                    rb.gravityScale = 0;
+                    float WallJumpDir = (collision.transform.position - transform.position).x;
+                    LedgeJumpDir = -(int)Mathf.Sign(WallJumpDir);
+
+                }
+            }
+        }
+    }
+    private void Climb_Init(Collider2D collision)
+    {
+        ClimbableSurface newClimbable = collision.GetComponent<ClimbableSurface>();
+        HorizontalClimbAllowed = newClimbable.Get_HorizAllowed();
+        Ladder_HasTop = newClimbable.Get_HasTop();
+        LadderPos = (Ladder_HasTop) ? collision.transform : null;
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if(collision.tag == LadderTag)
@@ -139,6 +219,11 @@ public class SpecialCharacterMovement : MonoBehaviour
             ReadyToClimb = false;
             CurrentSpecialMove = 0;
             Climbing_Initialized = false;
+        }
+
+        if (collision.tag == "Ledge")
+        {
+            CurrentGrabTime = 0;
         }
     }
     private void WallJump()
@@ -162,7 +247,7 @@ public class SpecialCharacterMovement : MonoBehaviour
         }
         if (CurrentSlideTimer >= SlideBreakTimer | OnGround | !isTouchingWall)
         {
-            print("Cancelling slide");
+//            print("Cancelling slide");
             CurrentSlideTimer = 0;
             CurrentSpecialMove = 0;
             isSlidingOnWall = false;
@@ -196,22 +281,37 @@ public class SpecialCharacterMovement : MonoBehaviour
     }
     private void Climb()
     {
-        if (!ReadyToClimb) { return; }
-        Ladder_ReachedTop = !Physics2D.OverlapCircle(LadderCheck.position, WallCheckRadius, LadderLayer);
+        if (!ReadyToClimb)          // There are two ways to climb: Climbing from the bottom of a ladder of from the top of a platform. This bit of code is in case the user wants to climb from on top of the platform
+        {
+            ReadyToClimbDown = Physics2D.OverlapCircle(BottomLadderCheck.position, BottomLadderCheckRadius, LadderLayer);
+            if (ReadyToClimbDown && Y_Dir < 0)
+            {
+               
+                Collider2D Ladder = Physics2D.OverlapCircle(BottomLadderCheck.position, BottomLadderCheckRadius, LadderLayer);
+                /*
+                 * Method 1
+                float BoxColHeight = Ladder.GetComponent<Renderer>().bounds.size.y / 2;
+                Vector3 LadderTopPos = Ladder.transform.position + new Vector3(0, BoxColHeight, 0);
+                print(LadderTopPos); 
+                */
+                Vector3 LadderTopPos = Ladder.GetComponent<ClimbableSurface>().Get_Climb_Down_Position();
+                transform.position = LadderTopPos;
+            }
+            return;
+        }
 
+        Ladder_ReachedTop = !Physics2D.OverlapCircle(LadderCheck.position, WallCheckRadius, LadderLayer);
         if (Y_Dir != 0 || (Climbing_Initialized && Dir != 0))
         {
-            CurrentSpecialMove = E_CurrentMode.Climbing;
-
-            if (!Climbing_Initialized)
+            if (!Climbing_Initialized)          // initializing when you press up.
             {
                 Climbing_Initialized = true;
+                CurrentSpecialMove = E_CurrentMode.Climbing;
                 if (Ladder_HasTop)
                 {
                     transform.position = new Vector3(LadderPos.position.x, transform.position.y);
                 }
             }
-
             Vector2 newVel = new Vector2(Dir * ClimbSpeed.x, Y_Dir * ClimbSpeed.y);
             if (!HorizontalClimbAllowed)
                 newVel.x = 0;
@@ -221,18 +321,16 @@ public class SpecialCharacterMovement : MonoBehaviour
 
             rb.velocity = newVel;
         }
+        
         else if((int)CurrentSpecialMove == 2 && Y_Dir == 0)
         {
             rb.velocity = Vector2.zero;
-        }
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            Jump();
         }
         if(OnGround)
         {
             CurrentSpecialMove = 0;
             Climbing_Initialized = false;
+            Jumping = false;
         }
     }
 
@@ -240,6 +338,19 @@ public class SpecialCharacterMovement : MonoBehaviour
     {
         rb.velocity = new Vector2(rb.velocity.x, 0);
         rb.AddForce(Vector2.up * JumpImpulse, ForceMode2D.Impulse);
+    }
+
+    private void Jump(Vector2 InputForce)
+    {
+        rb.velocity = new Vector2(rb.velocity.x, 0);
+        rb.AddForce(InputForce, ForceMode2D.Impulse);
+    }
+
+    private void ResetLedgeGrab()
+    {
+        CanLedgeGrabAgain = true;
+        print("Resetting Ledge Grab");
+
     }
 
     private void OnDrawGizmos()
@@ -255,6 +366,12 @@ public class SpecialCharacterMovement : MonoBehaviour
             Gizmos.color = (Ladder_ReachedTop) ? Color.blue : Color.red;
             Vector3 CurrentPos = LadderCheck.position;
             Gizmos.DrawSphere(CurrentPos, WallCheckRadius);
+        }
+        if(DrawBottomLadderCheck)
+        {
+            Gizmos.color = (ReadyToClimbDown) ? Color.blue : Color.red;
+            Vector3 CurrentPos = BottomLadderCheck.position;
+            Gizmos.DrawSphere(CurrentPos, BottomLadderCheckRadius);
         }
     }
 }
