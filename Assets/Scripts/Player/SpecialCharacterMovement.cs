@@ -14,6 +14,7 @@ public class SpecialCharacterMovement : MonoBehaviour
     private LayerMask PlayerLayer;              
 
     [SerializeField] LayerMask GroundLayer = 1 << 8;
+
     private float JumpImpulse = 15f;
 
     private E_CurrentMode m_CurrentSpecialMove; // Member variable that stores the current state that the player is in
@@ -132,21 +133,27 @@ public class SpecialCharacterMovement : MonoBehaviour
         }
         if (currentMode == 0 || currentMode == 2)                   // climbing up and down only
         {
-            /*
-            if (((Y_Dir > 0 && rb.velocity.y <= 0) | Input.GetKeyDown(KeyCode.W) | Input.GetKeyDown(KeyCode.UpArrow)) && CurrentSpecialMove == 0)                                                       // stretch goal: Make it so the user has to hit the key again to grab onto the ladder if they jump
+            if (((Y_Dir > 0 && rb.velocity.y <= -0.5f)) && CurrentSpecialMove == 0 && Jumping)                                                       // stretch goal: Make it so the user has to hit the key again to grab onto the ladder if they jump
             {
                 CurrentSpecialMove = E_CurrentMode.Climbing;
                 Jumping = false;
             }
-            if (Input.GetKeyDown(KeyCode.Space) && (int)CurrentSpecialMove == 1)
+            if(OnGround)
             {
+                Jumping = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Space) && (int)CurrentSpecialMove == 2)
+            {
+                print("WAHH!!!)");
                 Climbing_Initialized = false;
                 Jumping = true;
                 CurrentSpecialMove = 0;
                 Jump();
-            }*/
- 
-            Climb();   
+            }
+            if(!Jumping)
+            {
+                Climb();
+            }
         }
 
         if(currentMode == 3)                   // LedgeGrabbing
@@ -219,6 +226,7 @@ public class SpecialCharacterMovement : MonoBehaviour
             ReadyToClimb = false;
             CurrentSpecialMove = 0;
             Climbing_Initialized = false;
+            Jumping = false;
         }
 
         if (collision.tag == "Ledge")
@@ -294,10 +302,16 @@ public class SpecialCharacterMovement : MonoBehaviour
                 Vector3 LadderTopPos = Ladder.transform.position + new Vector3(0, BoxColHeight, 0);
                 print(LadderTopPos); 
                 */
-                Vector3 LadderTopPos = Ladder.GetComponent<ClimbableSurface>().Get_Climb_Down_Position();
-                transform.position = LadderTopPos;
+                if(Ladder.GetComponent<ClimbableSurface>() != null)
+                {
+                    Vector3 LadderTopPos = Ladder.GetComponent<ClimbableSurface>().Get_Climb_Down_Position();
+                    transform.position = LadderTopPos;
+                }
             }
-            return;
+            else
+            {
+                return;
+            }
         }
 
         Ladder_ReachedTop = !Physics2D.OverlapCircle(LadderCheck.position, WallCheckRadius, LadderLayer);
