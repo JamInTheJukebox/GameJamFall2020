@@ -14,26 +14,26 @@ public class Slot_Panel_Movement : MonoBehaviour
 
     private bool FinishedLastLoop;
     private Slot_Machine_Controller MachineController;
-
+    
     private void Awake()
     {
         MoveUp = gameObject.name.Contains("2");
         MachineController = FindObjectOfType<Slot_Machine_Controller>();
         Item = transform.Find("Item").gameObject;
         InitialPosition = transform.localPosition;
+
+        SetStep(MachineController.Slot_StepLength);
+        TimeInterval = MachineController.TimeInterval;
+        SetRange(MachineController.StartPos, MachineController.EndPos);
     }
-    public void SetStep(int newSpeed)
+
+    private void SetStep(int newSpeed)
     {
         StepLength = newSpeed;
         StepLength *= (MoveUp) ? 1 : -1;
     }
 
-    public void SetTimeInterval(float newScrollSpeed)
-    {
-        TimeInterval = newScrollSpeed;
-    }
-
-    public void SetRange(Transform StartPos, Transform EndPos)
+    private void SetRange(Transform StartPos, Transform EndPos)
     {
         StartPosition = (!MoveUp) ? StartPos : EndPos;
         EndPosition = (!MoveUp) ? EndPos: StartPos;
