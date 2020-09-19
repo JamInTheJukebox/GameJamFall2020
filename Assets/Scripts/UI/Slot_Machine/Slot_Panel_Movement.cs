@@ -14,7 +14,8 @@ public class Slot_Panel_Movement : MonoBehaviour
 
     private bool FinishedLastLoop;
     private Slot_Machine_Controller MachineController;
-    
+    ParticleSystem.MainModule particleSys;
+
     private void Awake()
     {
         MoveUp = gameObject.name.Contains("2");
@@ -25,6 +26,8 @@ public class Slot_Panel_Movement : MonoBehaviour
         SetStep(MachineController.Slot_StepLength);
         TimeInterval = MachineController.TimeInterval;
         SetRange(MachineController.StartPos, MachineController.EndPos);
+        if (Item.GetComponent<SpawnVFX_Animator>() != null)
+            particleSys = Item.GetComponent<SpawnVFX_Animator>().TheParticle.main;
     }
 
     private void SetStep(int newSpeed)
@@ -53,14 +56,14 @@ public class Slot_Panel_Movement : MonoBehaviour
     {
         if (MoveUp)
         {
-            if (transform.position.y > EndPosition.position.y)
+            if (transform.localPosition.y > EndPosition.localPosition.y)
             {
                 RestartLoop();
             }
         }
         else
         {
-            if (transform.position.y < EndPosition.position.y)
+            if (transform.localPosition.y < EndPosition.localPosition.y)
             {
                 RestartLoop();                    
             }
@@ -69,11 +72,10 @@ public class Slot_Panel_Movement : MonoBehaviour
 
     private void RestartLoop()
     {
-        Vector3 newPos = transform.position;
-        newPos.y = StartPosition.position.y;
-        transform.position = newPos;
-        Slot_Item newItem = MachineController.RetreiveRandomItem();
-        Item.GetComponent<Image>().sprite = newItem.Item_PNG;
+        Vector3 newPos = transform.localPosition;
+        newPos.y = StartPosition.localPosition.y;
+        transform.localPosition = newPos;
+        SelectRandomItem();
         if (!MachineController.IsSpinning)
         {
             FinishedLastLoop = true;
@@ -82,12 +84,18 @@ public class Slot_Panel_Movement : MonoBehaviour
         }
     }
 
+    public void SelectRandomItem()
+    {
+        Slot_Item newItem = MachineController.RetreiveRandomItem();
+        Item.GetComponent<Image>().sprite = newItem.Item_PNG;
+    }
+
     private IEnumerator TranslatePanel()
     {
         FinishedLastLoop = false;
         while (MachineController.IsSpinning)
         {
-            transform.position += new Vector3(0, StepLength, 0);
+            transform.localPosition += new Vector3(0, StepLength, 0);
             yield return new WaitForSeconds(TimeInterval);
         }
 
@@ -97,17 +105,22 @@ public class Slot_Panel_Movement : MonoBehaviour
         while (ExitCondition)
         {
             CurrentPos = transform.localPosition;
-            transform.position += new Vector3(0, StepLength, 0);
+            transform.localPosition += new Vector3(0, StepLength, 0);
             yield return new WaitForSeconds(TimeInterval);
             if (FinishedLastLoop)
             {
                 ExitCondition = Vector2.Distance(CurrentPos, InitialPosition) > 3;
             }
-
         }
 
         transform.localPosition = InitialPosition;
-        SelfSpinning = false;   
+        SelfSpinning = false;
+        if(Item.GetComponent<Animator>() != null)
+        {
+            Item.GetComponent<Animator>().SetTrigger("Explode");
+
+            particleSys.startColor = MachineController.ChosenItem.Pixel_Color;
+        }
     }
 
 }

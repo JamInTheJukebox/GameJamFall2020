@@ -16,3 +16,4 @@ MonoBehaviour:
   Probability: 44
   Item_PNG: {fileID: 4183674307502537953, guid: 8361c55e34f3a9844ae85e4b5bda0b19, type: 3}
   Effect: 
+  Pixel_Color: {r: 1, g: 0.8592094, b: 0, a: 1}

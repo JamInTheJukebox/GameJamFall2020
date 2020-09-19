@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
     // This script is in charge of handling Horizontal Movement and Jumping.
     private Rigidbody2D rb;
     private SpecialCharacterMovement SpecMove;
+    public ParticleSystem DustParticle;
 
     public float LinearDrag = 0.6f;
     
@@ -38,6 +39,7 @@ public class Movement : MonoBehaviour
     [SerializeField] float FallMultiplier = 4;
     [SerializeField] float JumpDelay = 0.25f;
     [SerializeField] float MaxFallSpeed = 10f;
+
     private float JumpTimer = 0;
 
     [Header("DebugTools")]
@@ -47,6 +49,7 @@ public class Movement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         SpecMove = GetComponent<SpecialCharacterMovement>();
+        DustParticle.Stop();
     }
 
     private void Update()
@@ -59,8 +62,11 @@ public class Movement : MonoBehaviour
             JumpTimer = Time.time + JumpDelay;      // A jump timer allows for a treshold for timing jumps. When a player gets on the ground
             // There is a chance that their input will be dropped due to them not being "technically" grounded yet. This timer allows for them to jump without being frame perfect.
         }
+
+        CreateDust();
+        
     }
-    
+
     private void FixedUpdate()
     {
         // You can easily detach
@@ -80,6 +86,39 @@ public class Movement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, -MaxFallSpeed);
         }
     }
+
+    private void CreateDust()
+    {
+        bool cond1 = (int)SpecMove.CurrentSpecialMove == 1;
+        bool cond2 = rb.velocity.magnitude > MaxWalkSpeed;
+
+        if(cond1 | cond2)
+        {
+            var main = DustParticle.main;
+            var emmision = DustParticle.emission;
+            DustParticle.Play();
+            if (cond1)
+            {
+                DustParticle.transform.localPosition = SpecMove.WallCheck.localPosition;
+
+                emmision.rateOverDistanceMultiplier = 180;
+                main.startLifetime = 1f;
+                // cbhange pos here
+            }
+            else if (cond2)
+            {
+                emmision.rateOverDistanceMultiplier = 80;
+                DustParticle.transform.localPosition = new Vector3(0, -0.1896f, 0);
+
+                main.startLifetime = 0.5f;
+            }
+        }
+        else
+        {
+            DustParticle.Stop();
+        }
+    }
+
 
     private void HorizontalMovement()
     {

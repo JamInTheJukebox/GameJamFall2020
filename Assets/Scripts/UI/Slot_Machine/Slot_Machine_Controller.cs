@@ -99,7 +99,7 @@ public class Slot_Machine_Controller : MonoBehaviour
         TimeElapsed = 0;
         // add other effects here
     }
-    private void StopSlotMachine()
+    public void StopSlotMachine()
     {
         InFrame = false;
         TimerText.color = OriginalColor;
@@ -136,7 +136,7 @@ public class Slot_Machine_Controller : MonoBehaviour
                 print("Chosen Item: " + ChosenItem);
                 IsSpinning = false;
                 // play an animation here
-                Invoke("StopSlotMachine", 2f);      // amount of time the animation takes.
+                //Invoke("StopSlotMachine", 2f);      // amount of time the animation takes.
                 // call a function to call a shader on the item
                 //Move back to original position when the shader is done.
             }

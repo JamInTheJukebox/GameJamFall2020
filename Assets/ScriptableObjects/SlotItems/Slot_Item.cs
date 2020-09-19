@@ -11,4 +11,6 @@ public class Slot_Item : ScriptableObject
     public Sprite Item_PNG;
 
     public string Effect;
+
+    public Color Pixel_Color;
 }
