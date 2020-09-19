@@ -11,10 +11,10 @@ public class ItemPickUp : MonoBehaviour
     {
         if(collision.gameObject.layer == LayerMask.NameToLayer("Player") && !retrieved)
         {
-            ItemCount.addItem(item);
+            ItemTracker.addItem(item);
             EventLogger.addLog(EventType.ITEM_RETRIEVED, gameObject);
             deactivate();
-            Debug.Log(ItemCount.getItemCount(item));
+            Debug.Log(ItemTracker.getItemCount(item));
         }
     }
 

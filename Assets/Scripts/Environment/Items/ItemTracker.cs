@@ -7,11 +7,14 @@ public enum ItemType
     COIN
 }
 
-public static class ItemCount
+public static class ItemTracker
 {
+    public delegate void itemCountChange(ItemType item, int counted);
+    public static event itemCountChange itemCountEvent;
+
     static Dictionary<ItemType, int> count;
 
-    static ItemCount()
+    static ItemTracker()
     {
         count = new Dictionary<ItemType, int>();
     }
@@ -26,6 +29,8 @@ public static class ItemCount
         {
             count[item] = 1;
         }
+
+        onItemChange(item, count[item]);
     }
 
     public static void removeItem(ItemType item)
@@ -38,6 +43,8 @@ public static class ItemCount
             {
                 count[item] = 0;
             }
+
+            onItemChange(item, count[item]);
         }
     }
 
@@ -49,5 +56,13 @@ public static class ItemCount
         }
 
         return 0;
+    }
+
+    public static void onItemChange(ItemType item, int counted)
+    {
+        if (itemCountEvent != null)
+        {
+            itemCountEvent(item, counted);
+        }
     }
 }

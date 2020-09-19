@@ -41,7 +41,7 @@ public static class EventLogger
                 case (EventType.ITEM_RETRIEVED):
                     ItemPickUp tempItem = temp.obj.GetComponent<ItemPickUp>();
                     tempItem.reactivate();
-                    ItemCount.removeItem(tempItem.item);
+                    ItemTracker.removeItem(tempItem.item);
                     break;
                 case (EventType.CHECKPOINT):
                     return temp.obj.transform;

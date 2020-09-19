@@ -8,7 +8,7 @@ public class HazardDamage : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            
+            collision.gameObject.GetComponent<Respawn>().respawnPlayer();
         }
     }
 }
