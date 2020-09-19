@@ -305,7 +305,9 @@ public class SpecialCharacterMovement : MonoBehaviour
                 if(Ladder.GetComponent<ClimbableSurface>() != null)
                 {
                     Vector3 LadderTopPos = Ladder.GetComponent<ClimbableSurface>().Get_Climb_Down_Position();
+                    print(Ladder.name);
                     transform.position = LadderTopPos;
+                    LadderPos = Ladder.transform;
                 }
             }
             else
