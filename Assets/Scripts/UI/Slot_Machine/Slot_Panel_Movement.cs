@@ -120,6 +120,7 @@ public class Slot_Panel_Movement : MonoBehaviour
             Item.GetComponent<Animator>().SetTrigger("Explode");
 
             particleSys.startColor = MachineController.ChosenItem.Pixel_Color;
+            // do not create your own material instance
         }
     }
 
