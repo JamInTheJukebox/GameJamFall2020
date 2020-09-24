@@ -63,14 +63,14 @@ public class AudioManager : MonoBehaviour
         AudioSource activeSource = (firstMusicSourceIsPlaying) ? musicsource : musicsource2;        // (boolean variable) Assign this if true; else assign this if false
 
         activeSource.clip = musicClip;
-        activeSource.volume = 1;
+        activeSource.volume = 0.5f;
         activeSource.Play();
         //activeSource.time = StartPosition;
         if(StartPosition != 0)
             activeSource.timeSamples = StartPosition;
     }
 
-    public void PlayMusicwithFade(AudioClip newClip, float transitionTime = 1.0f)
+    public void PlayMusicwithFade(AudioClip newClip, float transitionTime = 2.0f)
     {
         //Figures out which clip is playing
         AudioSource activeSource = (firstMusicSourceIsPlaying) ? musicsource : musicsource2;

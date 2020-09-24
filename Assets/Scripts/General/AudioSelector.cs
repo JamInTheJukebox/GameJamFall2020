@@ -8,6 +8,6 @@ public class AudioSelector : MonoBehaviour
 
     private void Start()
     {
-        AudioManager.Instance.PlayMusic(AwakeClip);
+        AudioManager.Instance.PlayMusicwithFade(AwakeClip);
     }
 }
