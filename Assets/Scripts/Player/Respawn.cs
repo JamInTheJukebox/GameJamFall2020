@@ -18,6 +18,7 @@ public class Respawn : MonoBehaviour
         else
         {
             gameObject.transform.position = defaultSpawn;
-        }   
+        }
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 }

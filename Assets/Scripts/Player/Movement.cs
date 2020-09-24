@@ -126,9 +126,9 @@ public class Movement : MonoBehaviour
         float MoveSpeed = Input.GetKey(KeyCode.LeftShift) ? RunAcceleration : WalkAcceleration;
         if (Movement_Type == E_MovementType.Linear)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift)) { MoveSpeed = MaxSpeed;
-
-
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                MoveSpeed = MaxSpeed;
             }
             Vector2 newMove = new Vector2(Dir * MoveSpeed, rb.velocity.y);
             rb.velocity = newMove;
@@ -157,7 +157,11 @@ public class Movement : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, FacingRight ? 0 : 180, 0);
     }
 
-    private void Jump()
+    public int GetDirectionFacing()
+    {
+        return (FacingRight) ? 1 : -1;
+    }
+    public void Jump()
     {
         rb.velocity = new Vector2(rb.velocity.x, 0);
         rb.AddForce(Vector2.up * JumpImpulse, ForceMode2D.Impulse);

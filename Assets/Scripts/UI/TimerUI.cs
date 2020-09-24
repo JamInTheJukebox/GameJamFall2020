@@ -51,7 +51,7 @@ public class TimerUI : MonoBehaviour
         minutes = Mathf.Floor(CurrentTime / 60).ToString("0");
         seconds = Mathf.Floor(CurrentTime % 60).ToString("00");
         milliseconds = (100*CurrentTime%100).ToString("00");        // floats are wierd
-        string Time = minutes + "." + seconds + "." + milliseconds;
+        string Time = minutes + ":" + seconds + "." + milliseconds;
         return Time;
     }
 }

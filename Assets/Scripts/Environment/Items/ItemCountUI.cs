@@ -5,7 +5,7 @@ using TMPro;
 
 public class ItemCountUI : MonoBehaviour
 {
-    [SerializeField] TextMeshPro counter;
+    [SerializeField] TextMeshProUGUI counter;
     public ItemType countedItem;
 
     private void Awake()

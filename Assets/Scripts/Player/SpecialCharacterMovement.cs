@@ -83,6 +83,7 @@ public class SpecialCharacterMovement : MonoBehaviour
     private bool CanLedgeGrabAgain = true;
     public float TimeToRefreshLedgegrab;                // Ledgegrabs cannot be abused
 
+
     [Header("DebugTools")]
     [SerializeField] bool DrawWallCheck = false;
     [SerializeField] bool DrawLadderCeilCheck = false;
@@ -138,33 +139,32 @@ public class SpecialCharacterMovement : MonoBehaviour
                 CurrentSpecialMove = E_CurrentMode.Climbing;
                 Jumping = false;
             }
-            if(OnGround)
+            if (OnGround)
             {
                 Jumping = false;
             }
             if (Input.GetKeyDown(KeyCode.Space) && (int)CurrentSpecialMove == 2)
             {
-                print("WAHH!!!)");
                 Climbing_Initialized = false;
                 Jumping = true;
                 CurrentSpecialMove = 0;
                 Jump();
             }
-            if(!Jumping)
+            if (!Jumping)
             {
                 Climb();
             }
         }
 
-        if(currentMode == 3)                   // LedgeGrabbing
+        if (currentMode == 3)                   // LedgeGrabbing
         {
-            if(Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 float X_Force = 0;
 
-                if(Dir != 0)
+                if (Dir != 0)
                 {
-                    if(Dir * LedgeJumpDir > 0)
+                    if (Dir * LedgeJumpDir > 0)
                     {
                         X_Force = xWallForce * Dir;
                     }
@@ -302,7 +302,7 @@ public class SpecialCharacterMovement : MonoBehaviour
                 Vector3 LadderTopPos = Ladder.transform.position + new Vector3(0, BoxColHeight, 0);
                 print(LadderTopPos); 
                 */
-                if(Ladder.GetComponent<ClimbableSurface>() != null)
+                if(Ladder.GetComponent<ClimbableSurface>() != null && !HorizontalClimbAllowed)
                 {
                     Vector3 LadderTopPos = Ladder.GetComponent<ClimbableSurface>().Get_Climb_Down_Position();
                     print(Ladder.name);
