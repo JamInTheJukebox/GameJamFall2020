@@ -47045,9 +47045,10 @@ MonoBehaviour:
   - {fileID: 1107343500}
   - {fileID: 6713002}
   - {fileID: 1542474732}
-  moveSpeed: 1
-  isTeleport: 1
-  rotationSpeed: -180
+  moveSpeed: 0
+  isTeleport: 0
+  rotationSpeed: 110
+  degreeLimit: 0
 --- !u!61 &2130042122
 BoxCollider2D:
   m_ObjectHideFlags: 0
