@@ -70,7 +70,7 @@ public class AudioManager : MonoBehaviour
             activeSource.timeSamples = StartPosition;
     }
 
-    public void PlayMusicwithFade(AudioClip newClip, float transitionTime = 2.0f)
+    public void PlayMusicwithFade(AudioClip newClip, float transitionTime = 1.5f)
     {
         //Figures out which clip is playing
         AudioSource activeSource = (firstMusicSourceIsPlaying) ? musicsource : musicsource2;
