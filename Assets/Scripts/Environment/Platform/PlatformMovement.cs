@@ -8,10 +8,12 @@ public class PlatformMovement : MonoBehaviour
     public float moveSpeed;
     public bool isTeleport;
     public float rotationSpeed = 0;
+    public float degreeLimit = 0;
     int currPoint = 0;
     float lerpTime = 0;
     float rotateTime = 0;
     float totalDegrees = 0;
+    int seasawDirection = 1;
     Quaternion originalRotation;
     Coroutine move = null;
     Coroutine rotate = null;
@@ -26,6 +28,12 @@ public class PlatformMovement : MonoBehaviour
         if (rotationSpeed != 0)
         {
             originalRotation = transform.localRotation;
+        }
+
+        if (degreeLimit != 0)
+        {
+            transform.localRotation = Quaternion.Euler(transform.localRotation.x, transform.localRotation.y, degreeLimit);
+            seasawDirection = (int) Mathf.Sign(degreeLimit) * -1;
         }
     }
 
@@ -81,6 +89,29 @@ public class PlatformMovement : MonoBehaviour
                 rotateTime = 0;
             }
             totalDegrees += rotationSpeed * Time.deltaTime;
+            transform.localRotation = Quaternion.Euler(transform.localRotation.x, transform.localRotation.y, totalDegrees);
+            rotateTime += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    IEnumerator seasawRotation()
+    {
+        float abDegreeLimit = Mathf.Abs(degreeLimit);
+        float rotateDuration = abDegreeLimit / rotationSpeed;
+        while (true)
+        {
+            if (rotateTime >= rotateDuration)
+            {
+                if (Mathf.Abs(totalDegrees) >= abDegreeLimit)
+                {
+                    totalDegrees = abDegreeLimit * seasawDirection;
+                    transform.localRotation = Quaternion.Euler(transform.localRotation.x, transform.localRotation.y, totalDegrees);
+                    seasawDirection *= -1;
+                }
+                rotateTime = 0;
+            }
+            totalDegrees += rotationSpeed * seasawDirection * Time.deltaTime;
             transform.localRotation = Quaternion.Euler(transform.localRotation.x, transform.localRotation.y, totalDegrees);
             rotateTime += Time.deltaTime;
             yield return null;
@@ -146,7 +177,14 @@ public class PlatformMovement : MonoBehaviour
 
         if (rotationSpeed != 0)
         {
-            rotate = StartCoroutine(lerpRotation());
+            if (degreeLimit == 0)
+            {
+                rotate = StartCoroutine(lerpRotation());
+            }
+            else
+            {
+                rotate = StartCoroutine(seasawRotation());
+            }
         }
     }
 }
