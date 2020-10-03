@@ -23333,6 +23333,7 @@ Canvas:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1001 &822778468
 =======
 --- !u!1001 &826118495
@@ -23421,6 +23422,8 @@ BoxCollider2D:
 >>>>>>> parent of 2b70080... Revert "Revert "Revert "Hierarchy organization and Environment Generator Tool"""
 =======
 >>>>>>> parent of 6f43137... Revert "Hierarchy organization and Environment Generator Tool"
+=======
+>>>>>>> parent of b3f4ca9... Merge branch 'master' of https://github.com/JamInTheJukebox/GameJamFall2020 into master
 --- !u!1 &848055913
 GameObject:
   m_ObjectHideFlags: 0
@@ -30694,6 +30697,7 @@ Transform:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1001 &1083335749
 =======
 --- !u!1001 &1087894524
@@ -30782,6 +30786,8 @@ BoxCollider2D:
 >>>>>>> parent of 2b70080... Revert "Revert "Revert "Hierarchy organization and Environment Generator Tool"""
 =======
 >>>>>>> parent of 6f43137... Revert "Hierarchy organization and Environment Generator Tool"
+=======
+>>>>>>> parent of b3f4ca9... Merge branch 'master' of https://github.com/JamInTheJukebox/GameJamFall2020 into master
 --- !u!1 &1101400122
 GameObject:
   m_ObjectHideFlags: 0
@@ -49471,6 +49477,7 @@ SpriteRenderer:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 2b70080... Revert "Revert "Revert "Hierarchy organization and Environment Generator Tool"""
 =======
@@ -49546,6 +49553,8 @@ BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 6846521872596915178, guid: 5a87238778a3eed4497581194a75ab32, type: 3}
   m_PrefabInstance: {fileID: 1987336889}
   m_PrefabAsset: {fileID: 0}
+=======
+>>>>>>> parent of b3f4ca9... Merge branch 'master' of https://github.com/JamInTheJukebox/GameJamFall2020 into master
 =======
 >>>>>>> parent of b3f4ca9... Merge branch 'master' of https://github.com/JamInTheJukebox/GameJamFall2020 into master
 --- !u!1 &1988748024
