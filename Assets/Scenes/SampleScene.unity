@@ -50168,6 +50168,7 @@ MonoBehaviour:
   - {fileID: 1107343500}
   - {fileID: 6713002}
   - {fileID: 1542474732}
+<<<<<<< HEAD
 <<<<<<< Updated upstream
   moveSpeed: 0
   isTeleport: 0
@@ -50178,6 +50179,11 @@ MonoBehaviour:
   isTeleport: 0
   rotationSpeed: -180
 >>>>>>> Stashed changes
+=======
+  moveSpeed: 1
+  isTeleport: 1
+  rotationSpeed: -180
+>>>>>>> parent of 9e35a6a... seasaw rotation added
 --- !u!61 &2130042122
 BoxCollider2D:
   m_ObjectHideFlags: 0
