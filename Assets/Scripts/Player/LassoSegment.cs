@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class LassoSegment : MonoBehaviour
 {
-    // UNUSED
-    // UNUSED
-    // UNUSED
-    // UNUSED
-
     public GameObject Segment_Above, Segment_Below;
 
     private void Start()
