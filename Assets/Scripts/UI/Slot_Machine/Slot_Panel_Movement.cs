@@ -118,13 +118,7 @@ public class Slot_Panel_Movement : MonoBehaviour
         if(Item.GetComponent<Animator>() != null)
         {
             Item.GetComponent<Animator>().SetTrigger("Explode");
-            Color nextColor = MachineController.ChosenItem.Pixel_Color;
-            Gradient grad = new Gradient();
-            grad.SetKeys(new GradientColorKey[] { new GradientColorKey(Color.white, 0.0f), new GradientColorKey(nextColor, 0.05f) }, new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(0.0f, 0.5f) });
-
-            var col = Item.GetComponent<SpawnVFX_Animator>().TheParticle.colorOverLifetime;
-            col.color = grad;
-            //particleSys.startColor = MachineController.ChosenItem.Pixel_Color;
+            particleSys.startColor = MachineController.ChosenItem.Pixel_Color;
             // do not create your own material instance
         }
     }

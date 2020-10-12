@@ -38,10 +38,7 @@ public class Lasso : MonoBehaviour
         {
             SetPostions();
             if(ParentJoint != null)
-            {
                 ParentJoint.connectedAnchor = Latch.position;
-            }
-            else { print("My dude, you cheated!"); Parent.GetComponent<ThrowLasso>().ResetLasso(); Parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero; Destroy(gameObject); }
         }
     }
 
@@ -82,7 +79,6 @@ public class Lasso : MonoBehaviour
             ParentJoint = Parent.gameObject.AddComponent<DistanceJoint2D>();
             ParentJoint.maxDistanceOnly = true;
             ParentJoint.enableCollision = true;
-            ParentJoint.breakForce = 600f;
             Latch = collision.transform;
             ParentJoint.connectedAnchor = Latch.position;
             SetPostions();
