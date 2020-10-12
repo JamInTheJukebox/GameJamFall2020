@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Force: {x: 10, y: 10}
-  MaximumDistance: 30
+  MaximumDistance: 10
   Parent: {fileID: 0}
   Latch: {fileID: 0}
 --- !u!50 &8794757464938224653

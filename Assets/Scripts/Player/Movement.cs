@@ -122,7 +122,8 @@ public class Movement : MonoBehaviour
 
     private void HorizontalMovement()
     {
-        float MaxSpeed = Input.GetKey(KeyCode.LeftShift) ? MaxRunSpeed : MaxWalkSpeed; 
+        float MaxSpeed = ManageMaxSpeed();
+
         float MoveSpeed = Input.GetKey(KeyCode.LeftShift) ? RunAcceleration : WalkAcceleration;
         if (Movement_Type == E_MovementType.Linear)
         {
@@ -148,6 +149,22 @@ public class Movement : MonoBehaviour
             {
                 FlipDirection();
             }
+        }
+    }
+
+    private float ManageMaxSpeed()
+    {
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            return MaxRunSpeed;
+        }
+        else
+        {
+            if(Mathf.Abs(rb.velocity.x) > MaxWalkSpeed && !onGround)
+            {
+                return MaxRunSpeed;
+            }
+            else { return MaxWalkSpeed; }
         }
     }
 
