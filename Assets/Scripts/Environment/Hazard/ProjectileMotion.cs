@@ -45,7 +45,6 @@ public class ProjectileMotion : MonoBehaviour
     }
     private void OnDestroy()
     {
-        print("WTF");
         // play particle effect here
     }
 }

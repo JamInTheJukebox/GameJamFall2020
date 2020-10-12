@@ -61,8 +61,10 @@ public class CustomEnvironmentWindow : EditorWindow
             {
                 // spawn blocks and parent them to the blockplacement gameobject.
                 GameObject clone = PrefabUtility.InstantiatePrefab(BlockPrefab, BlockPlacement) as GameObject;
+
                 clone.transform.position = SpawnPosition + Vector2.right * X_OFFSET * j + Vector2.up * Y_OFFSET * i;
                 clone.GetComponent<SpriteRenderer>().sprite = BlockSprite;
+                //clone.GetComponent<SpriteRenderer>().sortingOrder = i;
             }
         }
     }

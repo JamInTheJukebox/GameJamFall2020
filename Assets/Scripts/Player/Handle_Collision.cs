@@ -26,6 +26,7 @@ public class Handle_Collision : MonoBehaviour
         {
             if (name.Contains("bouncy"))
             {
+                if (Mathf.Abs(transform.position.y - collision.transform.position.y) < 0.1) return;
                 obj.GetComponent<Animator>().SetTrigger("Bounce");
             }
         }
