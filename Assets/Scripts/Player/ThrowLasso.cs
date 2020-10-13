@@ -26,12 +26,12 @@ public class ThrowLasso : MonoBehaviour
 
     private void Update()
     {
-        Y_Dir = Input.GetAxis("Vertical");
-        if (Input.GetKeyDown(KeyCode.C))
+        Y_Dir = Movement.PlayerInput.Vertical;
+        if (Movement.PlayerInput.LassoTriggered())
         {
             ShootLasso();
         }
-        if (Input.GetKeyDown(KeyCode.V))
+        else if (Movement.PlayerInput.LassoDirTriggered())
         {
             ShootLassoDirectionally();
         }
@@ -49,7 +49,7 @@ public class ThrowLasso : MonoBehaviour
                 CharJoint.distance = Mathf.Clamp(CharJoint.distance, 0.5f, MaxSegmentLength);
             }
             bool isGrounded = CharMovement.CheckGrounded();
-            if (Input.GetKeyDown(KeyCode.Space) && !isGrounded)
+            if (Movement.PlayerInput.JumpTriggered() && !isGrounded)
             {
                 Jump();
             }

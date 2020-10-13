@@ -10,6 +10,7 @@ public class CharacterAnimation : MonoBehaviour
 
     private Movement AirMove;
     private Rigidbody2D rb;
+
     private void Awake()
     {
         CharAnim = GetComponent<Animator>();
@@ -35,7 +36,7 @@ public class CharacterAnimation : MonoBehaviour
         float Y_Vel = rb.velocity.y;
         bool grounded = AirMove.CheckGrounded();
         bool Moved = false;
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Movement.PlayerInput.JumpTriggered())
         {
             CharAnim.SetTrigger("Jump");
             Moved = true;
@@ -61,30 +62,30 @@ public class CharacterAnimation : MonoBehaviour
 
     private void SetBasicAnimation()            // Includes walking, Running
     {
-        Vector2 PlayerInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        CharAnim.SetFloat("Input_X", Mathf.Abs(PlayerInput.x));
-        CharAnim.SetFloat("Input_Y", PlayerInput.y);
+        Vector2 P_Input = new Vector2(Movement.PlayerInput.Horizontal, Movement.PlayerInput.Vertical);
+        CharAnim.SetFloat("Input_X", Mathf.Abs(P_Input.x));
+        CharAnim.SetFloat("Input_Y", P_Input.y);
 
-        if (PlayerInput.x != 0)
+        if (P_Input.x != 0)
         {
             CharAnim.SetFloat("Input_Y", 0);
         }
 
-        if (PlayerInput.x != 0)
+        if (P_Input.x != 0)
         {
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Movement.PlayerInput.Running)
             {
                 CharAnim.SetBool("Run", true);
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftShift) || PlayerInput.x == 0)
+        if (Movement.PlayerInput.RunStopTriggered() || P_Input.x == 0)
         {
             CharAnim.SetBool("Run", false);
 
         }
 
-        if (PlayerInput != Vector2.zero)
+        if (P_Input != Vector2.zero)
             ResetIdleTimer();
     }
 

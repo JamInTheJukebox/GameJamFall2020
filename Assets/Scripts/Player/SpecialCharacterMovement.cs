@@ -117,8 +117,8 @@ public class SpecialCharacterMovement : MonoBehaviour
 
     private void Update()
     {
-        Dir = Input.GetAxisRaw("Horizontal");
-        Y_Dir = Input.GetAxisRaw("Vertical");
+        Dir = Movement.PlayerInput.Horizontal;
+        Y_Dir = Movement.PlayerInput.Vertical;
         OnGround = CharMovement.CheckGrounded();
         /*
         if (Input.GetKeyDown(KeyCode.Space))
@@ -143,7 +143,7 @@ public class SpecialCharacterMovement : MonoBehaviour
             {
                 Jumping = false;
             }
-            if (Input.GetKeyDown(KeyCode.Space) && (int)CurrentSpecialMove == 2)
+            if (Movement.PlayerInput.JumpTriggered() && (int)CurrentSpecialMove == 2)
             {
                 Climbing_Initialized = false;
                 Jumping = true;
@@ -158,7 +158,7 @@ public class SpecialCharacterMovement : MonoBehaviour
 
         if (currentMode == 3)                   // LedgeGrabbing
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Movement.PlayerInput.JumpTriggered())
             {
                 float X_Force = 0;
 
@@ -277,7 +277,7 @@ public class SpecialCharacterMovement : MonoBehaviour
             // Call Jump here;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && (isSlidingOnWall || (isTouchingWall && rb.velocity.y > 0.1f)))
+        if (Movement.PlayerInput.JumpTriggered() && (isSlidingOnWall || (isTouchingWall && rb.velocity.y > 0.1f)))
         {
             float WallJumpDir = -(WallCheck.position - transform.position).x;
             WallJumpDir /= Mathf.Abs(WallJumpDir);

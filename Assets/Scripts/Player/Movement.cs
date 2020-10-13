@@ -45,19 +45,22 @@ public class Movement : MonoBehaviour
     [Header("DebugTools")]
     [SerializeField] bool DrawGroundCheck = false;
 
+    public static PlayerInputs PlayerInput;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         SpecMove = GetComponent<SpecialCharacterMovement>();
         DustParticle.Stop();
+        PlayerInput = GetComponent<PlayerInputs>();
     }
 
     private void Update()
     {
-        Dir = Input.GetAxis("Horizontal");
+        Dir = PlayerInput.Horizontal;
         onGround = Physics2D.Raycast(transform.position + RayCastOffset, Vector2.down, GroundLength, GroundLayer)
             || Physics2D.Raycast(transform.position - RayCastOffset, Vector2.down, GroundLength, GroundLayer);
-        if (Input.GetKeyDown(KeyCode.Space) && SpecMove.CurrentSpecialMove == 0)
+        if (PlayerInput.JumpTriggered() && SpecMove.CurrentSpecialMove == 0)
         {
             JumpTimer = Time.time + JumpDelay;      // A jump timer allows for a treshold for timing jumps. When a player gets on the ground
             // There is a chance that their input will be dropped due to them not being "technically" grounded yet. This timer allows for them to jump without being frame perfect.
@@ -124,10 +127,10 @@ public class Movement : MonoBehaviour
     {
         float MaxSpeed = ManageMaxSpeed();
 
-        float MoveSpeed = Input.GetKey(KeyCode.LeftShift) ? RunAcceleration : WalkAcceleration;
+        float MoveSpeed = PlayerInput.Running ? RunAcceleration : WalkAcceleration;
         if (Movement_Type == E_MovementType.Linear)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            if (PlayerInput.RunTriggered())
             {
                 MoveSpeed = MaxSpeed;
             }
@@ -154,7 +157,7 @@ public class Movement : MonoBehaviour
 
     private float ManageMaxSpeed()
     {
-        if(Input.GetKey(KeyCode.LeftShift))
+        if(PlayerInput.Running)
         {
             return MaxRunSpeed;
         }
@@ -207,7 +210,7 @@ public class Movement : MonoBehaviour
             {
                 rb.gravityScale = gravity * FallMultiplier;
             }
-            else if (rb.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
+            else if (rb.velocity.y > 0 && !PlayerInput.Jumping)
             {
                 rb.gravityScale = gravity * (FallMultiplier / 2);
             }

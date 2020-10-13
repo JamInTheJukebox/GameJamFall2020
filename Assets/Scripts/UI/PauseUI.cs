@@ -15,7 +15,7 @@ public class PauseUI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P) && CanPauseAgain)
+        if (Movement.PlayerInput.PauseTriggered() && CanPauseAgain)
         {
             CanPauseAgain = false;
             Paused = (Paused == 1) ? 0 : 1;
