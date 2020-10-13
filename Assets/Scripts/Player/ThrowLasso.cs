@@ -5,6 +5,7 @@ using UnityEngine;
 public class ThrowLasso : MonoBehaviour
 {
     // handle special item collisions here(perks, lasso, etc)
+    // you can only shoot a lasso when you are climbing or when you are in the default movement state.
     [Header("Lasso")]
     public GameObject Lasso;
     private bool ThrewLasso;
@@ -26,6 +27,8 @@ public class ThrowLasso : MonoBehaviour
 
     private void Update()
     {
+        if (!CheckLasso()) { return; }
+
         Y_Dir = Movement.PlayerInput.Vertical;
         if (Movement.PlayerInput.LassoTriggered())
         {
@@ -58,8 +61,37 @@ public class ThrowLasso : MonoBehaviour
             {
                 CharJoint.distance -= Y_Dir*Time.deltaTime;
             }
+            else if(Y_Dir > 0 && isGrounded)
+            {
+                GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1f), ForceMode2D.Impulse);
+                CharJoint.autoConfigureDistance = true;
+                Invoke("TurnOffAutoConfig", 0.1f);
+            }
         }
     }
+
+    private void TurnOffAutoConfig()
+    {
+        CharJoint.autoConfigureDistance = false;
+    }
+    private bool CheckLasso()
+    {
+        if((int)SpecialMove.CurrentSpecialMove == 2 || (int)SpecialMove.CurrentSpecialMove == 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool VerifyLasso()
+    {
+        if ((int)SpecialMove.CurrentSpecialMove == 2 || (int)SpecialMove.CurrentSpecialMove == 0)
+        {
+            SpecialMove.ResetClimbing();
+            return true;
+        }
+        return false;
+    }
+
     private void ShootLasso()
     {
         if (!ThrewLasso)
@@ -114,4 +146,5 @@ public class ThrowLasso : MonoBehaviour
         if(GetComponent<DistanceJoint2D>() != null)
             Destroy(GetComponent<DistanceJoint2D>());
     }
+
 }

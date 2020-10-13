@@ -99,5 +99,4 @@ public class CharacterAnimation : MonoBehaviour
     {
         CurrentIdleTime = 0;
     }
-
 }

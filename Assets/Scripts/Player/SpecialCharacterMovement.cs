@@ -206,7 +206,6 @@ public class SpecialCharacterMovement : MonoBehaviour
                     rb.gravityScale = 0;
                     float WallJumpDir = (collision.transform.position - transform.position).x;
                     LedgeJumpDir = -(int)Mathf.Sign(WallJumpDir);
-
                 }
             }
         }
@@ -255,10 +254,8 @@ public class SpecialCharacterMovement : MonoBehaviour
         }
         if (CurrentSlideTimer >= SlideBreakTimer | OnGround | !isTouchingWall)
         {
-//            print("Cancelling slide");
-            CurrentSlideTimer = 0;
-            CurrentSpecialMove = 0;
-            isSlidingOnWall = false;
+            //            print("Cancelling slide");
+            ResetWallSlide();
             // make this a seconds time.
         }
 
@@ -287,6 +284,14 @@ public class SpecialCharacterMovement : MonoBehaviour
             //invoke
         }
     }
+
+    private void ResetWallSlide()
+    {
+        CurrentSlideTimer = 0;
+        CurrentSpecialMove = 0;
+        isSlidingOnWall = false;
+    }
+
     private void Climb()
     {
         if (!ReadyToClimb)          // There are two ways to climb: Climbing from the bottom of a ladder of from the top of a platform. This bit of code is in case the user wants to climb from on top of the platform
@@ -344,10 +349,15 @@ public class SpecialCharacterMovement : MonoBehaviour
         }
         if(OnGround)
         {
-            CurrentSpecialMove = 0;
-            Climbing_Initialized = false;
-            Jumping = false;
+            ResetClimbing();
         }
+    }
+
+    public void ResetClimbing()
+    {
+        CurrentSpecialMove = 0;
+        Climbing_Initialized = false;
+        Jumping = false;
     }
 
     private void Jump()

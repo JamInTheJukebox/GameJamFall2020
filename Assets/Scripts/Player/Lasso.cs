@@ -41,7 +41,6 @@ public class Lasso : MonoBehaviour
             {
                 ParentJoint.connectedAnchor = Latch.position;
             }
-            else { print("My dude, you cheated!"); Parent.GetComponent<ThrowLasso>().ResetLasso(); Parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero; Destroy(gameObject); }
         }
     }
 
@@ -62,17 +61,20 @@ public class Lasso : MonoBehaviour
         LastPos = transform.position;
     }
 
-    private void DestroyLasso()
+    public void DestroyLasso()
     {
         Parent.GetComponent<ThrowLasso>().ResetLasso();
         Destroy(gameObject);
         return;
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Lasso_Latch")
         {
-            //if(Vector2.Distance(Parent.position,collision.transform.position) > 20) { DestroyLasso(); }
+            if (!Parent.GetComponent<ThrowLasso>().VerifyLasso()) { Destroy(gameObject); return; }
+                //if(Vector2.Distance(Parent.position,collision.transform.position) > 20) { DestroyLasso(); }
+
             Destroy(GetComponent<TrailRenderer>());
             Destroy(GetComponent<SpriteRenderer>());
             Destroy(GetComponent<Rigidbody2D>());
