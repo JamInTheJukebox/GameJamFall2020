@@ -66,7 +66,9 @@ public class PlatformMovement : MonoBehaviour
 
             int nextPoint = (currPoint + 1) % movePoints.Length;
 
-            transform.position = Vector2.Lerp(movePoints[currPoint].position, movePoints[nextPoint].position, lerpTime / moveDuration);
+            // new Position = current position + delta X
+            var DeltaVec = (Vector3)(Vector2.Lerp(movePoints[currPoint].position, movePoints[nextPoint].position, lerpTime / moveDuration) - (Vector2)transform.position); ;
+            transform.position += DeltaVec;
             lerpTime += Time.deltaTime;
             yield return null;
         }

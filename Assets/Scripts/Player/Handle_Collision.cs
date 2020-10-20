@@ -6,8 +6,13 @@ using UnityEngine.InputSystem;
 
 public class Handle_Collision : MonoBehaviour
 {
-    System.Action<InputAction.CallbackContext> ActivateElevator;
+    //System.Action<InputAction.CallbackContext> ActivateElevator;
+    bool InteractTriggered;
 
+    private void Update()
+    {
+        InteractTriggered = Movement.PlayerInput.RunTriggered();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         string name = collision.name.ToLower();
@@ -35,11 +40,24 @@ public class Handle_Collision : MonoBehaviour
         }
         else if(obj.tag == "Elevator")
         {
-            print("entering");
-            ActivateElevator += ctx => ToggleElevator(collision);
-            Movement.PlayerInput.Controls.Player.Run.performed += ActivateElevator;
+            //ActivateElevator += ctx => ToggleElevator(collision);
+            //Movement.PlayerInput.Controls.Player.Run.performed += ActivateElevator;
             //Movement.PlayerInput.Controls.Player.Jump.performed -= ActivateElevator;
+            transform.parent = collision.transform;
+            GetComponent<Rigidbody2D>().interpolation = RigidbodyInterpolation2D.None;
+        }
+    }
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        var obj = collision.gameObject;
+
+        if (obj.tag == "Elevator")
+        {
+            if(InteractTriggered)     // might cause problem
+            {
+                ToggleElevator(collision);
+            }
         }
     }
 
@@ -48,9 +66,11 @@ public class Handle_Collision : MonoBehaviour
         var obj = collision.gameObject;
         if (obj.tag == "Elevator")
         {
-            //print("Exiting!");
-            Movement.PlayerInput.Controls.Player.Run.performed -= ActivateElevator;
-            ActivateElevator = null;        
+            //Movement.PlayerInput.Controls.Player.Run.performed -= ActivateElevator;
+            //ActivateElevator = null;
+
+            transform.parent = null;
+            GetComponent<Rigidbody2D>().interpolation = RigidbodyInterpolation2D.Interpolate;
         }
     }
 
@@ -60,9 +80,10 @@ public class Handle_Collision : MonoBehaviour
         //print("Activating Elevator");
         if(collision != null)
         {
-            PlatformMovement Elevator = collision.gameObject.GetComponent<PlatformMovement>();
+            PlatformMovement Elevator = collision.gameObject.GetComponent<PlatformMovement>();      // watch out. This is called every time user presses shift on the elevator.
             if (Elevator != null && Elevator.move == null)  
             {
+                transform.parent = collision.transform;
                 Elevator.toggleMovement();
             }
         }
