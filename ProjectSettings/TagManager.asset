@@ -9,6 +9,7 @@ TagManager:
   - Lasso_Latch
   - Item
   - Platform
+  - Elevator
   layers:
   - Default
   - TransparentFX
@@ -48,4 +49,7 @@ TagManager:
     locked: 0
   - name: ToolTip
     uniqueID: 4060322703
+    locked: 0
+  - name: ForeGround
+    uniqueID: 3462378985
     locked: 0

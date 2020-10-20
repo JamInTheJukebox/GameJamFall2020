@@ -15,9 +15,11 @@ public class PlatformMovement : MonoBehaviour
     float totalDegrees = 0;
     int seasawDirection = 1;
     Quaternion originalRotation;
-    Coroutine move = null;
+    public Coroutine move = null;
     Coroutine rotate = null;
-
+    public bool Queued_Movement = false;    // whether the script will automatically move the platform or if they have to be commanded by another script to move.
+    
+    //[HideInInspector] public bool Moving;
     void Awake()
     {
         if (movePoints.Length == 1)
@@ -39,6 +41,7 @@ public class PlatformMovement : MonoBehaviour
 
     private void Start()
     {
+        if (Queued_Movement) { return; }        // player will tell platform when to move, not the system
         toggleMovement();
         toggleRotate();
     }
@@ -52,8 +55,13 @@ public class PlatformMovement : MonoBehaviour
             {
                 transform.position = movePoints[currPoint].position;
                 currPoint = (currPoint + 1) % movePoints.Length;
-                moveDuration = Vector2.Distance(movePoints[currPoint].position, movePoints[(currPoint + 1) % movePoints.Length].position) / moveSpeed;
                 lerpTime = 0;
+                if (Queued_Movement && (currPoint == 0 || currPoint == movePoints.Length-1))
+                {
+                    print("I have stopped, My lord");
+                    toggleMovement();
+                }
+                moveDuration = Vector2.Distance(movePoints[currPoint].position, movePoints[(currPoint + 1) % movePoints.Length].position) / moveSpeed;
             }
 
             int nextPoint = (currPoint + 1) % movePoints.Length;

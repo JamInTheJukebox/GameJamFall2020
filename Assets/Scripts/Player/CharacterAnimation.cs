@@ -9,84 +9,185 @@ public class CharacterAnimation : MonoBehaviour
     private float CurrentIdleTime;
 
     private Movement AirMove;
+    private SpecialCharacterMovement SpecialMove;
+    private ThrowLasso LassoMove;
     private Rigidbody2D rb;
 
+    private string m_CurrentState;
+    public string CurrentState
+    {
+        get { return m_CurrentState; }
+        set
+        {
+            m_CurrentState = value;
+            StateChanged();
+        }
+    }
+
+    private void StateChanged()
+    {
+        var ID = Animator.StringToHash(m_CurrentState);
+        CharAnim.Play(ID);
+    }
+
+    private int m_CurrentMoveState;
+
+    public int CurrentMoveState
+    {
+        get { return m_CurrentMoveState; }
+        set
+        {
+            if(m_CurrentMoveState != value)
+            {
+                MoveStateChanged(value);
+                m_CurrentMoveState = value;
+            }
+        }
+    }
+
+    private void MoveStateChanged(int newState)
+    {
+        Alt_Anim = false;
+        if(newState == 0 && (m_CurrentMoveState == 1 || m_CurrentMoveState == 3) && Movement.PlayerInput.Jumping)
+        {
+            WallJump();
+        }
+    }
+
+    private void WallJump()
+    {
+        CurrentState = "WallJump";
+        Alt_Anim = true;
+    }
+
+    private bool Alt_Anim;
+
+    bool Grounded = false;
+    bool hanging = false;
+    bool old_hanging = false;
     private void Awake()
     {
         CharAnim = GetComponent<Animator>();
         AirMove = GetComponent<Movement>();
         rb = GetComponent<Rigidbody2D>();
+        SpecialMove = GetComponent<SpecialCharacterMovement>();
+        LassoMove = GetComponent<ThrowLasso>();
     }
 
     private void Update()
     {
-        SetBasicAnimation();
-        AirAnimations();
+        Grounded = AirMove.CheckGrounded();
+        hanging = LassoMove.HangingOnLasso;
 
-        if (CurrentIdleTime >= IdleTimer)
+        CurrentMoveState = (int)SpecialMove.CurrentSpecialMove;
+        if(CurrentMoveState == 0)
         {
-            PlayIdleAnim();
+            if(hanging && !Grounded)
+            {
+                SetHangingAnimation();
+            }
+            if (Grounded)
+            {
+                SetBasicAnimation();
+            }
+            else if (!Grounded && !hanging)
+            {
+                AirAnimations();
+            }
+
+            if (CurrentIdleTime >= IdleTimer)
+            {
+                PlayIdleAnim();
+            }
+            // challenge, implement move variable here
+            CurrentIdleTime += Time.deltaTime;
+        }
+        else if(CurrentMoveState == 1)          //
+        {
+            CurrentState = "WallSlide";
+        }
+        else if(CurrentMoveState == 2)
+        {
+
+        }
+        else if(CurrentMoveState == 3)
+        {
+            CurrentState = "Hanging";
         }
 
-        CurrentIdleTime += Time.deltaTime;
     }
 
     private void AirAnimations()
     {
+        if (old_hanging)
+        {
+            old_hanging = false; WallJump(); return;
+        }
+
         float Y_Vel = rb.velocity.y;
-        bool grounded = AirMove.CheckGrounded();
-        bool Moved = false;
-        if (Movement.PlayerInput.JumpTriggered())
+        if (Y_Vel > -2 && !Alt_Anim)
         {
-            CharAnim.SetTrigger("Jump");
-            Moved = true;
+            CurrentState = "Jump";
         }
 
-        if (!grounded)
+        if(Y_Vel <= -2f)
         {
-            if (Y_Vel < 0)
-            {
-                CharAnim.SetBool("Falling", true);
-                ResetIdleTimer();
-                Moved = true;
-            }
+            Alt_Anim = false;
+            CurrentState = "Falling";
         }
 
-        else if(grounded || Mathf.RoundToInt(Y_Vel) == 0)
-        {
-            CharAnim.SetBool("Falling", false);
-        }
-
-        if (Moved) { ResetIdleTimer(); }
     }
 
     private void SetBasicAnimation()            // Includes walking, Running
     {
         Vector2 P_Input = new Vector2(Movement.PlayerInput.Horizontal, Movement.PlayerInput.Vertical);
-        CharAnim.SetFloat("Input_X", Mathf.Abs(P_Input.x));
-        CharAnim.SetFloat("Input_Y", P_Input.y);
 
         if (P_Input.x != 0)
         {
-            CharAnim.SetFloat("Input_Y", 0);
+            bool running = Movement.PlayerInput.Running;
+            if (running)
+                CurrentState = "Run";
+            else
+                CurrentState = "Walk";
         }
-
-        if (P_Input.x != 0)
+        else
         {
-            if (Movement.PlayerInput.Running)
+            if(hanging)
             {
-                CharAnim.SetBool("Run", true);
+                CurrentState = "Lasso_Idle";
             }
-        }
-
-        if (Movement.PlayerInput.RunStopTriggered() || P_Input.x == 0)
-        {
-            CharAnim.SetBool("Run", false);
-
+            else
+                CurrentState = "Idle";
         }
 
         if (P_Input != Vector2.zero)
             ResetIdleTimer();
+    }
+
+    private void SetHangingAnimation()
+    {
+        Vector2 P_Input = new Vector2(Movement.PlayerInput.Horizontal, Movement.PlayerInput.Vertical);
+        old_hanging = true;
+        CurrentState = "Lasso_Hang";
+        /*
+        if (P_Input.x != 0)
+        {
+            CurrentState = "Lasso_Hang";
+        }
+        else
+        {
+            float vel = rb.velocity.x;
+            if (Mathf.Abs(vel) < 0.01f)
+            {
+                //CurrentState = "Hanging";
+                CurrentState = "Lasso_Hang";        // default hanging animation
+            }
+            else
+            {
+                CurrentState = "Lasso_Hang";        // default hanging animation
+            }
+        }
+        */
     }
 
     private void PlayIdleAnim()

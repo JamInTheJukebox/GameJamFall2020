@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 1196211639885811224}
   - component: {fileID: 1196211639885811225}
   - component: {fileID: 1196211639885811230}
+  - component: {fileID: 169296272}
   m_Layer: 11
   m_Name: Player
   m_TagString: Untagged
@@ -113,8 +114,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
-  m_Sprite: {fileID: 4962856755825618467, guid: 06c2323ef08e1114ebe77c1ebce6f20d, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -7143181218572828648, guid: cc4a35c8a6493e146bba07256c899b00, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -159,18 +160,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.039776325}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.28, y: 0.38}
+    oldSize: {x: 0.421875, y: 0.59375}
     newSize: {x: 0.35, y: 0.37}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.20760782, y: 0.37}
+  m_Size: {x: 0.20760782, y: 0.5159626}
   m_EdgeRadius: 0
 --- !u!114 &1196211639885811220
 MonoBehaviour:
@@ -195,14 +196,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   onGround: 1
-  GroundLength: 0.22
+  GroundLength: 0.32
   RayCastOffset: {x: 0.1, y: 0, z: 0}
   JumpImpulse: 5
   gravity: 1
   FallMultiplier: 4
   JumpDelay: 0.2
   MaxFallSpeed: 10
-  DrawGroundCheck: 0
+  DrawGroundCheck: 1
 --- !u!114 &1196211639885811227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,9 +235,9 @@ MonoBehaviour:
   LedgeJumpImpulse: 5
   TimeRequiredToGrabLedge: 0.17
   TimeToRefreshLedgegrab: 0.2
-  DrawWallCheck: 0
+  DrawWallCheck: 1
   DrawLadderCeilCheck: 0
-  DrawBottomLadderCheck: 0
+  DrawBottomLadderCheck: 1
 --- !u!114 &1196211639885811226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,7 +261,7 @@ Animator:
   m_GameObject: {fileID: 1196211639885811219}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0b348a7b344fa604c86c46897e83c849, type: 2}
+  m_Controller: {fileID: 9100000, guid: 10eeef32e903570419eb9b170f54d86d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -311,6 +312,22 @@ MonoBehaviour:
   MaxSegmentLength: 10
   MinSegmentLength: 0
   RetractVelocity: 10
+--- !u!114 &169296272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196211639885811219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89efd5d74b4025b47beb3973e2b5886e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Horizontal: 0
+  Vertical: 0
+  Running: 0
+  Jumping: 0
 --- !u!1 &1196211639897299581
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,7 +352,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1196211639897299581}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.25, z: 0}
+  m_LocalPosition: {x: 0, y: -0.33, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1196211639885811223}
