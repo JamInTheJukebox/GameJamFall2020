@@ -7,7 +7,12 @@ using UnityEngine.InputSystem;
 public class Handle_Collision : MonoBehaviour
 {
     //System.Action<InputAction.CallbackContext> ActivateElevator;
+    private Rigidbody2D rb;
 
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         string name = collision.name.ToLower();
@@ -29,7 +34,9 @@ public class Handle_Collision : MonoBehaviour
         {
             if (name.Contains("bouncy"))
             {
-                if (Mathf.Abs(transform.position.y - collision.transform.position.y) < 0.1) return;
+                bool cond = transform.position.y - collision.transform.position.y >= 0.405  && rb.velocity.y >= 0.01f;     // activate only if the player is moving down and they are above the spring. Change this to a collider if this is error prone.
+                if (!cond) { return; }
+                print(rb.velocity.y);
                 obj.GetComponent<Animator>().SetTrigger("Bounce");
             }
         }

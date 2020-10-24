@@ -36,7 +36,7 @@ public class CarryRigidbody : MonoBehaviour
         {
             Colliding = false;
             obj.transform.parent = null;
-            GetComponent<Rigidbody2D>().interpolation = RigidbodyInterpolation2D.Interpolate;
+            obj.GetComponent<Rigidbody2D>().interpolation = RigidbodyInterpolation2D.Interpolate;
         }
     }
 
