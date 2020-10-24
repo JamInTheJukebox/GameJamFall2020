@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Respawn : MonoBehaviour
 {
-    public Vector3 defaultSpawn;
+    Vector3 defaultSpawn;
+
+    private void Awake()
+    {
+        defaultSpawn = transform.position;
+    }
 
     public void respawnPlayer()
     {

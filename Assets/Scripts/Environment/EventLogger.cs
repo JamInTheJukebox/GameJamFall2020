@@ -22,6 +22,9 @@ public class EventDetails
 
 public static class EventLogger
 {
+    public delegate void checkpointEvent();
+    public static event checkpointEvent triggeredCheckpoint;
+
     static Stack<EventDetails> log;
 
     static EventLogger()
@@ -44,6 +47,8 @@ public static class EventLogger
                     ItemTracker.removeItem(tempItem.item);
                     break;
                 case (EventType.CHECKPOINT):
+                    if (triggeredCheckpoint != null)
+                        triggeredCheckpoint();
                     return temp.obj.transform;
             }
         }
