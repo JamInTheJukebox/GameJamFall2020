@@ -20,6 +20,11 @@ namespace Project2020
                 EditorGUI.DrawRect(SelectionRect, Color.grey);
                 EditorGUI.DropShadowLabel(SelectionRect, obj.name.Replace("-", "").ToString());
             }
+            else if(obj != null && obj.name.StartsWith(">>>",System.StringComparison.Ordinal))
+            {
+                EditorGUI.DrawRect(SelectionRect, Color.HSVToRGB(0,0,0));
+                EditorGUI.DropShadowLabel(SelectionRect, obj.name.Replace(">", "").ToString());
+            }
         }
     }
 }

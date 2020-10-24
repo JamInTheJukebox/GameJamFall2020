@@ -4,57 +4,48 @@ using UnityEngine;
 
 public class CarryRigidbody : MonoBehaviour
 {
-    public List<Rigidbody2D> RigidBodies = new List<Rigidbody2D>();
+    public PlatformMovement ElevatorMovement;       // script that controls movement
+    private bool Colliding;
 
-    public Vector2 LastPos;
-    Transform _transform;
-
-    private void Start()
+    private void Update()
     {
-        _transform = transform;
-        LastPos = _transform.position;
+        if (Colliding && Movement.PlayerInput.RunTriggered())
+        {
+            ToggleElevator();
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-        if(rb == null) { return; }
-        AddRigidBody(rb);
+        var obj = collision.gameObject;
+
+        if (obj.tag == "Player")            // turn on only if player is touching collider
+        {
+            //ActivateElevator += ctx => ToggleElevator(collision);
+            //Movement.PlayerInput.Controls.Player.Run.performed += ActivateElevator;
+            //Movement.PlayerInput.Controls.Player.Jump.performed -= ActivateElevator;
+            Colliding = true;
+            obj.transform.parent = transform;
+            obj.GetComponent<Rigidbody2D>().interpolation = RigidbodyInterpolation2D.None;
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-        if (rb == null) { return; }
-        RemoveRigidBody(rb);
-    }
-
-    private void LateUpdate()
-    {
-        if(RigidBodies.Count > 0)
+        var obj = collision.gameObject;
+        if (obj.tag == "Player")        // dont turn off again until player touches collider and presses shift
         {
-            UpdateBody();   
-        }
-
-        LastPos = (Vector2)_transform.position;
-    }
-
-    private void UpdateBody()
-    {
-        foreach(Rigidbody2D rb in RigidBodies)
-        {
-            Vector2 vel = ((Vector2)_transform.position - LastPos);
-            rb.transform.Translate(vel, _transform);
+            Colliding = false;
+            obj.transform.parent = null;
+            obj.GetComponent<Rigidbody2D>().interpolation = RigidbodyInterpolation2D.Interpolate;
         }
     }
-    void AddRigidBody(Rigidbody2D rb)
-    {
-        if(!RigidBodies.Contains(rb))
-            RigidBodies.Add(rb);
-    }
 
-    void RemoveRigidBody(Rigidbody2D rb)
-    {
-        if (RigidBodies.Contains(rb))
-            RigidBodies.Remove(rb);
+
+    private void ToggleElevator()
+    {   
+        if (ElevatorMovement != null && ElevatorMovement.move == null)
+        {
+            ElevatorMovement.toggleMovement();      // if the elevator is not already stationed to move, move the elevator
+        }
     }
 }

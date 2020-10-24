@@ -192,7 +192,7 @@ public class CharacterAnimation : MonoBehaviour
 
     private void PlayIdleAnim()
     {
-        CharAnim.SetTrigger("IdleTrigger");
+
         CurrentIdleTime = 0;
     }
 

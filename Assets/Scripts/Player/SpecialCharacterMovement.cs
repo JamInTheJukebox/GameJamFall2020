@@ -117,6 +117,7 @@ public class SpecialCharacterMovement : MonoBehaviour
 
     private void Update()
     {
+        print(CurrentSpecialMove);
         Dir = Movement.PlayerInput.Horizontal;
         Y_Dir = Movement.PlayerInput.Vertical;
         OnGround = CharMovement.CheckGrounded();
@@ -179,7 +180,6 @@ public class SpecialCharacterMovement : MonoBehaviour
                 Invoke("ResetLedgeGrab", TimeToRefreshLedgegrab);
             }
         }
-        print(CurrentSpecialMove);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
