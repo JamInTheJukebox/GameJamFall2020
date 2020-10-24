@@ -6,6 +6,9 @@ public class Laser : MonoBehaviour
 {
     [SerializeField] Collider2D lazerZone; // collider denotating the zone the lazer should detect the player
     [SerializeField] GameObject beam;
+    LineRenderer beamLine;
+    BoxCollider2D beamCollider;
+    float beamLength;
     public float moveTime;
     public float shootDelay;
     public float shootTime;
@@ -20,6 +23,8 @@ public class Laser : MonoBehaviour
         playerFilter.useTriggers = true;
         playerFilter.SetLayerMask(LayerMask.GetMask("Player"));
         EventLogger.triggeredCheckpoint += stopShoot;
+        beamLine = beam.GetComponent<LineRenderer>();
+        beamCollider = beam.GetComponent<BoxCollider2D>();
         beam.SetActive(false);
     }
 
@@ -55,7 +60,6 @@ public class Laser : MonoBehaviour
         if (val == 1)
         {
             foundPlayer = objs[0].gameObject;
-            Debug.Log(foundPlayer.name);
             return true;
         }
         else if (val > 1)
@@ -70,16 +74,25 @@ public class Laser : MonoBehaviour
     {
         if (foundPlayer == null) return;
         Vector3 dir = foundPlayer.transform.position - transform.position;
+        beamLength = dir.magnitude + 1;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         Quaternion angleAxis = Quaternion.AngleAxis(angle, Vector3.forward);
-        Debug.Log(angle);
         transform.rotation = Quaternion.Slerp(transform.rotation, angleAxis, Time.deltaTime * 10);
+
+        // find length beam needs to travel
+        RaycastHit2D hit = Physics2D.Linecast(transform.position, foundPlayer.transform.position + dir, LayerMask.GetMask("Ground"));
+        if (hit.collider != null)
+        {
+            beamLength = (hit.point - new Vector2(transform.position.x, transform.position.y)).magnitude;
+        }
     }
 
     void shoot()
     {
         isShooting = true;
         beam.SetActive(true);
+        beamCollider.size = new Vector2(beamLength, beamCollider.size.y);
+        beamLine.SetPosition(1, new Vector3(beamLength, 0, 0));
         Invoke("stopShoot", shootTime);
     }
 
