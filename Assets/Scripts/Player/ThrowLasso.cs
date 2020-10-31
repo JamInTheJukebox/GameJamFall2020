@@ -70,6 +70,16 @@ public class ThrowLasso : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        float X_dir = Movement.PlayerInput.Horizontal;
+
+        if (X_dir == 0 && HangingOnLasso)
+        {
+            GetComponent<Rigidbody2D>().drag = 2.5f;
+        }
+    }
+
     private void TurnOffAutoConfig()
     {
         CharJoint.autoConfigureDistance = false;

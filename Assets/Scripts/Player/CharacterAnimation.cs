@@ -47,6 +47,10 @@ public class CharacterAnimation : MonoBehaviour
 
     private void MoveStateChanged(int newState)
     {
+        if (m_CurrentMoveState == 2)
+        {
+            CharAnim.speed = 1;
+        }
         Alt_Anim = false;
         if(newState == 0 && (m_CurrentMoveState == 1 || m_CurrentMoveState == 3) && Movement.PlayerInput.Jumping)
         {
@@ -108,7 +112,9 @@ public class CharacterAnimation : MonoBehaviour
         }
         else if(CurrentMoveState == 2)
         {
-
+            float P_Input = Movement.PlayerInput.Vertical;
+            CharAnim.speed = Mathf.Abs(P_Input);                       // set the speed of the animation equal to the y Input.
+            CurrentState = "Climbing";
         }
         else if(CurrentMoveState == 3)
         {

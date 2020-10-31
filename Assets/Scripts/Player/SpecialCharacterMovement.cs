@@ -83,6 +83,7 @@ public class SpecialCharacterMovement : MonoBehaviour
     private bool CanLedgeGrabAgain = true;
     public float TimeToRefreshLedgegrab;                // Ledgegrabs cannot be abused
 
+    private SpriteRenderer SpritePNG;
 
     [Header("DebugTools")]
     [SerializeField] bool DrawWallCheck = false;
@@ -97,6 +98,7 @@ public class SpecialCharacterMovement : MonoBehaviour
                 break;
             case 2:
                 rb.gravityScale = 0;
+                SpritePNG.sortingOrder = 4;
                 break;
             case 3:
                 break;
@@ -112,6 +114,7 @@ public class SpecialCharacterMovement : MonoBehaviour
         CharMovement = GetComponent<Movement>();
         JumpImpulse = CharMovement.JumpImpulse;
         PlayerLayer = gameObject.layer;
+        SpritePNG = GetComponent<SpriteRenderer>();
     }
     
 
@@ -226,6 +229,7 @@ public class SpecialCharacterMovement : MonoBehaviour
             CurrentSpecialMove = 0;
             Climbing_Initialized = false;
             Jumping = false;
+            SpritePNG.sortingOrder = 0;
         }
 
         if (collision.tag == "Ledge")

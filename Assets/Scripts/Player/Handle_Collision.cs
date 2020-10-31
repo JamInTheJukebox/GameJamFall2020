@@ -38,6 +38,14 @@ public class Handle_Collision : MonoBehaviour
                 if (!cond) { return; }
                 print(rb.velocity.y);
                 obj.GetComponent<Animator>().SetTrigger("Bounce");
+                obj.GetComponent<SpawnVFX_Animator>()?.BurstParticle();
+            }
+            else if (name.Contains("trap"))
+            {
+                Animator anim = obj.GetComponent<Animator>();
+                if (anim != null)
+                    anim.SetTrigger("Open");
+                    //anim.ResetTrigger("Open");
             }
         }
     }
