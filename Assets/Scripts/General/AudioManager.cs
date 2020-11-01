@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
@@ -36,7 +37,7 @@ public class AudioManager : MonoBehaviour
     private bool firstMusicSourceIsPlaying = true;
     //unity fix
     public AudioClip musicClip;
-
+    public static AudioMixer audioMixer = null;
     #endregion
 
     private void Awake()
@@ -50,6 +51,16 @@ public class AudioManager : MonoBehaviour
         musicsource = this.gameObject.AddComponent<AudioSource>();
         musicsource2 = this.gameObject.AddComponent<AudioSource>();
         sfxsource = this.gameObject.AddComponent<AudioSource>();
+
+        if (audioMixer == null)
+        {
+            audioMixer = Resources.Load<AudioMixer>("Audio/AudioMixer");
+        }
+
+        AudioMixerGroup[] masterGroup = audioMixer.FindMatchingGroups("Master");
+        musicsource.outputAudioMixerGroup = masterGroup[0];
+        musicsource2.outputAudioMixerGroup = masterGroup[0];
+        sfxsource.outputAudioMixerGroup = masterGroup[0];
 
         //This loops the music tracks
         musicsource.loop = true;
