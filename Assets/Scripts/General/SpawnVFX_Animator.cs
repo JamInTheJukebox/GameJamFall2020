@@ -8,7 +8,8 @@ public class SpawnVFX_Animator : MonoBehaviour
     public Sprite NullImage;
     private void Awake()
     {
-        TheParticle.Stop();
+        if (TheParticle != null)
+            TheParticle.Stop();
     }
     public void OnAnimTrigger()
     {
@@ -19,6 +20,13 @@ public class SpawnVFX_Animator : MonoBehaviour
         
     }
 
+    public void BurstParticle()
+    {
+        if(TheParticle != null)
+        {
+            TheParticle.Play();
+        }
+    }
     private void Set_Out_Of_Frame()
     {
         FindObjectOfType<Slot_Machine_Controller>().StopSlotMachine();
