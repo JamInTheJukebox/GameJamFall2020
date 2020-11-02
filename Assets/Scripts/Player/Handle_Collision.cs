@@ -47,6 +47,10 @@ public class Handle_Collision : MonoBehaviour
                     anim.SetTrigger("Open");
                     //anim.ResetTrigger("Open");
             }
+            else if(name.Contains("tnt"))
+            {
+                obj.GetComponent<BlastBox>().InitiateDestruction();
+            }
         }
     }
 }
