@@ -43,4 +43,13 @@ public class PlatformPanel : MonoBehaviour
         edge.enabled = true;
         ResetTrigger();
     }
+
+    public void OpenPanel()
+    {
+        if(!Automatic)
+        {
+            PlatAnim.SetTrigger("Open");
+        }
+
+    }
 }

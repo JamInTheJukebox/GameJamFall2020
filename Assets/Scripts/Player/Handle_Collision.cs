@@ -8,10 +8,12 @@ public class Handle_Collision : MonoBehaviour
 {
     //System.Action<InputAction.CallbackContext> ActivateElevator;
     private Rigidbody2D rb;
+    private Movement GroundCheck;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        GroundCheck = GetComponent<Movement>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -36,15 +38,15 @@ public class Handle_Collision : MonoBehaviour
             {
                 bool cond = transform.position.y - collision.transform.position.y >= 0.405  && rb.velocity.y >= 0.01f;     // activate only if the player is moving down and they are above the spring. Change this to a collider if this is error prone.
                 if (!cond) { return; }
-                print(rb.velocity.y);
                 obj.GetComponent<Animator>().SetTrigger("Bounce");
                 obj.GetComponent<SpawnVFX_Animator>()?.BurstParticle();
             }
             else if (name.Contains("trap"))
             {
-                Animator anim = obj.GetComponent<Animator>();
-                if (anim != null)
-                    anim.SetTrigger("Open");
+
+                PlatformPanel PlatPanel = obj.GetComponent<PlatformPanel>();
+                if (PlatPanel != null)
+                    PlatPanel.OpenPanel();
                     //anim.ResetTrigger("Open");
             }
             else if(name.Contains("tnt"))
