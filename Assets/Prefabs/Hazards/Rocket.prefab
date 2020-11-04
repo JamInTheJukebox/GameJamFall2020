@@ -191,7 +191,9 @@ MonoBehaviour:
   rotateSpeed: 200
   Homing: 0
   Target: {fileID: 0}
-  StartAngle: 90
+  lifetime: 0
+  BaseColor: {r: 1, g: 1, b: 1, a: 1}
+  WarningColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!50 &1093088291
 Rigidbody2D:
   serializedVersion: 4

@@ -17,6 +17,7 @@ public class ThrowLasso : MonoBehaviour
     public float MinSegmentLength = 0f;
     public float RetractVelocity = 0.1f;
     private float Y_Dir;
+    [HideInInspector] public float LatchDragFactor = 2.5f;
 
     private void Awake()
     {
@@ -76,7 +77,7 @@ public class ThrowLasso : MonoBehaviour
 
         if (X_dir == 0 && HangingOnLasso)
         {
-            GetComponent<Rigidbody2D>().drag = 2.5f;
+            GetComponent<Rigidbody2D>().drag = LatchDragFactor;
         }
     }
 

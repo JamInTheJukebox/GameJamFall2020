@@ -4,23 +4,37 @@ using UnityEngine;
 
 public class ProjectileMotion : MonoBehaviour
 {
-    public float speed;
-    public float rotateSpeed;
+    // manages motion for the rocket.
+    public float speed;             
+    public float rotateSpeed;           // torque exerted on the rocket to rotate.
     private Rigidbody2D rb;
+    private SpriteRenderer sp;
     [HideInInspector] public bool Homing;
     [HideInInspector] public Transform Target;
-
-    public int StartAngle;
+    [HideInInspector] public float lifetime;
+    private float WarningTime;
+    public Color BaseColor = Color.white;
+    public Color WarningColor = Color.red;          // color to show that the rocket is about to blow up.
+    private float CollectiveTime = 0;
+    private bool ShowWarning = false;   
     private void Start()
     {
-        Destroy(gameObject,10f);
+        WarningTime = lifetime * 0.75f;
+        StartCoroutine(ShowWarningNow());
+        Destroy(gameObject, lifetime);
         rb = GetComponent<Rigidbody2D>();
+        sp = GetComponent<SpriteRenderer>();
     }
 
-    private void Awake()
+    private IEnumerator ShowWarningNow()
     {
-        transform.rotation = Quaternion.Euler(0, 0, StartAngle);
-        
+        yield return new WaitForSeconds(WarningTime);
+        while(true)
+        {
+            yield return new WaitForSeconds(0.3f); sp.color = WarningColor;
+            yield return new WaitForSeconds(0.3f); sp.color = Color.white;
+
+        }
     }
     void FixedUpdate()
     {

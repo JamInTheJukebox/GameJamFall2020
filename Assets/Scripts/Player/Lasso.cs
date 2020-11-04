@@ -37,9 +37,13 @@ public class Lasso : MonoBehaviour
         else
         {
             SetPostions();
-            if(ParentJoint != null)
+            if(ParentJoint != null && Latch != null)
             {
                 ParentJoint.connectedAnchor = Latch.position;
+            }
+            else if(ParentJoint != null && Latch == null)       // a rocket
+            {
+                DestroyLasso();
             }
         }
     }
@@ -72,15 +76,22 @@ public class Lasso : MonoBehaviour
     {
         if (collision.tag == "Lasso_Latch")
         {
-            if (!Parent.GetComponent<ThrowLasso>().VerifyLasso()) { Destroy(gameObject); return; }
-                //if(Vector2.Distance(Parent.position,collision.transform.position) > 20) { DestroyLasso(); }
-
+            var ParentComp = Parent.GetComponent<ThrowLasso>();
+            if (!ParentComp.VerifyLasso()) { Destroy(gameObject); return; }
+            //if(Vector2.Distance(Parent.position,collision.transform.position) > 20) { DestroyLasso(); }
+            float DragMagnitude = 2.5f;
             Destroy(GetComponent<TrailRenderer>());
             Destroy(GetComponent<SpriteRenderer>());
             Destroy(GetComponent<Rigidbody2D>());
             Destroy(GetComponent<CircleCollider2D>());
             TargetHit = true;
-            Parent.GetComponent<ThrowLasso>().HangingOnLasso = true;
+            ParentComp.HangingOnLasso = true;
+            if (collision.transform.name.ToLower().Contains("rocket"))
+            {
+                DragMagnitude = 1;
+            }
+            ParentComp.LatchDragFactor = DragMagnitude;              // drag in a rocket looks wierd!
+
             ParentJoint = Parent.gameObject.AddComponent<DistanceJoint2D>();
             ParentJoint.maxDistanceOnly = true;
             ParentJoint.enableCollision = true;
