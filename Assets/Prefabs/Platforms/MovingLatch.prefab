@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 842197682150900072}
   - component: {fileID: 5317464030487410017}
   - component: {fileID: 8242738763500015274}
+  - component: {fileID: 2794106197183172260}
   m_Layer: 8
   m_Name: diamond_platform (2)
   m_TagString: Untagged
@@ -125,6 +126,19 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!114 &2794106197183172260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2855255831845333295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 638ccfa0d535d4642887c3f0b9c10a6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ElevatorMovement: {fileID: 932097831995590481}
 --- !u!1 &6151346771928803756
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,97 +173,6 @@ Transform:
   m_Father: {fileID: 6198038652952050431}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6198038651148199635
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6198038651148199634}
-  - component: {fileID: 6198038651148199647}
-  - component: {fileID: 6198038651148199632}
-  - component: {fileID: 6198038651148199633}
-  m_Layer: 12
-  m_Name: Const
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6198038651148199634
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6198038651148199635}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.065, y: -0.126, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6198038652952050431}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &6198038651148199647
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6198038651148199635}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!247 &6198038651148199632
-ConstantForce2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6198038651148199635}
-  m_Enabled: 1
-  m_Force: {x: 0, y: 0.1}
-  m_RelativeForce: {x: 0, y: 0}
-  m_Torque: 0
---- !u!61 &6198038651148199633
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6198038651148199635}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.007577896, y: 0.34696913}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.0528291, y: 0.12218571}
-  m_EdgeRadius: 0
 --- !u!1 &6198038651822954940
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,6 +298,7 @@ GameObject:
   - component: {fileID: 6198038651937165223}
   - component: {fileID: 6198038651937165221}
   - component: {fileID: 6198038651937165222}
+  - component: {fileID: 5921190072556890333}
   m_Layer: 8
   m_Name: diamond_platform
   m_TagString: Untagged
@@ -488,6 +412,19 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!114 &5921190072556890333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6198038651937165241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 638ccfa0d535d4642887c3f0b9c10a6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ElevatorMovement: {fileID: 932097831995590481}
 --- !u!1 &6198038652352098613
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,7 +518,7 @@ GameObject:
   - component: {fileID: 6198038652952050431}
   - component: {fileID: 932097831995590481}
   m_Layer: 12
-  m_Name: Lasso Latch (1)
+  m_Name: MovingLatch
   m_TagString: Lasso_Latch
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -594,13 +531,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6198038652952050416}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 51.24, y: 18.86, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6198038651822954939}
   - {fileID: 450816407018482923}
-  - {fileID: 6198038651148199634}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -636,6 +572,7 @@ GameObject:
   - component: {fileID: 3720426517499775819}
   - component: {fileID: 4667319434481743897}
   - component: {fileID: 289086875775850775}
+  - component: {fileID: 7140964718576043373}
   m_Layer: 8
   m_Name: diamond_platform (3)
   m_TagString: Untagged
@@ -749,3 +686,16 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!114 &7140964718576043373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9079879690323898192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 638ccfa0d535d4642887c3f0b9c10a6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ElevatorMovement: {fileID: 932097831995590481}

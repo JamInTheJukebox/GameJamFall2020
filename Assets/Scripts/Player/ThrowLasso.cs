@@ -83,7 +83,11 @@ public class ThrowLasso : MonoBehaviour
 
     private void TurnOffAutoConfig()
     {
-        CharJoint.autoConfigureDistance = false;
+        if(CharJoint == null)
+        {
+            ResetLasso();
+        }
+            CharJoint.autoConfigureDistance = false;
     }
     private bool CheckLasso()
     {

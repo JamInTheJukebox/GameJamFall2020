@@ -228,7 +228,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   LadderTag: Climbable
-  ClimbSpeed: {x: 1, y: 1.3}
+  ClimbSpeed: {x: 1, y: 1.5}
   LadderCheck: {fileID: 1196211639878698256}
   BottomLadderCheck: {fileID: 1196211639897299554}
   BottomLadderCheckRadius: 0.04
@@ -294,6 +294,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65a422edf9ecc144b42d04064590e2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DrawCrushCheck: 1
+  CrushCheckRadius: 0.1
 --- !u!114 &1196211639885811230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,6 +313,7 @@ MonoBehaviour:
   MaxSegmentLength: 10
   MinSegmentLength: 0
   RetractVelocity: 10
+  LatchDragFactor: 2.5
 --- !u!114 &169296272
 MonoBehaviour:
   m_ObjectHideFlags: 0

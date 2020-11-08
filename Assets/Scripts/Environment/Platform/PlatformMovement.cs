@@ -20,8 +20,9 @@ public class PlatformMovement : MonoBehaviour
     public bool Queued_Movement = false;    // whether the script will automatically move the platform or if they have to be commanded by another script to move.
     
     //[HideInInspector] public bool Moving;
-    void Awake()
+    void OnEnable()
     {
+        move = null; rotate = null;
         if (movePoints.Length == 1)
         {
             transform.position = movePoints[0].position;
@@ -37,10 +38,7 @@ public class PlatformMovement : MonoBehaviour
             transform.localRotation = Quaternion.Euler(transform.localRotation.x, transform.localRotation.y, degreeLimit);
             seasawDirection = (int) Mathf.Sign(degreeLimit) * -1;
         }
-    }
 
-    private void Start()
-    {
         if (Queued_Movement) { return; }        // player will tell platform when to move, not the system
         toggleMovement();
         toggleRotate();
