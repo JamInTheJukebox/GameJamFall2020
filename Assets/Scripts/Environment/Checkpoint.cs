@@ -5,6 +5,12 @@ using UnityEngine;
 public class Checkpoint : MonoBehaviour
 {
     public static GameObject currentCheckpoint = null;
+    private Animator SlotAnim;
+
+    private void Awake()
+    {
+        SlotAnim = GetComponent<Animator>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -13,6 +19,7 @@ public class Checkpoint : MonoBehaviour
             EventLogger.clearLog();
             EventLogger.addLog(EventType.CHECKPOINT, gameObject);
             currentCheckpoint = gameObject;
+            SlotAnim.SetTrigger("Save");
         }
     }
 }

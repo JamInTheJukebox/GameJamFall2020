@@ -112,9 +112,21 @@ public class CharacterAnimation : MonoBehaviour
         }
         else if(CurrentMoveState == 2)
         {
-            float P_Input = Movement.PlayerInput.Vertical;
-            CharAnim.speed = Mathf.Abs(P_Input);                       // set the speed of the animation equal to the y Input.
-            CurrentState = "Climbing";
+            Vector2 P_Input = new Vector2(Movement.PlayerInput.Horizontal,Movement.PlayerInput.Vertical);
+            if(P_Input.y != 0)
+            {
+                CharAnim.speed = Mathf.Abs(P_Input.y);                       // set the speed of the animation equal to the y Input.
+                CurrentState = "Climbing";
+            }
+            else if(P_Input.x != 0 && rb.velocity.x != 0)
+            {
+                CharAnim.speed = Mathf.Abs(P_Input.x);                       // set the speed of the animation equal to the y Input.
+                CurrentState = (P_Input.x > 0) ? "SideClimb2" : "SideClimb";
+            }
+            else
+            {
+                CharAnim.speed = 0;                       // set the speed of the animation equal to the y Input.
+            }
         }
         else if(CurrentMoveState == 3)
         {

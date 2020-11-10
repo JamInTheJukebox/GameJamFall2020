@@ -12,7 +12,6 @@ public class Handle_Collision : MonoBehaviour
     private bool TrapCol = false;
     public bool DrawCrushCheck = false;
     public float CrushCheckRadius = 1f;
-    private bool CrushCheck;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -57,14 +56,14 @@ public class Handle_Collision : MonoBehaviour
             int LayermaskG = 1 << 8;
             var inside = collision.collider.bounds.ClosestPoint(transform.position);
             print(inside);
-            bool ActuallyInside = Physics2D.Raycast(transform.position, Vector2.right,CrushCheckRadius, LayermaskG);
-            print(ActuallyInside);
+            //bool ActuallyInside = Physics2D.Raycast(transform.position, Vector2.right,CrushCheckRadius, LayermaskG);
+            //print(ActuallyInside);
             CrushCheck = ActuallyInside;
 
             // Because closest=point if point is inside - not clear from docs I feel
-            if (closest && ActuallyInside)
+            if (closest)
             {
-                print("I'm being crushed!");
+                print("I'm being crushed!");            // if this piece of code runs, kill the player. THey are stuck inside a block.
             }
         }
         */
@@ -101,18 +100,6 @@ public class Handle_Collision : MonoBehaviour
             {
                 TrapCol = false;
             }
-        }
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (DrawCrushCheck)
-        {
-            Gizmos.color = (CrushCheck) ? Color.green : Color.red;
-
-            Gizmos.color = Color.red;
-            Vector3 CurrentPos = transform.position;
-            Gizmos.DrawLine(transform.position, (Vector2)transform.position + Vector2.right * CrushCheckRadius );
         }
     }
 }

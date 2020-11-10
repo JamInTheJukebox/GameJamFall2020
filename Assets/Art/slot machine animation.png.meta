@@ -1,0 +1,433 @@
+fileFormatVersion: 2
+guid: 46c00728e696ae0409f52e35f38180f2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5614924191773333857
+    second: slot machine animation_0
+  - first:
+      213: -8131308127795724403
+    second: slot machine animation_1
+  - first:
+      213: -6446774149203156704
+    second: slot machine animation_2
+  - first:
+      213: 6351323758616288070
+    second: slot machine animation_3
+  - first:
+      213: -2580584977151356635
+    second: slot machine animation_4
+  - first:
+      213: -6873443010458715765
+    second: slot machine animation_5
+  - first:
+      213: 8085607554641815158
+    second: slot machine animation_6
+  - first:
+      213: -7664612548280154697
+    second: slot machine animation_7
+  - first:
+      213: 5718747323579534180
+    second: slot machine animation_8
+  - first:
+      213: -6162318081612799904
+    second: slot machine animation_9
+  - first:
+      213: -1772065704003417008
+    second: slot machine animation_10
+  - first:
+      213: 1602530456466512217
+    second: slot machine animation_11
+  - first:
+      213: -5538918783795077074
+    second: slot machine animation_12
+  - first:
+      213: 1044858729946693002
+    second: slot machine animation_13
+  - first:
+      213: -5624342448572276083
+    second: slot machine animation_14
+  - first:
+      213: 7869590253832625861
+    second: slot machine animation_15
+  - first:
+      213: 7929586913619613864
+    second: slot machine animation_16
+  - first:
+      213: 4291615718017885600
+    second: slot machine animation_17
+  - first:
+      213: 250315602603406662
+    second: slot machine animation_18
+  - first:
+      213: 3172863517909051149
+    second: slot machine animation_19
+  - first:
+      213: 3030307457624469641
+    second: slot machine animation_20
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: slot machine animation_0
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 276
+        width: 64
+        height: 76
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1699563adc73ced40800000000000000
+      internalID: 5614924191773333857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slot machine animation_2
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 275
+        width: 64
+        height: 76
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 021239951157886a0800000000000000
+      internalID: -6446774149203156704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slot machine animation_4
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 275
+        width: 64
+        height: 76
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5211f24c2abef2cd0800000000000000
+      internalID: -2580584977151356635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slot machine animation_5
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 275
+        width: 64
+        height: 76
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8977b1cfff9c90a0800000000000000
+      internalID: -6873443010458715765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slot machine animation_7
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 170
+        width: 64
+        height: 76
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b582c60f73d1a590800000000000000
+      internalID: -7664612548280154697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slot machine animation_9
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 168
+        width: 64
+        height: 76
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 060a088aa5c0b7aa0800000000000000
+      internalID: -6162318081612799904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slot machine animation_11
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 167
+        width: 64
+        height: 76
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9595e67a5f45d3610800000000000000
+      internalID: 1602530456466512217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slot machine animation_13
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 167
+        width: 64
+        height: 76
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8d30fe9a75108e00800000000000000
+      internalID: 1044858729946693002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slot machine animation_14
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 64
+        width: 64
+        height: 76
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d82e2b1975252f1b0800000000000000
+      internalID: -5624342448572276083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slot machine animation_16
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 63
+        width: 64
+        height: 76
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a812e1094d8b0e60800000000000000
+      internalID: 7929586913619613864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slot machine animation_18
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 63
+        width: 64
+        height: 76
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 645f9eed6bc497300800000000000000
+      internalID: 250315602603406662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slot machine animation_19
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 63
+        width: 64
+        height: 76
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d07e3c91f86480c20800000000000000
+      internalID: 3172863517909051149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

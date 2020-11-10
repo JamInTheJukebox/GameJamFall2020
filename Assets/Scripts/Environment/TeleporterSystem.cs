@@ -26,6 +26,6 @@ public class TeleporterSystem : MonoBehaviour
     {
         int nextIndex = (currIndex + 1) % teleporters.Length;
         tSettings[nextIndex].previouslyTeleported = true;
-        player.transform.position = teleporters[nextIndex].transform.position;
+        player.transform.position = teleporters[nextIndex].transform.position + new Vector3(0.3f,0.3f,0);
     }
 }
