@@ -8,8 +8,9 @@ public class ProjectileSpawner : MonoBehaviour
     [Header("Rocket")]
     public GameObject Rocket;
     [SerializeField] float ProjectileSpeed;
-    public float SpawnWait;
-    public float Standby;
+    public float SpawnWait;          // how long the rocket waits when it is red to shoot.
+    public float Standby;          
+    public float Standby2 = 0;        // a second standby in case you want to create patterns.
     private Animator RocketAnim;
     //private SpriteRenderer RocketSprite;
 
@@ -31,15 +32,17 @@ public class ProjectileSpawner : MonoBehaviour
             yield return new WaitForSeconds(Standby);
             RocketAnim.SetTrigger("Prepare");
             yield return new WaitForSeconds(SpawnWait);
+            
             RocketAnim.SetTrigger("Shoot");
             SmokeCloud.Play();
             ShootRocket();
+            yield return new WaitForSeconds(Standby2);
         }
     }
 
     public void ShootRocket()
     {
-        ProjectileMotion g_Rocket = Instantiate(Rocket, transform.position + new Vector3(0,0.3f,0), transform.rotation).GetComponent<ProjectileMotion>();
+        ProjectileMotion g_Rocket = Instantiate(Rocket, transform.position + 0.3f*transform.up, transform.rotation).GetComponent<ProjectileMotion>();
         g_Rocket.transform.Rotate(0, 0, 90);
         g_Rocket.lifetime = LifeTime;
         // g_Rocket.transform.rotation = Angle;

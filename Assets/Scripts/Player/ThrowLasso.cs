@@ -86,6 +86,7 @@ public class ThrowLasso : MonoBehaviour
         if(CharJoint == null)
         {
             ResetLasso();
+            return;
         }
             CharJoint.autoConfigureDistance = false;
     }

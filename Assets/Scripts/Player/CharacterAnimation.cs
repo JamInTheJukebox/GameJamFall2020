@@ -121,7 +121,7 @@ public class CharacterAnimation : MonoBehaviour
             else if(P_Input.x != 0 && rb.velocity.x != 0)
             {
                 CharAnim.speed = Mathf.Abs(P_Input.x);                       // set the speed of the animation equal to the y Input.
-                CurrentState = (P_Input.x > 0) ? "SideClimb2" : "SideClimb";
+                CurrentState = (P_Input.x > 0) ? "SideClimb" : "SideClimb2";
             }
             else
             {
