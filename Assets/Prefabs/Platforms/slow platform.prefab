@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4442078210155677845}
   - component: {fileID: 5692728519933101249}
   - component: {fileID: 6833024461946401774}
+  - component: {fileID: 5873424603694687511}
   m_Layer: 8
   m_Name: slow platform
   m_TagString: Untagged
@@ -109,3 +110,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.42430496, y: 0.41743565}
   m_EdgeRadius: 0
+--- !u!114 &5873424603694687511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8016018232029214740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8e0b1a5b422fe4594b4a0a8871e7ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slowDownBy: 2
