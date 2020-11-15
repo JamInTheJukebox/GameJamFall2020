@@ -1,0 +1,373 @@
+fileFormatVersion: 2
+guid: fe83da22a12573344a3838a3fdce355c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2668726507973407791
+    second: shooting star sheet_0
+  - first:
+      213: 527270713249925439
+    second: shooting star sheet_1
+  - first:
+      213: 6440314075273115028
+    second: shooting star sheet_2
+  - first:
+      213: 124241806542634509
+    second: shooting star sheet_3
+  - first:
+      213: -2691976824621452777
+    second: shooting star sheet_4
+  - first:
+      213: 4878282236587693249
+    second: shooting star sheet_5
+  - first:
+      213: 2135665253611036407
+    second: shooting star sheet_6
+  - first:
+      213: 5954313699838295861
+    second: shooting star sheet_7
+  - first:
+      213: 406291277795240704
+    second: shooting star sheet_8
+  - first:
+      213: -2024756194648748870
+    second: shooting star sheet_9
+  - first:
+      213: -453601615449565067
+    second: shooting star sheet_10
+  - first:
+      213: 5066442487918400864
+    second: shooting star sheet_11
+  - first:
+      213: 7301401352534689851
+    second: shooting star sheet_12
+  - first:
+      213: 1292690640990019678
+    second: shooting star sheet_13
+  - first:
+      213: -7148362573477475308
+    second: shooting star sheet_14
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: shooting star sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 275
+        width: 85
+        height: 85
+      alignment: 9
+      pivot: {x: 0.7764706, y: 0.44705883}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f247c669e98390520800000000000000
+      internalID: 2668726507973407791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shooting star sheet_1
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 275
+        width: 85
+        height: 85
+      alignment: 9
+      pivot: {x: 0.7411765, y: 0.39411765}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f398abb8bed315700800000000000000
+      internalID: 527270713249925439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shooting star sheet_2
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 275
+        width: 85
+        height: 85
+      alignment: 9
+      pivot: {x: 0.7294118, y: 0.3764706}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4953a9a7787906950800000000000000
+      internalID: 6440314075273115028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shooting star sheet_3
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 275
+        width: 85
+        height: 85
+      alignment: 9
+      pivot: {x: 0.7176471, y: 0.35882354}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0ef939c34569b100800000000000000
+      internalID: 124241806542634509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shooting star sheet_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 190
+        width: 85
+        height: 85
+      alignment: 9
+      pivot: {x: 0.8352941, y: 0.62941176}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 712bad8375d24aad0800000000000000
+      internalID: -2691976824621452777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shooting star sheet_5
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 190
+        width: 85
+        height: 85
+      alignment: 9
+      pivot: {x: 0.90588236, y: 0.5294118}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c458e119d323b340800000000000000
+      internalID: 4878282236587693249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shooting star sheet_6
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 190
+        width: 85
+        height: 85
+      alignment: 9
+      pivot: {x: 0.7411765, y: 0.5294118}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fe51a0ab3863ad10800000000000000
+      internalID: 2135665253611036407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shooting star sheet_7
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 190
+        width: 85
+        height: 85
+      alignment: 9
+      pivot: {x: 0.64117646, y: 0.5588235}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53f7a1043c8f1a250800000000000000
+      internalID: 5954313699838295861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shooting star sheet_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 105
+        width: 85
+        height: 85
+      alignment: 9
+      pivot: {x: 0.69411767, y: 0.60588235}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00b2358b3cf63a500800000000000000
+      internalID: 406291277795240704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shooting star sheet_9
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 105
+        width: 85
+        height: 85
+      alignment: 9
+      pivot: {x: 0.80588233, y: 0.62941176}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abc8035f7fe96e3e0800000000000000
+      internalID: -2024756194648748870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
