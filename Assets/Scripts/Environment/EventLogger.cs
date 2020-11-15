@@ -5,7 +5,8 @@ using UnityEngine;
 public enum EventType
 {
     ITEM_RETRIEVED,
-    CHECKPOINT
+    CHECKPOINT,
+    PlatformToggle
 }
 
 public class EventDetails
@@ -24,6 +25,9 @@ public static class EventLogger
 {
     public delegate void checkpointEvent();
     public static event checkpointEvent triggeredCheckpoint;
+
+    public delegate void SlotEvent(E_ObjectType SelectedObject);
+    public static event SlotEvent ItemToggle;
 
     static Stack<EventDetails> log;
 
@@ -56,6 +60,10 @@ public static class EventLogger
         return null;
     }
 
+    public static void ToggleObject(E_ObjectType Target)
+    {
+        ItemToggle(Target);
+    }
     public static void addLog(EventType type, GameObject obj)
     {
         log.Push(new EventDetails(type, obj));

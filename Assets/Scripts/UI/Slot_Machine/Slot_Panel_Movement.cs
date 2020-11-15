@@ -14,6 +14,8 @@ public class Slot_Panel_Movement : MonoBehaviour
 
     private bool FinishedLastLoop;
     private Slot_Machine_Controller MachineController;
+
+    public bool Log_Event;              // only one should log the event
     ParticleSystem.MainModule particleSys;
 
     private void Awake()
@@ -90,7 +92,7 @@ public class Slot_Panel_Movement : MonoBehaviour
         Item.GetComponent<Image>().sprite = newItem.Item_PNG;
     }
 
-    private IEnumerator TranslatePanel()
+    private IEnumerator TranslatePanel()                                                // actual function where the object will get deleted
     {
         FinishedLastLoop = false;
         while (MachineController.IsSpinning)
@@ -115,6 +117,10 @@ public class Slot_Panel_Movement : MonoBehaviour
 
         transform.localPosition = InitialPosition;
         SelfSpinning = false;
+
+        EventLogger.addLog(EventType.PlatformToggle, gameObject);
+        EventLogger.ToggleObject(MachineController.ChosenItem.ObjectType);
+
         if(Item.GetComponent<Animator>() != null)
         {
             Item.GetComponent<Animator>().SetTrigger("Explode");

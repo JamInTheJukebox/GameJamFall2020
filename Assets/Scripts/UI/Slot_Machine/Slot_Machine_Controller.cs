@@ -185,13 +185,6 @@ public class Slot_Machine_Controller : MonoBehaviour
         return Items[index];
     }
 
-    public void RemoveItem(string name)
-    {
-        foreach (Slot_Item Item in Items)
-            if (Item.name == name)
-                Items.Remove(Item);
-    }
-
     public void RemoveItem(Slot_Item item)
     {
         Items.Remove(item);

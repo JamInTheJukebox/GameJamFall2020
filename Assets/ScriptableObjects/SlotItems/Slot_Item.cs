@@ -13,4 +13,6 @@ public class Slot_Item : ScriptableObject
     public string Effect;
 
     public Color Pixel_Color;
+
+    public E_ObjectType ObjectType;
 }

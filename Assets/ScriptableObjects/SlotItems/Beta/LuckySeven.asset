@@ -17,3 +17,4 @@ MonoBehaviour:
   Item_PNG: {fileID: -672534819351458384, guid: 8361c55e34f3a9844ae85e4b5bda0b19, type: 3}
   Effect: 
   Pixel_Color: {r: 1, g: 0.9120099, b: 0, a: 1}
+  ObjectType: 10
