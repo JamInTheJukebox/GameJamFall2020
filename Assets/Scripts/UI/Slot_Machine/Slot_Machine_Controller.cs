@@ -133,7 +133,7 @@ public class Slot_Machine_Controller : MonoBehaviour
             if(TimeElapsed >= TotalSpinTime)
             {
                 ChosenItem = DefineProbabilityTree();
-                //print("Chosen Item: " + ChosenItem);
+                print("Chosen Item: " + ChosenItem);
                 IsSpinning = false;
                 // play an animation here
                 //Invoke("StopSlotMachine", 2f);      // amount of time the animation takes.

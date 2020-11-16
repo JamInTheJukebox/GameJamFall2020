@@ -77,7 +77,6 @@ public class Handle_Collision : MonoBehaviour
             string name = obj.name.ToLower();
             if (name.Contains("trap"))
             {
-                print(rb.velocity.y);
                 if (TrapCol | (!GroundCheck.CheckGrounded() | Mathf.Abs(rb.velocity.y) > 0.01f)) { return; }
                 print(GroundCheck.CheckGrounded());
                 PlatformPanel PlatPanel = obj.GetComponent<PlatformPanel>();

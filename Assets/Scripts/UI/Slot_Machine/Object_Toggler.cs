@@ -16,7 +16,8 @@ public enum E_ObjectType
 
 public class Object_Toggler : MonoBehaviour
 {
-
+    public BoxCollider2D Occulsion_effect;
+    List<Transform> Blocks_Del = new List<Transform>();
     [SerializeField] E_ObjectType ObjectType;
 
     private void Awake()
@@ -28,11 +29,68 @@ public class Object_Toggler : MonoBehaviour
     {
         if(TargetType == ObjectType)
         {
+            if ((int)ObjectType <= 3)
+            {
+                StartCoroutine(ToggleBlocks(false));
+                return;
+            }
+
             gameObject.SetActive(false);        // set Target gameobjects to false.
         }
-        else if (!gameObject.activeSelf)
+        else if (!gameObject.activeSelf | (int)ObjectType <= 3)
         {
+            if ((int)ObjectType <= 3 && Blocks_Del.Count > 0)
+            {
+                StartCoroutine(ToggleBlocks(true));
+                return;
+            }
             gameObject.SetActive(true);     // set objects back to enabled when they are not the target.
+
+        }
+    }
+
+    IEnumerator ToggleBlocks(bool status)
+    {
+        if(status == false) { yield return new WaitForSeconds(0.5f); }
+        // toggling off
+        if (!status)
+        {
+            foreach (Transform Child in transform)
+            {
+                bool DeletedBlock = false;
+                if (Occulsion_effect == null) { Debug.LogWarning("Object_Toggler.cs: WARNING. Occulsion effect not assigned."); yield return null; }
+
+                foreach (Transform block in Child.transform)
+                {
+                    print(Occulsion_effect.bounds.Contains(block.position));
+                    var Block = block.gameObject;
+                    if (Block.activeSelf == status) { continue; }        // if the block is not going to change, do not bother doing anything. Useful for cases where we get the same role again.
+                    if (Occulsion_effect.bounds.Contains(block.position))
+                    {
+                        Block.SetActive(false);
+                        if (!DeletedBlock) { DeletedBlock = true; Blocks_Del.Add(Child); }        // keep a reference to any blocks that have stuff deleted so we don't have to iterate through the whole list again.
+                    }
+
+                    yield return new WaitForSeconds(0.05f);
+                }
+            }
+        }
+        // when toggling on
+        else
+        {
+            print(Blocks_Del.Count);
+            for(int i = 0; i < Blocks_Del.Count; i++)
+            {
+                foreach (Transform block in Blocks_Del[i])
+                {
+                    var Block = block.gameObject;
+                    if (Block.activeSelf == status) { continue; }        // if the block is not going to change, do not bother doing anything.
+                    Block.SetActive(true);
+                    yield return new WaitForSeconds(0.05f);
+                }
+            }
+            Blocks_Del.Clear();
+            //gameObject.SetActive(status);     // set objects back to enabled when they are not the target.
         }
     }
 

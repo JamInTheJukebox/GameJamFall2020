@@ -96,6 +96,7 @@ public class ThrowLasso : MonoBehaviour
         {
             return true;
         }
+        ThrewLasso = false;
         return false;
     }
     public bool VerifyLasso()
