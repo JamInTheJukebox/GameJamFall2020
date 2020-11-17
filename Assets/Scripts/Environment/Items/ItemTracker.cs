@@ -12,7 +12,7 @@ public static class ItemTracker
     public delegate void itemCountChange(ItemType item, int counted);
     public static event itemCountChange itemCountEvent;
 
-    static Dictionary<ItemType, int> count;
+    public static Dictionary<ItemType, int> count;
 
     static ItemTracker()
     {

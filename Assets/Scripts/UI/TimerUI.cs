@@ -5,6 +5,8 @@ using TMPro;
 
 public class TimerUI : MonoBehaviour
 {
+    public static string timeText;
+    public static bool stopTimer = false;
     private TextMeshProUGUI TimerText;
 
     private string m_TimeElapsed;
@@ -41,7 +43,10 @@ public class TimerUI : MonoBehaviour
     }
     private void Update()
     {
-        CurrentTime += Time.deltaTime;
+        if (!stopTimer)
+        {
+            CurrentTime += Time.deltaTime;
+        }
     }
 
     public string UpdateTime(float newTime)
@@ -52,6 +57,7 @@ public class TimerUI : MonoBehaviour
         seconds = Mathf.Floor(CurrentTime % 60).ToString("00");
         milliseconds = (100*CurrentTime%100).ToString("00");        // floats are wierd
         string Time = minutes + ":" + seconds + "." + milliseconds;
+        TimerUI.timeText = Time;
         return Time;
     }
 }
