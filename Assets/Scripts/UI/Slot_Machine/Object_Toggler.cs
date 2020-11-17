@@ -57,18 +57,25 @@ public class Object_Toggler : MonoBehaviour
         {
             foreach (Transform Child in transform)
             {
+                int DistanceCheck = 0;                                                                                                              // to avoid iterating through blocks that are literally too far away
                 bool DeletedBlock = false;
                 if (Occulsion_effect == null) { Debug.LogWarning("Object_Toggler.cs: WARNING. Occulsion effect not assigned."); yield return null; }
 
                 foreach (Transform block in Child.transform)
                 {
-                    print(Occulsion_effect.bounds.Contains(block.position));
                     var Block = block.gameObject;
                     if (Block.activeSelf == status) { continue; }        // if the block is not going to change, do not bother doing anything. Useful for cases where we get the same role again.
                     if (Occulsion_effect.bounds.Contains(block.position))
                     {
                         Block.SetActive(false);
                         if (!DeletedBlock) { DeletedBlock = true; Blocks_Del.Add(Child); }        // keep a reference to any blocks that have stuff deleted so we don't have to iterate through the whole list again.
+                    }
+                    else
+                    {
+                        var Dist = (Occulsion_effect.transform.position - block.position).sqrMagnitude;
+                        if(Dist > 1000) { break; }                                                                      // extreme cases 
+                        if (Dist > 350) { DistanceCheck++; }
+                        if (DistanceCheck >= 3) { break; }                                                                    // if there are more than 3 blocks very far away from the player, break from the block group.
                     }
 
                     yield return new WaitForSeconds(0.05f);

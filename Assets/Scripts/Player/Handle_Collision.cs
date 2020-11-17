@@ -12,11 +12,16 @@ public class Handle_Collision : MonoBehaviour
     private bool TrapCol = false;
     public bool DrawCrushCheck = false;
     public float CrushCheckRadius = 1f;
+    private float Jump_Delay = 0.25f;
+    public float AdditiveSpringJumpForce;
+
+    public float DisplacementFactor = 0.1f;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         GroundCheck = GetComponent<Movement>();
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Item")
@@ -42,6 +47,11 @@ public class Handle_Collision : MonoBehaviour
                 if (!cond) { return; }
                 obj.GetComponent<Animator>().SetTrigger("Bounce");
                 obj.GetComponent<SpawnVFX_Animator>()?.BurstParticle();
+
+                if(GroundCheck.GetJumpTimer() > Time.time)
+                {
+                    rb.AddForce(Vector2.up * AdditiveSpringJumpForce, ForceMode2D.Impulse);
+                }
             }
             else if(name.Contains("tnt"))
             {
@@ -49,24 +59,40 @@ public class Handle_Collision : MonoBehaviour
             }
             return;
         }
-        /*
-        if(obj.layer == 8)
+        
+        if(obj.layer == 8)      // CRUSH CHECK
         {
             bool closest = collision.collider.bounds.Contains(transform.position);
-            int LayermaskG = 1 << 8;
-            var inside = collision.collider.bounds.ClosestPoint(transform.position);
-            print(inside);
-            //bool ActuallyInside = Physics2D.Raycast(transform.position, Vector2.right,CrushCheckRadius, LayermaskG);
-            //print(ActuallyInside);
-            CrushCheck = ActuallyInside;
+            Debug.LogWarning(collision.gameObject.name);
 
-            // Because closest=point if point is inside - not clear from docs I feel
-            if (closest)
+            // if the collider is a composite, get any colliders underneath that tile
+            if (collision.collider is CompositeCollider2D)
             {
-                print("I'm being crushed!");            // if this piece of code runs, kill the player. THey are stuck inside a block.
+
+                List<Collider2D> hitColliders = new List<Collider2D>();
+                Vector3 hitPosition = Vector3.zero;
+
+                foreach (ContactPoint2D hit in collision.contacts)
+                {
+                    print("Normal Y:" + hit.normal.y);
+                    print("Normal X:" + hit.normal.x);
+                    // move the hit location inside the collider a bit
+                    hitPosition.x = hit.point.x; //- DisplacementFactor * hit.normal.x;
+                    hitPosition.y = hit.point.y; //- DisplacementFactor * hit.normal.y;
+                    hitColliders.AddRange(Physics2D.OverlapPointAll(hitPosition,1<<8));
+                }
+                
+                foreach(var hit in hitColliders)
+                {
+                    Debug.LogWarning(hit.gameObject.name);
+                    Debug.LogWarning(transform.position);
+                    Debug.LogWarning(hit.transform.position);
+                    Debug.LogWarning(Vector2.Distance(transform.position, hit.transform.position));
+                }
+                // use hitColliders as a list of all colliders under the hit location
             }
         }
-        */
+        
     }
 
     private void OnCollisionStay2D(Collision2D collision)

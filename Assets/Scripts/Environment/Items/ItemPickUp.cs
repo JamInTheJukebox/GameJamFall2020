@@ -14,7 +14,7 @@ public class ItemPickUp : MonoBehaviour
             ItemTracker.addItem(item);
             EventLogger.addLog(EventType.ITEM_RETRIEVED, gameObject);
             deactivate();
-            Debug.Log(ItemTracker.getItemCount(item));
+            //Debug.Log(ItemTracker.getItemCount(item));
         }
     }
 

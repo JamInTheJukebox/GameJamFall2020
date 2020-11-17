@@ -90,6 +90,11 @@ public class Movement : MonoBehaviour
         }
     }
 
+    public float GetJumpTimer()
+    {
+        return JumpTimer;
+    }
+
     private void CreateDust()
     {
         bool cond1 = (int)SpecMove.CurrentSpecialMove == 1;
