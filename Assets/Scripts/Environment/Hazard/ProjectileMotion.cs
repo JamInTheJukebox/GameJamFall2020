@@ -16,14 +16,22 @@ public class ProjectileMotion : MonoBehaviour
     public Color BaseColor = Color.white;
     public Color WarningColor = Color.red;          // color to show that the rocket is about to blow up.
     private float CollectiveTime = 0;
-    private bool ShowWarning = false;   
+    private bool ShowWarning = false;
+    HazardDamage explo;
     private void Start()
     {
         WarningTime = lifetime * 0.75f;
         StartCoroutine(ShowWarningNow());
-        Destroy(gameObject, lifetime);
         rb = GetComponent<Rigidbody2D>();
         sp = GetComponent<SpriteRenderer>();
+        explo = GetComponentInChildren<HazardDamage>();
+        StartCoroutine(timedDestroy());
+    }
+
+    IEnumerator timedDestroy()
+    {
+        yield return new WaitForSeconds(lifetime);
+        explo.destroyProjectile();
     }
 
     private IEnumerator ShowWarningNow()

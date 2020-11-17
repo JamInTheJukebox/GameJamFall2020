@@ -2,12 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class EndLevel : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI time;
     [SerializeField] TextMeshProUGUI coins;
-    [SerializeField] Animation anim;
+    [SerializeField] GameObject endScreen;
+    Animation anim;
+
+    private void Awake()
+    {
+        anim = endScreen.GetComponent<Animation>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -24,6 +31,8 @@ public class EndLevel : MonoBehaviour
         }
     }
 
+
+
     public void QuitGame()
     {
         Application.Quit();
@@ -31,6 +40,6 @@ public class EndLevel : MonoBehaviour
 
     public void RestartLevel()
     {
-
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
