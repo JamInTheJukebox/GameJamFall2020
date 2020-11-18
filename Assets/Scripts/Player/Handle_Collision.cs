@@ -14,6 +14,7 @@ public class Handle_Collision : MonoBehaviour
     public float CrushCheckRadius = 1f;
     private float Jump_Delay = 0.25f;
     public float AdditiveSpringJumpForce;
+    public Transform CrushCheck;
 
     public float DisplacementFactor = 0.1f;
     private void Awake()
@@ -62,9 +63,9 @@ public class Handle_Collision : MonoBehaviour
         
         if(obj.layer == 8)      // CRUSH CHECK
         {
-            bool closest = collision.collider.bounds.Contains(transform.position);
+            bool closest = collision.collider.bounds.Contains(transform.position);/*
             Debug.LogWarning(collision.gameObject.name);
-
+            
             // if the collider is a composite, get any colliders underneath that tile
             if (collision.collider is CompositeCollider2D)
             {
@@ -72,13 +73,15 @@ public class Handle_Collision : MonoBehaviour
                 List<Collider2D> hitColliders = new List<Collider2D>();
                 Vector3 hitPosition = Vector3.zero;
 
+                print(collision.collider.bounds.Contains(transform.position));
                 foreach (ContactPoint2D hit in collision.contacts)
                 {
                     print("Normal Y:" + hit.normal.y);
                     print("Normal X:" + hit.normal.x);
                     // move the hit location inside the collider a bit
-                    hitPosition.x = hit.point.x; //- DisplacementFactor * hit.normal.x;
-                    hitPosition.y = hit.point.y; //- DisplacementFactor * hit.normal.y;
+
+                    hitPosition.x = hit.point.x - DisplacementFactor * hit.normal.x;
+                    hitPosition.y = hit.point.y - DisplacementFactor * hit.normal.y;
                     hitColliders.AddRange(Physics2D.OverlapPointAll(hitPosition,1<<8));
                 }
                 
@@ -89,8 +92,10 @@ public class Handle_Collision : MonoBehaviour
                     Debug.LogWarning(hit.transform.position);
                     Debug.LogWarning(Vector2.Distance(transform.position, hit.transform.position));
                 }
+                
                 // use hitColliders as a list of all colliders under the hit location
             }
+            */
         }
         
     }

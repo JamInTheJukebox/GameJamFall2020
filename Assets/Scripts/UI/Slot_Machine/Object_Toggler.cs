@@ -68,12 +68,12 @@ public class Object_Toggler : MonoBehaviour
                     if (Occulsion_effect.bounds.Contains(block.position))
                     {
                         Block.SetActive(false);
-                        if (!DeletedBlock) { DeletedBlock = true; Blocks_Del.Add(Child); }        // keep a reference to any blocks that have stuff deleted so we don't have to iterate through the whole list again.
+                        if (!DeletedBlock) { DeletedBlock = true; if (!Blocks_Del.Contains(Child)) { Blocks_Del.Add(Child); } }        // keep a reference to any blocks that have stuff deleted so we don't have to iterate through the whole list again.
                     }
                     else
                     {
                         var Dist = (Occulsion_effect.transform.position - block.position).sqrMagnitude;
-                        if(Dist > 1000) { break; }                                                                      // extreme cases 
+                        if(Dist > 600) { break; }                                                                      // extreme cases 
                         if (Dist > 350) { DistanceCheck++; }
                         if (DistanceCheck >= 3) { break; }                                                                    // if there are more than 3 blocks very far away from the player, break from the block group.
                     }
@@ -85,7 +85,7 @@ public class Object_Toggler : MonoBehaviour
         // when toggling on
         else
         {
-            print(Blocks_Del.Count);
+
             for(int i = 0; i < Blocks_Del.Count; i++)
             {
                 foreach (Transform block in Blocks_Del[i])
@@ -99,6 +99,11 @@ public class Object_Toggler : MonoBehaviour
             Blocks_Del.Clear();
             //gameObject.SetActive(status);     // set objects back to enabled when they are not the target.
         }
+
     }
 
+    private void OnDestroy()
+    {
+        EventLogger.ItemToggle -= ToggleObject;
+    }
 }

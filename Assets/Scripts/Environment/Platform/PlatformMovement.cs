@@ -56,7 +56,6 @@ public class PlatformMovement : MonoBehaviour
                 lerpTime = 0;
                 if (Queued_Movement && (currPoint == 0 || currPoint == movePoints.Length-1))
                 {
-                    print("I have stopped, My lord");
                     toggleMovement();
                 }
                 moveDuration = Vector2.Distance(movePoints[currPoint].position, movePoints[(currPoint + 1) % movePoints.Length].position) / moveSpeed;
