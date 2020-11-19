@@ -10,7 +10,6 @@ public class Handle_Collision : MonoBehaviour
     private Rigidbody2D rb;
     private Movement GroundCheck;
     private bool TrapCol = false;
-    public GameObject LassoUI;
     public bool DrawCrushCheck = false;
     public float CrushCheckRadius = 1f;
     private float Jump_Delay = 0.25f;
@@ -33,7 +32,6 @@ public class Handle_Collision : MonoBehaviour
             {
                 Destroy(collision.gameObject);
                 GetComponent<ThrowLasso>().enabled = true;
-                TurnOnLasso();
                 // only slot machine disables this.s
             }
         }
@@ -133,10 +131,5 @@ public class Handle_Collision : MonoBehaviour
                 TrapCol = false;
             }
         }
-    }
-
-    public void TurnOnLasso()
-    {
-        LassoUI.GetComponent<UnityEngine.UI.Image>().color = Color.white;
     }
 }

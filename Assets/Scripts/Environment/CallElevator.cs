@@ -47,7 +47,7 @@ public class CallElevator : MonoBehaviour
 
     private void ToggleElevator()
     {
-        if (ElevatorMovement != null && ElevatorMovement.move == null && ElevatorMovement.gameObject.activeInHierarchy)
+        if (ElevatorMovement != null && ElevatorMovement.move == null)
         {
             ButtonAnim.Play(SuccessHash);
             ElevatorMovement.toggleMovement();      // if the elevator is not already stationed to move, move the elevator

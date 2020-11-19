@@ -32,7 +32,6 @@ public class PlayerInputs : MonoBehaviour
 
         Controls.Player.Jump.performed += ctx => { Jumping = true; };
         Controls.Player.Jump.canceled += ctx => { Jumping = false; };
-
     }
 
     public bool JumpTriggered()
@@ -61,10 +60,6 @@ public class PlayerInputs : MonoBehaviour
     public bool PauseTriggered()
     {
         return Controls.Player.Pause.triggered;
-    }
-    public bool Lasso_Y_Triggered()
-    {
-        return Controls.Player.LassoDirY.triggered;
     }
     private void OnEnable()
     {

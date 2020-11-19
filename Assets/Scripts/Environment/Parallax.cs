@@ -1,5 +1,4 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,55 +8,22 @@ public class Parallax : MonoBehaviour
     public GameObject cam;
     public float parallaxEffect;
 
-    [Header("Parallax Y")]
-    private float height, startPos_Y;
-    public Transform Max_Y;
-    public Transform Min_Y;
-
-    float MaximumY;
-    float MinimumY;
-    float Amplitude;
+    // Start is called before the first frame update
     void Start()
     {
         startPos = transform.position.x;
-        startPos_Y = transform.position.y;
-        var Temp = GetComponent<SpriteRenderer>();
-        length = Temp.bounds.size.x;
-        height = Temp.bounds.size.y;
-        MaximumY = Max_Y.localPosition.y;
-        MinimumY = Min_Y.localPosition.y;
-        Amplitude = Max_Y.position.y + Min_Y.position.y;
-        print(height);
+        length = GetComponent<SpriteRenderer>().bounds.size.x;
     }
 
+    // Update is called once per frame
     void Update()
     {
-        //if (gameObject.name.Contains("3")) { print(transform.localPosition.y); }
         float temp = (cam.transform.position.x * (1 - parallaxEffect));
         float distance = (cam.transform.position.x * parallaxEffect);
-        float Distance_Y = (cam.transform.position.y * 0.8f);
-        transform.position = new Vector3(startPos + distance, startPos_Y + Distance_Y, transform.position.z);
-        //transform.position -= Vector3.up * 0.02f;
+
+        transform.position = new Vector3(startPos + distance, transform.position.y, transform.position.z);
+
         if (temp > startPos + length) startPos += length;
         else if (temp < startPos - length) startPos -= length;
-
-        if (transform.localPosition.y > MaximumY)
-        {
-            print("TOo high:" + transform.position.y);
-            Vector2 A = transform.position;
-            transform.position = new Vector2(transform.position.x, Min_Y.position.y);
-            float Dist = Vector2.Distance(A, transform.position);
-
-            startPos_Y -= Dist;
-        }
-        else if (transform.localPosition.y < MinimumY)
-        {
-            print("Too low" + transform.position.y);
-            Vector2 A = transform.position;
-            transform.position = new Vector2(transform.position.x, Max_Y.position.y);
-            float Dist = Vector2.Distance(A, transform.position);
-
-            startPos_Y += Dist;
-        }
     }
 }

@@ -29,13 +29,13 @@ public class ThrowLasso : MonoBehaviour
     private void Update()
     {
         if (!CheckLasso()) { return; }
-        
+
         Y_Dir = Movement.PlayerInput.Vertical;
         if (Movement.PlayerInput.LassoTriggered())
         {
             ShootLasso();
         }
-        else if (Movement.PlayerInput.LassoDirTriggered() | Movement.PlayerInput.Lasso_Y_Triggered())
+        else if (Movement.PlayerInput.LassoDirTriggered())
         {
             ShootLassoDirectionally();
         }
@@ -43,7 +43,7 @@ public class ThrowLasso : MonoBehaviour
         {
             if(CharJoint == null)
             {
-                if(GetComponent<DistanceJoint2D>() == null) { print("Too much force on lasso!"); ResetLasso(); }
+                if(GetComponent<DistanceJoint2D>() == null) { return; }
                 CharJoint = GetComponent<DistanceJoint2D>();
                 CharJoint.autoConfigureDistance = false;
                 SpecialMove.enabled = false;
@@ -113,7 +113,7 @@ public class ThrowLasso : MonoBehaviour
     {
         if (!ThrewLasso)
         {
-            Lasso Bullet; Throw(out Bullet);
+            Lasso Bullet = Instantiate(Lasso, transform.position, Quaternion.identity).GetComponent<Lasso>();
             Bullet.Parent = transform;
             int ForceDir = CharMovement.GetDirectionFacing();
             Bullet.Shoot(ForceDir);
@@ -130,10 +130,10 @@ public class ThrowLasso : MonoBehaviour
     {
         if (!ThrewLasso)
         {
-            Lasso Bullet; Throw(out Bullet);
+            Lasso Bullet = Instantiate(Lasso, transform.position, Quaternion.identity).GetComponent<Lasso>();
             Bullet.Parent = transform;
             Vector2 ForceDir;
-            if(Y_Dir > 0 | Movement.PlayerInput.Lasso_Y_Triggered())
+            if(Y_Dir > 0)
             {
                 ForceDir = Vector2.up * 1.5f;
             }
@@ -145,12 +145,6 @@ public class ThrowLasso : MonoBehaviour
             Bullet.Shoot(ForceDir);
             ThrewLasso = true;
         }
-    }
-
-    private void Throw(out Lasso Bullet)
-    {
-        Bullet = Instantiate(Lasso, transform.position + new Vector3(0,0.1f,0), Quaternion.identity).GetComponent<Lasso>();
-
     }
 
     private void Jump()

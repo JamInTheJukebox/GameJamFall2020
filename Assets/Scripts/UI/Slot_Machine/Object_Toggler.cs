@@ -72,9 +72,8 @@ public class Object_Toggler : MonoBehaviour
                     }
                     else
                     {
-                        // turn on blocks that are too far away here.
                         var Dist = (Occulsion_effect.transform.position - block.position).sqrMagnitude;
-                        if(Dist > 500) { break; }                                                                      // extreme cases 
+                        if(Dist > 600) { break; }                                                                      // extreme cases 
                         if (Dist > 350) { DistanceCheck++; }
                         if (DistanceCheck >= 3) { break; }                                                                    // if there are more than 3 blocks very far away from the player, break from the block group.
                     }

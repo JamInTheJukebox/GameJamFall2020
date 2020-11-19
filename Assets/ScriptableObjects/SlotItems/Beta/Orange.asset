@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1207147c660303646816208cc1fc52b2, type: 3}
-  m_Name: HorizontalLadder
+  m_Name: Orange
   m_EditorClassIdentifier: 
-  Item_Name: 
-  Probability: 0
-  Item_PNG: {fileID: 0}
+  Item_Name: Orange
+  Probability: 67
+  Item_PNG: {fileID: -8494906757371013280, guid: 8361c55e34f3a9844ae85e4b5bda0b19, type: 3}
   Effect: 
-  Pixel_Color: {r: 0, g: 0, b: 0, a: 0}
+  Pixel_Color: {r: 1, g: 0.47635484, b: 0, a: 1}
   ObjectType: 0
