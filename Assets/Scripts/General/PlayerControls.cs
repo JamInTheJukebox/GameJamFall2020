@@ -400,7 +400,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""49f45f54-7887-4909-b4c8-a71577ab1d2d"",
-                    ""path"": ""<Gamepad>/start"",
+                    ""path"": ""<XInputController>/start"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",

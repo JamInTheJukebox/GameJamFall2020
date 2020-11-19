@@ -19,7 +19,7 @@ public class ProjectileSpawner : MonoBehaviour
     [SerializeField] float LifeTime = 10f;
 
     public ParticleSystem SmokeCloud;
-
+    Coroutine CurrentShoot;
     private void Awake()
     {
         RocketAnim = GetComponent<Animator>();
@@ -51,8 +51,20 @@ public class ProjectileSpawner : MonoBehaviour
         g_Rocket.GetComponent<CircleCollider2D>().radius = HomingRadius;
     }
 
-    private void OnEnable()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        StartCoroutine(RocketWait());
+        if(collision.tag == "Player")
+        {
+            CurrentShoot = StartCoroutine(RocketWait());
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            if (CurrentShoot != null)
+                StopCoroutine(CurrentShoot);
+        }
     }
 }

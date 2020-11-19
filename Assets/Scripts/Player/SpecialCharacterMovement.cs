@@ -90,6 +90,9 @@ public class SpecialCharacterMovement : MonoBehaviour
     [SerializeField] bool DrawLadderCeilCheck = false;
     [SerializeField] bool DrawBottomLadderCheck = false;
 
+    private float WallJumpBufferTimer;
+    private float JumpDelay = 0.2f;
+
     private void I_CurrentMoveChanged()
     {
         switch((int)CurrentSpecialMove)
@@ -134,6 +137,7 @@ public class SpecialCharacterMovement : MonoBehaviour
         int currentMode = (int)CurrentSpecialMove;
         if (currentMode == 0 || currentMode == 1)                   // walljumping only
         {
+            if (Movement.PlayerInput.JumpTriggered() && isSlidingOnWall) { WallJumpBufferTimer = Time.time + JumpDelay; }
             WallJump();
         }
         if (currentMode == 0 || currentMode == 2)                   // climbing up and down only
@@ -278,7 +282,7 @@ public class SpecialCharacterMovement : MonoBehaviour
             // Call Jump here;
         }
 
-        if (Movement.PlayerInput.JumpTriggered() && (isSlidingOnWall || (isTouchingWall && rb.velocity.y > 0.1f)))
+        if ((WallJumpBufferTimer > Time.time) && (isSlidingOnWall || (isTouchingWall && rb.velocity.y > 0.1f)))
         {
             float WallJumpDir = -(WallCheck.position - transform.position).x;
             WallJumpDir /= Mathf.Abs(WallJumpDir);
