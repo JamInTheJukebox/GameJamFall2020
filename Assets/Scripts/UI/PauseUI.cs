@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseUI : MonoBehaviour
 {
+    public Respawn playerRespawn;
     private Animator Pause_Anim;
     private bool CanPauseAgain = true;
     private int Paused = 1;
@@ -50,5 +51,10 @@ public class PauseUI : MonoBehaviour
         ItemTracker.count.Clear();
         TimerUI.stopTimer = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void RestartCheckpoint()
+    {
+        playerRespawn.respawnPlayer();
     }
 }
