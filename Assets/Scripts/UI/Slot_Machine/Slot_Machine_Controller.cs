@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 public class Slot_Machine_Controller : MonoBehaviour
 {
+    public static bool disableSlot = false; // used to disable slot machine on end level
     public Animator SlotAnimator;
     [Header("Slot Panels")]
     public int Slot_StepLength = 1;                             // slots move at a range from -125 to 125. Therefore, this integer must be a factor of 250.
@@ -121,10 +122,13 @@ public class Slot_Machine_Controller : MonoBehaviour
         string minutes = Mathf.Floor(Total_Idle_Time / 60).ToString("0");
         string seconds = (Total_Idle_Time % 60).ToString("00");
         String_Idle_Time = minutes + seconds;
+        disableSlot = false;
     }
 
     private void Update()
     {
+        if (disableSlot) return;
+
         if(!IsSpinning && !InFrame)
             TimeElapsed += Time.deltaTime;
         else if(IsSpinning)
