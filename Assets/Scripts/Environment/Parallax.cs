@@ -35,7 +35,7 @@ public class Parallax : MonoBehaviour
         //if (gameObject.name.Contains("3")) { print(transform.localPosition.y); }
         float temp = (cam.transform.position.x * (1 - parallaxEffect));
         float distance = (cam.transform.position.x * parallaxEffect);
-        float Distance_Y = (cam.transform.position.y * 0.8f);
+        float Distance_Y = (cam.transform.position.y * 0.4f);
         transform.position = new Vector3(startPos + distance, startPos_Y + Distance_Y, transform.position.z);
         //transform.position -= Vector3.up * 0.02f;
         if (temp > startPos + length) startPos += length;
