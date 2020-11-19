@@ -1,20 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseUI : MonoBehaviour
 {
     private Animator Pause_Anim;
     private bool CanPauseAgain = true;
     private int Paused = 1;
+    public static bool disablePausing = false;
 
     private void Awake()
     {
+        disablePausing = false;
         Pause_Anim = GetComponent<Animator>();
     }
 
     private void Update()
     {
+        if (disablePausing) return;
+
         if (Movement.PlayerInput.PauseTriggered() && CanPauseAgain)
         {
             CanPauseAgain = false;
@@ -38,5 +43,12 @@ public class PauseUI : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void RestartLevel()
+    {
+        ItemTracker.count.Clear();
+        TimerUI.stopTimer = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

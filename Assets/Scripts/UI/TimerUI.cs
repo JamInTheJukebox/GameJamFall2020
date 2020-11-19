@@ -40,6 +40,7 @@ public class TimerUI : MonoBehaviour
     private void Awake()
     {
         TimerText = GetComponent<TextMeshProUGUI>();
+        stopTimer = false;
     }
     private void Update()
     {

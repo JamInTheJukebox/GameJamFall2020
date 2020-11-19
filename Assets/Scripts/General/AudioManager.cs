@@ -65,7 +65,6 @@ public class AudioManager : MonoBehaviour
         //This loops the music tracks
         musicsource.loop = true;
         musicsource2.loop = true;
-
     }
 
     public void PlayMusic(AudioClip musicClip, int StartPosition = 0)
@@ -154,6 +153,12 @@ public class AudioManager : MonoBehaviour
         sfxsource.PlayOneShot(clip, volume);
     }
 
+    public void StopMusic()
+    {
+        AudioSource activeSource = (firstMusicSourceIsPlaying) ? musicsource : musicsource2;
+        activeSource.Stop();
+        activeSource.time = 0;
+    }
 
     //Sets the volume for the music and sfx in the game(like through an options menu)
     public void SetMusicVolume(float Volume)

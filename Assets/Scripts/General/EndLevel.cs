@@ -27,6 +27,10 @@ public class EndLevel : MonoBehaviour
                 string countText = ItemTracker.count[ItemType.COIN].ToString();
                 coins.text = ItemTracker.count[ItemType.COIN] < 10 ? "0" + countText : countText;
             }
+            collision.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            collision.gameObject.GetComponent<Movement>().enabled = false;
+            PauseUI.disablePausing = true;
+            Slot_Machine_Controller.disableSlot = true;
             anim.Play("EndScreenAppear");
         }
     }
@@ -40,6 +44,14 @@ public class EndLevel : MonoBehaviour
 
     public void RestartLevel()
     {
+        ItemTracker.count.Clear();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
+        AudioManager audio = FindObjectOfType<AudioManager>();
+        audio.StopMusic();
     }
 }
