@@ -352,9 +352,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65a422edf9ecc144b42d04064590e2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LassoUI: {fileID: 0}
   DrawCrushCheck: 1
   CrushCheckRadius: 0.1
   AdditiveSpringJumpForce: 1
+  CrushCheck: {fileID: 0}
+  DisplacementFactor: 0.1
 --- !u!114 &1196211639885811230
 MonoBehaviour:
   m_ObjectHideFlags: 0

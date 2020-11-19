@@ -84,6 +84,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "LassoDirY",
+                    "type": "Button",
+                    "id": "80763791-144f-4191-8d81-12bc607f700a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -243,6 +251,17 @@
                 },
                 {
                     "name": "",
+                    "id": "da499dd6-8532-474f-9eb0-f3d70b9ae40c",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Lasso_T",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "90f09c27-02ac-47d9-9091-c95eb3b59b62",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "Press",
@@ -392,6 +411,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "adeb3e81-689b-46e6-a7e2-716841a0dae5",
+                    "path": "<DualShockGamepad>/start",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0961f90f-31d9-4562-9818-e09eb73b0c82",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LassoDirY",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
