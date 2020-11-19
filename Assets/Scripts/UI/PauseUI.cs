@@ -20,7 +20,7 @@ public class PauseUI : MonoBehaviour
     private void Update()
     {
         if (disablePausing) return;
-
+        print(CanPauseAgain);
         if (Movement.PlayerInput.PauseTriggered() && CanPauseAgain)
         {
             CanPauseAgain = false;
@@ -39,6 +39,13 @@ public class PauseUI : MonoBehaviour
     {
         Time.timeScale = newState;
         Pause_Anim.SetInteger("Paused", newState);
+        //Invoke("EnablePausing",0.2f);
+       // CanPauseAgain = newState == 1;
+    }
+
+    public void SetUnpaused(int newState)
+    {
+        Paused = 1;
     }
 
     public void QuitGame()
