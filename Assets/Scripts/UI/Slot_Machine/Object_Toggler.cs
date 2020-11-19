@@ -51,7 +51,7 @@ public class Object_Toggler : MonoBehaviour
 
     IEnumerator ToggleBlocks(bool status)
     {
-        if(status == false) { yield return new WaitForSeconds(0.5f); }
+        if(status == false) { yield return new WaitForSeconds(2.5f); }
         // toggling off
         if (!status)
         {
@@ -74,12 +74,12 @@ public class Object_Toggler : MonoBehaviour
                     {
                         // turn on blocks that are too far away here.
                         var Dist = (Occulsion_effect.transform.position - block.position).sqrMagnitude;
-                        if(Dist > 500) { break; }                                                                      // extreme cases 
+                        if(Dist > 450) { break; }                                                                      // extreme cases 
                         if (Dist > 350) { DistanceCheck++; }
                         if (DistanceCheck >= 3) { break; }                                                                    // if there are more than 3 blocks very far away from the player, break from the block group.
                     }
 
-                    yield return new WaitForSeconds(0.05f);
+                    yield return new WaitForSeconds(0.1f);
                 }
             }
         }
@@ -94,7 +94,7 @@ public class Object_Toggler : MonoBehaviour
                     var Block = block.gameObject;
                     if (Block.activeSelf == status) { continue; }        // if the block is not going to change, do not bother doing anything.
                     Block.SetActive(true);
-                    yield return new WaitForSeconds(0.05f);
+                    yield return new WaitForSeconds(0.1f);
                 }
             }
             Blocks_Del.Clear();

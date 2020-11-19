@@ -43,7 +43,7 @@ public class ThrowLasso : MonoBehaviour
         {
             if(CharJoint == null)
             {
-                if(GetComponent<DistanceJoint2D>() == null) { print("Too much force on lasso!"); ResetLasso(); }
+                if(GetComponent<DistanceJoint2D>() == null) { print("Too much force on lasso!"); ResetLasso(); return; }
                 CharJoint = GetComponent<DistanceJoint2D>();
                 CharJoint.autoConfigureDistance = false;
                 SpecialMove.enabled = false;

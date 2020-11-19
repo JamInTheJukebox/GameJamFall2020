@@ -95,6 +95,16 @@ public class Movement : MonoBehaviour
         return JumpTimer;
     }
 
+    private void OnDisable()
+    {
+        Invoke("EnableAgain", 0.05f);
+    }
+    private void EnableAgain()
+    {
+        transform.parent = null;
+        gameObject.SetActive(true);
+    }
+
     private void CreateDust()
     {
         bool cond1 = (int)SpecMove.CurrentSpecialMove == 1;

@@ -56,8 +56,6 @@ public class CameraFollow : MonoBehaviour
     {
         if(CurrentMode == E_mode.AllowThreshold)
             RetreiveTargetPos();
-
-
     }
 
     private void RetreiveTargetPos()
@@ -110,6 +108,6 @@ public class CameraFollow : MonoBehaviour
     }
     private void SmoothDamp(Vector3 Start, Vector3 End)
     {
-        transform.position = Vector3.SmoothDamp(Start, End, ref velocity, TimeToReach);
+        transform.position = Vector3.SmoothDamp(Start, End, ref velocity, TimeToReach, 50f);
     }
 }

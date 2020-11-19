@@ -43,7 +43,6 @@ public class Parallax : MonoBehaviour
 
         if (transform.localPosition.y > MaximumY)
         {
-            print("TOo high:" + transform.position.y);
             Vector2 A = transform.position;
             transform.position = new Vector2(transform.position.x, Min_Y.position.y);
             float Dist = Vector2.Distance(A, transform.position);
@@ -52,7 +51,6 @@ public class Parallax : MonoBehaviour
         }
         else if (transform.localPosition.y < MinimumY)
         {
-            print("Too low" + transform.position.y);
             Vector2 A = transform.position;
             transform.position = new Vector2(transform.position.x, Max_Y.position.y);
             float Dist = Vector2.Distance(A, transform.position);

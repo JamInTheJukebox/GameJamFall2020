@@ -6,7 +6,7 @@ public class CarryRigidbody : MonoBehaviour
 {
     public PlatformMovement ElevatorMovement;       // script that controls movement
     private bool Colliding;
-
+    private GameObject Player;
     private void Update()
     {
         if (Colliding && Movement.PlayerInput.RunTriggered())
@@ -14,6 +14,7 @@ public class CarryRigidbody : MonoBehaviour
             ToggleElevator();
         }
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         var obj = collision.gameObject;
@@ -24,6 +25,7 @@ public class CarryRigidbody : MonoBehaviour
             //Movement.PlayerInput.Controls.Player.Run.performed += ActivateElevator;
             //Movement.PlayerInput.Controls.Player.Jump.performed -= ActivateElevator;
             Colliding = true;
+            Player = obj;
             obj.transform.parent = transform;
             obj.GetComponent<Rigidbody2D>().interpolation = RigidbodyInterpolation2D.None;
         }
@@ -35,6 +37,7 @@ public class CarryRigidbody : MonoBehaviour
         if (obj.tag == "Player")        // dont turn off again until player touches collider and presses shift
         {
             Colliding = false;
+            Player = null;
             obj.transform.parent = null;
             obj.GetComponent<Rigidbody2D>().interpolation = RigidbodyInterpolation2D.Interpolate;
         }
@@ -48,4 +51,5 @@ public class CarryRigidbody : MonoBehaviour
             ElevatorMovement.toggleMovement();      // if the elevator is not already stationed to move, move the elevator
         }
     }
+
 }
