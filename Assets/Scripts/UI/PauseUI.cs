@@ -57,11 +57,13 @@ public class PauseUI : MonoBehaviour
     {
         ItemTracker.count.Clear();
         TimerUI.stopTimer = false;
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void RestartCheckpoint()
     {
+        PauseGame(1);
         playerRespawn.respawnPlayer();
     }
 }
