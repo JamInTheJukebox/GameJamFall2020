@@ -10,9 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 54349244047591978}
   - component: {fileID: 842197682150900072}
-  - component: {fileID: 5317464030487410017}
-  - component: {fileID: 8242738763500015274}
-  - component: {fileID: 2794106197183172260}
   m_Layer: 8
   m_Name: diamond_platform (2)
   m_TagString: Untagged
@@ -85,60 +82,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!68 &5317464030487410017
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2855255831845333295}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 1
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.34, y: 0.03094101}
-  - {x: 0.3, y: 0.03094101}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
---- !u!251 &8242738763500015274
-PlatformEffector2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2855255831845333295}
-  m_Enabled: 1
-  m_UseColliderMask: 1
-  m_ColliderMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RotationalOffset: 0
-  m_UseOneWay: 1
-  m_UseOneWayGrouping: 0
-  m_SurfaceArc: 179
-  m_UseSideFriction: 0
-  m_UseSideBounce: 0
-  m_SideArc: 1
---- !u!114 &2794106197183172260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2855255831845333295}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 638ccfa0d535d4642887c3f0b9c10a6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ElevatorMovement: {fileID: 932097831995590481}
 --- !u!1 &6151346771928803756
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,7 +127,6 @@ GameObject:
   - component: {fileID: 6198038651822954939}
   - component: {fileID: 6198038651822954937}
   - component: {fileID: 6198038651822954938}
-  - component: {fileID: 3381289115629431211}
   m_Layer: 12
   m_Name: Latch
   m_TagString: Lasso_Latch
@@ -273,19 +215,6 @@ CircleCollider2D:
   m_Offset: {x: 0.20419444, y: -0.0000001688711}
   serializedVersion: 2
   m_Radius: 0.28335154
---- !u!114 &3381289115629431211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6198038651822954940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 638ccfa0d535d4642887c3f0b9c10a6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ElevatorMovement: {fileID: 932097831995590481}
 --- !u!1 &6198038651937165241
 GameObject:
   m_ObjectHideFlags: 0
@@ -387,8 +316,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.34, y: 0.03094101}
-  - {x: 0.3, y: 0.03094101}
+  - {x: -0.65, y: 0.03094101}
+  - {x: 0.66, y: 0.03094101}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -570,9 +499,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7059078361285138848}
   - component: {fileID: 3720426517499775819}
-  - component: {fileID: 4667319434481743897}
-  - component: {fileID: 289086875775850775}
-  - component: {fileID: 7140964718576043373}
   m_Layer: 8
   m_Name: diamond_platform (3)
   m_TagString: Untagged
@@ -645,57 +571,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!68 &4667319434481743897
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9079879690323898192}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 1
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.34, y: 0.03094101}
-  - {x: 0.3, y: 0.03094101}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
---- !u!251 &289086875775850775
-PlatformEffector2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9079879690323898192}
-  m_Enabled: 1
-  m_UseColliderMask: 1
-  m_ColliderMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RotationalOffset: 0
-  m_UseOneWay: 1
-  m_UseOneWayGrouping: 0
-  m_SurfaceArc: 179
-  m_UseSideFriction: 0
-  m_UseSideBounce: 0
-  m_SideArc: 1
---- !u!114 &7140964718576043373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9079879690323898192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 638ccfa0d535d4642887c3f0b9c10a6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ElevatorMovement: {fileID: 932097831995590481}
