@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: TNT
   m_EditorClassIdentifier: 
   Item_Name: 
-  Probability: 0
-  Item_PNG: {fileID: 0}
+  Probability: 26
+  Item_PNG: {fileID: 8641239068084560928, guid: 121be2910d9439d418cfc547190f126a, type: 3}
   Effect: 
   Pixel_Color: {r: 0, g: 0, b: 0, a: 0}
   ObjectType: 0

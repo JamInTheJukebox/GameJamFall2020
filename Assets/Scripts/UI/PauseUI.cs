@@ -20,7 +20,7 @@ public class PauseUI : MonoBehaviour
     private void Update()
     {
         if (disablePausing) return;
-        print(CanPauseAgain);
+
         if (Movement.PlayerInput.PauseTriggered() && CanPauseAgain)
         {
             CanPauseAgain = false;

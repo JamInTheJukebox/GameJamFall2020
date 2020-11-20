@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Item_Name: 
   Probability: 0
-  Item_PNG: {fileID: 0}
+  Item_PNG: {fileID: 7235352377724903421, guid: cf955367e8493294588e551f9ed494b8, type: 3}
   Effect: 
   Pixel_Color: {r: 0, g: 0, b: 0, a: 0}
-  ObjectType: 0
+  ObjectType: 5

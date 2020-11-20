@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: RocketPad
   m_EditorClassIdentifier: 
   Item_Name: 
-  Probability: 0
-  Item_PNG: {fileID: 0}
+  Probability: 33
+  Item_PNG: {fileID: -1360083701410691975, guid: 75f45177799d2ab4b8158fc1f4e408fd, type: 3}
   Effect: 
   Pixel_Color: {r: 0, g: 0, b: 0, a: 0}
-  ObjectType: 0
+  ObjectType: 18

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: BrownPanels
   m_EditorClassIdentifier: 
   Item_Name: 
-  Probability: 0
-  Item_PNG: {fileID: 0}
+  Probability: 14
+  Item_PNG: {fileID: 21300000, guid: 8eff983c7575be5479772e7cd5747713, type: 3}
   Effect: 
   Pixel_Color: {r: 0, g: 0, b: 0, a: 0}
   ObjectType: 0

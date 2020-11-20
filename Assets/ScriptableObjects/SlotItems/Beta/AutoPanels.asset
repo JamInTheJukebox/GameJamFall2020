@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: AutoPanels
   m_EditorClassIdentifier: 
   Item_Name: 
-  Probability: 0
-  Item_PNG: {fileID: 0}
+  Probability: 12
+  Item_PNG: {fileID: -8657469440923386502, guid: 3c0aede02640c5e4683c46cde4e13763, type: 3}
   Effect: 
   Pixel_Color: {r: 0, g: 0, b: 0, a: 0}
   ObjectType: 0
