@@ -16,5 +16,5 @@ MonoBehaviour:
   Probability: 33
   Item_PNG: {fileID: -1360083701410691975, guid: 75f45177799d2ab4b8158fc1f4e408fd, type: 3}
   Effect: 
-  Pixel_Color: {r: 0, g: 0, b: 0, a: 0}
+  Pixel_Color: {r: 0.8195658, g: 0, b: 1, a: 1}
   ObjectType: 18
