@@ -45,6 +45,9 @@ public class Movement : MonoBehaviour
     [Header("DebugTools")]
     [SerializeField] bool DrawGroundCheck = false;
 
+    public float HangTime = 0.2f;
+    private float HangCounter;
+
     public static PlayerInputs PlayerInput;
 
     private void Awake()
@@ -66,6 +69,10 @@ public class Movement : MonoBehaviour
             // There is a chance that their input will be dropped due to them not being "technically" grounded yet. This timer allows for them to jump without being frame perfect.
         }
 
+        if (onGround)
+            HangCounter = HangTime;
+        else
+            HangCounter -= Time.deltaTime;
         CreateDust();
         
     }
@@ -79,7 +86,7 @@ public class Movement : MonoBehaviour
             ModifyPhysics();
         }
 
-        if (JumpTimer > Time.time && onGround)
+        if (JumpTimer > Time.time && HangCounter > 0f)          // jump buffering and coyote Time.
         {
             Jump();
         }

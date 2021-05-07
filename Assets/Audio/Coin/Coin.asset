@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebdc879288609e14cae4d0eba781ae52, type: 3}
+  m_Name: Coin
+  m_EditorClassIdentifier: 
+  Source_volume: 1
+  SFX_Sounds:
+  - {fileID: 8300000, guid: 03cc55327b4b99349a9b502caf69e7aa, type: 3}
+  - {fileID: 8300000, guid: 940553642af5110499ebd05ec0141416, type: 3}
+  - {fileID: 8300000, guid: 13d6a270867efc34f811c10ac7b75079, type: 3}
+  - {fileID: 8300000, guid: 6e6551155af156d4e92496be8017d41f, type: 3}
+  - {fileID: 8300000, guid: f4f65e32fb3613d44a36543af3544da9, type: 3}
+  - {fileID: 8300000, guid: 4ce43630e21ba2c45a99f4c538801b2d, type: 3}
+  - {fileID: 8300000, guid: dc37cb601410b144dbb9b4177516ddd3, type: 3}
+  - {fileID: 8300000, guid: f7c9ad61cfd948e46857f2834dfa7290, type: 3}
+  - {fileID: 8300000, guid: c9948ef8392c8884e87dd9298bf77611, type: 3}
+  - {fileID: 8300000, guid: 440a73ea1b75be748acc872331b3ad98, type: 3}

@@ -6,6 +6,7 @@ public class ItemPickUp : MonoBehaviour
 {
     public ItemType item;
     public bool retrieved = false;
+    public AudioSFX PickupSound;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -26,6 +27,7 @@ public class ItemPickUp : MonoBehaviour
 
     public void deactivate()
     {
+        PickupSound.PlayRandomSFX();
         retrieved = true;
         gameObject.SetActive(false);
     }

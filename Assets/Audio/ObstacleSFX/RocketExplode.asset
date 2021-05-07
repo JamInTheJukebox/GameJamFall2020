@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebdc879288609e14cae4d0eba781ae52, type: 3}
+  m_Name: RocketExplode
+  m_EditorClassIdentifier: 
+  Source_volume: 1
+  SFX_Sounds:
+  - {fileID: 8300000, guid: d227dc81af1260244a649ad1cc0eedb9, type: 3}
+  - {fileID: 8300000, guid: 4b634323f06f596429f48605da868b88, type: 3}
+  - {fileID: 8300000, guid: d82276e2a98862443b2fd9703609cbac, type: 3}
