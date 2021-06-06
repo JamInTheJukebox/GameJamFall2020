@@ -256,12 +256,13 @@ MonoBehaviour:
   onGround: 1
   GroundLength: 0.32
   RayCastOffset: {x: 0.1, y: 0, z: 0}
-  JumpImpulse: 5
-  gravity: 1
+  JumpImpulse: 4.95
+  gravity: 0.8
   FallMultiplier: 4
   JumpDelay: 0.2
   MaxFallSpeed: 10
   DrawGroundCheck: 0
+  HangTime: 0.2
 --- !u!114 &1196211639885811227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,7 +282,7 @@ MonoBehaviour:
   WallCheckRadius: 0.01
   SlideBreakTimer: 1
   WallSlidingSpeed: 1
-  xWallForce: 6
+  WallJumpForce: {x: 6, y: 5.4}
   LadderLayer:
     serializedVersion: 2
     m_Bits: 512

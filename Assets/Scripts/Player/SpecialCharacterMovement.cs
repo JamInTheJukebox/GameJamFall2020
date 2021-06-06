@@ -47,8 +47,8 @@ public class SpecialCharacterMovement : MonoBehaviour
     private float CurrentSlideTimer;            // tracks the amount of time the player has been trying to break free from the wall slide.
     bool isSlidingOnWall;                       // If the player decides to actually slide down the wall, this will be set to true.
     public float WallSlidingSpeed;
-    public float xWallForce;                    // The force that players will bounce off the wall with.
-
+    public Vector2 WallJumpForce;                    // The force that players will bounce off the wall with.
+    
     // ledge Grabbing here
 
     // TO DO:
@@ -174,11 +174,11 @@ public class SpecialCharacterMovement : MonoBehaviour
                 {
                     if (Dir * LedgeJumpDir > 0)
                     {
-                        X_Force = xWallForce * Dir;
+                        X_Force = WallJumpForce.x * Dir;
                     }
                     else
                     {
-                        X_Force = xWallForce * Dir * 1 / 2;
+                        X_Force = WallJumpForce.x * Dir * 1 / 2;
                     }
                 }
                 Jump(new Vector2(X_Force, LedgeJumpImpulse));
@@ -287,8 +287,8 @@ public class SpecialCharacterMovement : MonoBehaviour
             float WallJumpDir = -(WallCheck.position - transform.position).x;
             WallJumpDir /= Mathf.Abs(WallJumpDir);
             print(WallJumpDir);
-            rb.AddForce(xWallForce * WallJumpDir * Vector2.right, ForceMode2D.Impulse);
-            Jump();
+            rb.AddForce(WallJumpForce.x * WallJumpDir * Vector2.right, ForceMode2D.Impulse);
+            Jump(new Vector2(0,WallJumpForce.y));
             //invoke
         }
     }
