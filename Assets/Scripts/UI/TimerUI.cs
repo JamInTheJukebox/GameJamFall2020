@@ -6,6 +6,7 @@ using TMPro;
 public class TimerUI : MonoBehaviour
 {
     public static string timeText;
+    public static float timeFloat;
     public static bool stopTimer = false;
     private TextMeshProUGUI TimerText;
 
@@ -59,6 +60,7 @@ public class TimerUI : MonoBehaviour
         milliseconds = (100*CurrentTime%100).ToString("00");        // floats are wierd
         string Time = minutes + ":" + seconds + "." + milliseconds;
         TimerUI.timeText = Time;
+        timeFloat = CurrentTime;
         return Time;
     }
 }

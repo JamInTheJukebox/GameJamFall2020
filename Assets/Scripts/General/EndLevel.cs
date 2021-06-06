@@ -9,6 +9,8 @@ public class EndLevel : MonoBehaviour
     [SerializeField] TextMeshProUGUI time;
     [SerializeField] TextMeshProUGUI coins;
     [SerializeField] GameObject endScreen;
+    [SerializeField] TextMeshProUGUI leaderboardTime;
+    [SerializeField] GameObject leaderboard;
     Animation anim;
 
     private void Awake()
@@ -22,6 +24,7 @@ public class EndLevel : MonoBehaviour
         {
             TimerUI.stopTimer = true;
             time.text = TimerUI.timeText;
+            leaderboardTime.text = TimerUI.timeText;
             if (ItemTracker.count.ContainsKey(ItemType.COIN))
             {
                 string countText = ItemTracker.count[ItemType.COIN].ToString();
@@ -35,7 +38,11 @@ public class EndLevel : MonoBehaviour
         }
     }
 
-
+    public void ShowLeaderboard()
+    {
+        leaderboard.SetActive(true);
+        leaderboard.GetComponent<Leaderboard>().TallyScores();
+    }
 
     public void QuitGame()
     {
@@ -45,6 +52,7 @@ public class EndLevel : MonoBehaviour
     public void RestartLevel()
     {
         ItemTracker.count.Clear();
+        leaderboard.GetComponent<Leaderboard>().newLevel = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
