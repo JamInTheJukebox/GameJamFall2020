@@ -16,8 +16,11 @@ public class Movement : MonoBehaviour
     public float WalkAcceleration = 5f;
     public float MaxWalkSpeed = 4f;
 
-    public float RunAcceleration = 10f;
+    public float RunAcceleration = 10f;     // how fast you speed up.
     public float MaxRunSpeed = 10;
+
+    private float OriginalWalkSpeed = 4;
+    private float OriginalRunSpeed = 7;
 
     private float Dir = 0;
     public E_MovementType Movement_Type = E_MovementType.Linear;
@@ -237,6 +240,12 @@ public class Movement : MonoBehaviour
                 rb.gravityScale = gravity * (FallMultiplier / 2);
             }
         }
+    }
+
+    public void ResetSpeed()
+    {
+        MaxWalkSpeed = OriginalWalkSpeed;
+        MaxRunSpeed = OriginalRunSpeed;
     }
     private void OnDrawGizmos()
     {

@@ -5,10 +5,11 @@ using UnityEngine;
 public class Respawn : MonoBehaviour
 {
     Vector3 defaultSpawn;
-
+    Movement CharMovement;
     private void Awake()
     {
         defaultSpawn = transform.position;
+        CharMovement = GetComponent<Movement>();
     }
 
     public void respawnPlayer()
@@ -18,6 +19,7 @@ public class Respawn : MonoBehaviour
         if (checkpointPos)
         {
             gameObject.transform.position = checkpointPos.position;
+            CharMovement.ResetSpeed();
             EventLogger.addLog(EventType.CHECKPOINT, checkpointPos.gameObject);
         }
         else

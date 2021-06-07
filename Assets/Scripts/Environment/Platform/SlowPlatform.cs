@@ -38,8 +38,8 @@ public class SlowPlatform : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            targetPlayer.MaxRunSpeed = origMaxRunSpeed;
-            targetPlayer.MaxWalkSpeed = origMaxWalkSpeed;
+            if(targetPlayer != null)
+                targetPlayer.ResetSpeed();
         }
     }
 }

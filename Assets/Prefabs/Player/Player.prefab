@@ -246,7 +246,7 @@ MonoBehaviour:
   DustParticle: {fileID: 1196211640947137203}
   LinearDrag: 5
   WalkAcceleration: 4
-  MaxWalkSpeed: 3
+  MaxWalkSpeed: 4
   RunAcceleration: 10
   MaxRunSpeed: 7
   Movement_Type: 1
