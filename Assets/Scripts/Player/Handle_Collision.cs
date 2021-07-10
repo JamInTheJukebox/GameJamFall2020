@@ -137,6 +137,7 @@ public class Handle_Collision : MonoBehaviour
 
     public void TurnOnLasso()
     {
+        if (LassoUI == null) return;
         LassoUI.GetComponent<UnityEngine.UI.Image>().color = Color.white;
     }
 }

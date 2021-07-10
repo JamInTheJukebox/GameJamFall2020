@@ -27,8 +27,8 @@ public class ItemPickUp : MonoBehaviour
 
     public void deactivate()
     {
-        PickupSound.PlayRandomSFX();
         retrieved = true;
         gameObject.SetActive(false);
+        PickupSound.PlayRandomSFX();
     }
 }
