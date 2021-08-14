@@ -6698,6 +6698,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1196211639885811221, guid: 6de6da6a9338cf845b8a040d3b9af93c, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 10eeef32e903570419eb9b170f54d86d, type: 2}
+    - target: {fileID: 1196211639885811222, guid: 6de6da6a9338cf845b8a040d3b9af93c, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1196211639885811223, guid: 6de6da6a9338cf845b8a040d3b9af93c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.01
