@@ -244,11 +244,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DustParticle: {fileID: 1196211640947137203}
-  LinearDrag: 5
-  WalkAcceleration: 4
-  MaxWalkSpeed: 4
+  LinearDrag: 6
+  WalkAcceleration: 7
+  MaxWalkSpeed: 2.5
   RunAcceleration: 10
-  MaxRunSpeed: 7
+  MaxRunSpeed: 5
   Movement_Type: 1
   GroundLayer:
     serializedVersion: 2

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3614413785198111391}
   - component: {fileID: 2264212790253086472}
   - component: {fileID: 2874121332292812462}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Perma-Blocks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,9 +79,9 @@ CompositeCollider2D:
     - - X: 12640522
         Y: -11310563
       - X: 12640522
-        Y: -7405175
+        Y: -7405176
       - X: 8179502
-        Y: -7405468
+        Y: -7405469
       - X: 8179795
         Y: -11310563
   - m_Collider: {fileID: 1799730223966704512}
@@ -89,9 +89,9 @@ CompositeCollider2D:
     - - X: 8579547
         Y: -11310563
       - X: 8579547
-        Y: -7405175
+        Y: -7405176
       - X: 4118528
-        Y: -7405468
+        Y: -7405469
       - X: 4118821
         Y: -11310563
   - m_Collider: {fileID: 1799730222148568071}
@@ -99,16 +99,16 @@ CompositeCollider2D:
     - - X: 4518573
         Y: -11310563
       - X: 4518573
-        Y: -7405175
+        Y: -7405176
       - X: 57554
-        Y: -7405468
+        Y: -7405469
       - X: 57847
         Y: -11310563
   m_CompositePaths:
     m_Paths:
     - - {x: 1.264023, y: -1.1310563}
-      - {x: 1.264023, y: -0.7405175}
-      - {x: 0.0057554003, y: -0.7405761}
+      - {x: 1.264023, y: -0.7405176}
+      - {x: 0.0057554003, y: -0.7405762}
       - {x: 0.005814, y: -1.1310563}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005

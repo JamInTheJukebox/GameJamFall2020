@@ -26,6 +26,7 @@ public class Handle_Collision : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        print(collision.name);
         if (collision.tag == "Item")
         {
             string name = collision.name.ToLower();
@@ -37,6 +38,10 @@ public class Handle_Collision : MonoBehaviour
                 // only slot machine disables this.s
             }
         }
+        if(collision.name.ToLower().Contains("tnt"))
+            if(collision.GetComponent<BlastBox>())
+                collision.GetComponent<BlastBox>().InitiateDestruction();
+
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
