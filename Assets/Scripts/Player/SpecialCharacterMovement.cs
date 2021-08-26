@@ -5,7 +5,6 @@ using UnityEngine;
 public class SpecialCharacterMovement : MonoBehaviour
 {
     // This script is in charge of handling movement that the player can only execute by interacting with the environment. Examples include: Climbing, WallJumping, ledgeGrabbing, etc.
-    // an ENUM controls the current special move to ensure that the player can only do one at a time.
     private Rigidbody2D rb;
     private float Dir;                          // Raw X input
     private float Y_Dir;                        // Raw Y input
@@ -27,7 +26,7 @@ public class SpecialCharacterMovement : MonoBehaviour
         protected set
         {
             m_CurrentSpecialMove = value;
-            I_CurrentMoveChanged();
+            PlayerStateChanged();
         }
     }
     public enum E_CurrentMode               
@@ -49,10 +48,6 @@ public class SpecialCharacterMovement : MonoBehaviour
     public float WallSlidingSpeed;
     public Vector2 WallJumpForce;                    // The force that players will bounce off the wall with.
     
-    // ledge Grabbing here
-
-    // TO DO:
-    // IMPLEMENT A WALL JUMP TIMER so players do not have to be frame-perfect if they want to jump off the wall immediately.
     [Header("Climbing")]
     [SerializeField] LayerMask LadderLayer = 1 << 9;        // Used only if the climbable surface has no ceiling. Climbing above the ladder leads to bugs(Player slowly falling.
                                                             // The player should stop when they reach the top.
@@ -71,8 +66,6 @@ public class SpecialCharacterMovement : MonoBehaviour
     public Transform BottomLadderCheck;
     [SerializeField] float BottomLadderCheckRadius = 0.3f;
     private bool ReadyToClimbDown = false;
-    // TO DO:
-    // JUMPING ON HORIZONTAL CLIMBABLE SURFACES SHOULD BE POSSIBLE? 
 
     [Header("LedgeGrabbing")]
     public float LedgeJumpImpulse = 15;
@@ -81,7 +74,7 @@ public class SpecialCharacterMovement : MonoBehaviour
     private bool IsLedgeGrabbing = false;
     private int LedgeJumpDir;
     private bool CanLedgeGrabAgain = true;
-    public float TimeToRefreshLedgegrab;                // Ledgegrabs cannot be abused
+    public float TimeToRefreshLedgegrab;                // To prevent Ledgegrabs from being abused
 
     private SpriteRenderer SpritePNG;
 
@@ -93,7 +86,7 @@ public class SpecialCharacterMovement : MonoBehaviour
     private float WallJumpBufferTimer;
     private float JumpDelay = 0.2f;
 
-    private void I_CurrentMoveChanged()
+    private void PlayerStateChanged()
     {
         switch((int)CurrentSpecialMove)
         {
@@ -123,17 +116,11 @@ public class SpecialCharacterMovement : MonoBehaviour
 
     private void Update()
     {
-        print(CurrentSpecialMove);
+        //print(CurrentSpecialMove);
         Dir = Movement.PlayerInput.Horizontal;
         Y_Dir = Movement.PlayerInput.Vertical;
         OnGround = CharMovement.CheckGrounded();
-        /*
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            JumpTimer = Time.time + JumpDelay;      // A jump timer allows for a treshold for timing jumps. When a player gets on the ground
-            // There is a chance that their input will be dropped due to them not being "technically" grounded yet. This timer allows for them to jump without being frame perfect.
-        }
-        */
+
         int currentMode = (int)CurrentSpecialMove;
         if (currentMode == 0 || currentMode == 1)                   // walljumping only
         {
@@ -156,7 +143,7 @@ public class SpecialCharacterMovement : MonoBehaviour
                 Climbing_Initialized = false;
                 Jumping = true;
                 CurrentSpecialMove = 0;
-                Jump();
+                SetYVelocity(Vector2.up * JumpImpulse);
             }
             if (!Jumping)
             {
@@ -181,7 +168,7 @@ public class SpecialCharacterMovement : MonoBehaviour
                         X_Force = WallJumpForce.x * Dir * 1 / 2;
                     }
                 }
-                Jump(new Vector2(X_Force, LedgeJumpImpulse));
+                SetYVelocity(new Vector2(X_Force, LedgeJumpImpulse));
                 CurrentSpecialMove = 0;
                 CanLedgeGrabAgain = false;
                 Invoke("ResetLedgeGrab", TimeToRefreshLedgegrab);
@@ -195,6 +182,7 @@ public class SpecialCharacterMovement : MonoBehaviour
         {
             ReadyToClimb = true;
             Climb_Init(collision);
+            SpritePNG.sortingOrder = 4;
         }
     }
 
@@ -217,13 +205,6 @@ public class SpecialCharacterMovement : MonoBehaviour
             }
         }
     }
-    private void Climb_Init(Collider2D collision)
-    {
-        ClimbableSurface newClimbable = collision.GetComponent<ClimbableSurface>();
-        HorizontalClimbAllowed = newClimbable.Get_HorizAllowed();
-        Ladder_HasTop = newClimbable.Get_HasTop();
-        LadderPos = (Ladder_HasTop) ? collision.transform : null;
-    }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -241,33 +222,32 @@ public class SpecialCharacterMovement : MonoBehaviour
             CurrentGrabTime = 0;
         }
     }
+    #region Walljump state
     private void WallJump()
     {
         isTouchingWall = Physics2D.OverlapCircle(WallCheck.position, WallCheckRadius, GroundLayer);
         if (!isSlidingOnWall && isTouchingWall && !OnGround && Dir != 0 && rb.velocity.y < -0.1f)
         {
+            // if the playeris trying to slide down the wall, set isSlidingOnWall to true.
             CurrentSpecialMove = E_CurrentMode.WallSliding;
             isSlidingOnWall = true;
         }
         if (isSlidingOnWall)
         {
+            // if the player is trying to break free from wall.
             float WallJumpDir = (WallCheck.position - transform.position).x;
             int WallJumpDirection = (int)(WallJumpDir / Mathf.Abs(WallJumpDir));
-            //print("WallJumpDir" + WallJumpDirection);
-            //print("Dir" + Mathf.Sign(Dir));
-            if ((int)Dir != Mathf.Sign(WallJumpDirection))      // Character is trying to break free from a walljump
+            if ((int)Dir != Mathf.Sign(WallJumpDirection))  
             {
                 CurrentSlideTimer += Time.deltaTime;
             }
         }
         if (CurrentSlideTimer >= SlideBreakTimer | OnGround | !isTouchingWall)
         {
-            //            print("Cancelling slide");
             ResetWallSlide();
-            // make this a seconds time.
         }
 
-        if (isSlidingOnWall)
+        if (isSlidingOnWall)        // slide player down
         {
             float Y_Vel = rb.velocity.y;
             if (Y_Vel > 0)
@@ -279,17 +259,17 @@ public class SpecialCharacterMovement : MonoBehaviour
                 rb.gravityScale = 1;
                 rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -WallSlidingSpeed, float.MaxValue));
             }
-            // Call Jump here;
         }
 
         if ((WallJumpBufferTimer > Time.time) && (isSlidingOnWall || (isTouchingWall && rb.velocity.y > 0.1f)))
         {
+            // perform the actual jump.
+            WallJumpBufferTimer = 0;            
             float WallJumpDir = -(WallCheck.position - transform.position).x;
             WallJumpDir /= Mathf.Abs(WallJumpDir);
-            print(WallJumpDir);
+            //print(WallJumpDir);
             rb.AddForce(WallJumpForce.x * WallJumpDir * Vector2.right, ForceMode2D.Impulse);
-            Jump(new Vector2(0,WallJumpForce.y));
-            //invoke
+            SetYVelocity(Vector2.up*WallJumpForce.y);
         }
     }
 
@@ -299,26 +279,21 @@ public class SpecialCharacterMovement : MonoBehaviour
         CurrentSpecialMove = 0;
         isSlidingOnWall = false;
     }
-
+    #endregion
+    #region climbing state
     private void Climb()
     {
         if (!ReadyToClimb)          // There are two ways to climb: Climbing from the bottom of a ladder of from the top of a platform. This bit of code is in case the user wants to climb from on top of the platform
         {
             ReadyToClimbDown = Physics2D.OverlapCircle(BottomLadderCheck.position, BottomLadderCheckRadius, LadderLayer);
-            if (ReadyToClimbDown && Y_Dir < 0)
+            if (ReadyToClimbDown && Y_Dir < 0)      // if you are on a platform and want to climb down a ladder that is under you.
             {
                
                 Collider2D Ladder = Physics2D.OverlapCircle(BottomLadderCheck.position, BottomLadderCheckRadius, LadderLayer);
-                /*
-                 * Method 1
-                float BoxColHeight = Ladder.GetComponent<Renderer>().bounds.size.y / 2;
-                Vector3 LadderTopPos = Ladder.transform.position + new Vector3(0, BoxColHeight, 0);
-                print(LadderTopPos); 
-                */
+
                 if(Ladder.GetComponent<ClimbableSurface>() != null && !HorizontalClimbAllowed)
                 {
                     Vector3 LadderTopPos = Ladder.GetComponent<ClimbableSurface>().Get_Climb_Down_Position();
-                    print(Ladder.name);
                     transform.position = LadderTopPos;
                     LadderPos = Ladder.transform;
                 }
@@ -336,7 +311,7 @@ public class SpecialCharacterMovement : MonoBehaviour
             {
                 Climbing_Initialized = true;
                 CurrentSpecialMove = E_CurrentMode.Climbing;
-                if (Ladder_HasTop)
+                if (Ladder_HasTop || !HorizontalClimbAllowed)
                 {
                     transform.position = new Vector3(LadderPos.position.x, transform.position.y);
                 }
@@ -361,20 +336,22 @@ public class SpecialCharacterMovement : MonoBehaviour
         }
     }
 
+    private void Climb_Init(Collider2D collision)
+    {
+        ClimbableSurface newClimbable = collision.GetComponent<ClimbableSurface>();
+        HorizontalClimbAllowed = newClimbable.Get_HorizAllowed();
+        Ladder_HasTop = newClimbable.Get_HasTop();
+        LadderPos = (Ladder_HasTop || !HorizontalClimbAllowed) ? collision.transform : null;
+    }
     public void ResetClimbing()
     {
         CurrentSpecialMove = 0;
         Climbing_Initialized = false;
         Jumping = false;
     }
+    #endregion
 
-    private void Jump()
-    {
-        rb.velocity = new Vector2(rb.velocity.x, 0);
-        rb.AddForce(Vector2.up * JumpImpulse, ForceMode2D.Impulse);
-    }
-
-    private void Jump(Vector2 InputForce)
+    private void SetYVelocity(Vector2 InputForce)
     {
         rb.velocity = new Vector2(rb.velocity.x, 0);
         rb.AddForce(InputForce, ForceMode2D.Impulse);
@@ -383,8 +360,6 @@ public class SpecialCharacterMovement : MonoBehaviour
     private void ResetLedgeGrab()
     {
         CanLedgeGrabAgain = true;
-        print("Resetting Ledge Grab");
-
     }
 
     private void OnDrawGizmos()

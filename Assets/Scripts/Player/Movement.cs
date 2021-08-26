@@ -31,10 +31,10 @@ public class Movement : MonoBehaviour
         Linear = 0,
         Force = 1,
     }
-
+    [Space(1)]
     [Header("Jumping")]
     [SerializeField] LayerMask GroundLayer = 1 << 8;
-    [SerializeField] bool onGround = false;
+    bool onGround = false;
     public float GroundLength = 0.6f;
     [SerializeField] Vector3 RayCastOffset = Vector3.zero;
     public float JumpImpulse = 15f;
@@ -43,18 +43,22 @@ public class Movement : MonoBehaviour
     [SerializeField] float JumpDelay = 0.25f;
     [SerializeField] float MaxFallSpeed = 10f;
 
-    private float JumpTimer = 0;
+    [SerializeField] int MaxJumps = 1;
+    int availableJumps = 1;
+    bool multipleJump;
 
+    public float CoyoteTime = 0.2f;
+    private bool CoyoteJumpActive;
+    private float JumpBufferTimer = 0;
+    [Space(1)]
     [Header("DebugTools")]
     [SerializeField] bool DrawGroundCheck = false;
-
-    public float HangTime = 0.2f;
-    private float HangCounter;
 
     public static PlayerInputs PlayerInput;
 
     private void Awake()
     {
+        availableJumps = MaxJumps;
         rb = GetComponent<Rigidbody2D>();
         SpecMove = GetComponent<SpecialCharacterMovement>();
         DustParticle.Stop();
@@ -64,24 +68,19 @@ public class Movement : MonoBehaviour
     private void Update()
     {
         Dir = PlayerInput.Horizontal;
-        onGround = Physics2D.Raycast(transform.position + RayCastOffset, Vector2.down, GroundLength, GroundLayer)
-            || Physics2D.Raycast(transform.position - RayCastOffset, Vector2.down, GroundLength, GroundLayer);
         if (PlayerInput.JumpTriggered() && SpecMove.CurrentSpecialMove == 0)
         {
-            JumpTimer = Time.time + JumpDelay;      // A jump timer allows for a treshold for timing jumps. When a player gets on the ground
+            JumpBufferTimer = Time.time + JumpDelay;      // A jump timer allows for a treshold for timing jumps. When a player gets on the ground
             // There is a chance that their input will be dropped due to them not being "technically" grounded yet. This timer allows for them to jump without being frame perfect.
         }
 
-        if (onGround)
-            HangCounter = HangTime;
-        else
-            HangCounter -= Time.deltaTime;
         CreateDust();
         
     }
 
     private void FixedUpdate()
     {
+        GroundCheck();
         // You can easily detach
         if(SpecMove.CurrentSpecialMove == 0) // Applicable ONLY when the player is not climbing or WallJumping
         {
@@ -89,23 +88,90 @@ public class Movement : MonoBehaviour
             ModifyPhysics();
         }
 
-        if (JumpTimer > Time.time && HangCounter > 0f)          // jump buffering and coyote Time.
-        {
-            Jump();
-        }
-        
-        if(rb.velocity.y <= -MaxFallSpeed)
+        HandleJumping();
+
+        if (rb.velocity.y <= -MaxFallSpeed)
         {
             rb.velocity = new Vector2(rb.velocity.x, -MaxFallSpeed);
         }
     }
+    #region Jumping
+    // jump buffering, coyote jump, multiple jumps.
 
-    public float GetJumpTimer()
+    void HandleJumping()
     {
-        return JumpTimer;
+        if(JumpBufferTimer > Time.time)
+        {
+            if (onGround)       // first jump
+            {
+                multipleJump = true;
+                Jump();
+            }
+            else
+            {                   // jumps after first jump or coyote jump.
+                if(availableJumps > 0)
+                {
+                    if (CoyoteJumpActive || multipleJump)
+                    {
+                        multipleJump = true;
+                        Jump();
+                    }
+                }
+            }
+        }
     }
 
-    private void OnDisable()
+    public void Jump()
+    {
+        print("Jumping)");
+        availableJumps--;
+        rb.velocity = new Vector2(rb.velocity.x, 0);
+        rb.AddForce(Vector2.up * JumpImpulse, ForceMode2D.Impulse);
+        JumpBufferTimer = 0;// minus jump?      // only reset when
+    }
+
+    private void GroundCheck()
+    {
+        bool wasGrounded = onGround;
+        onGround = false;
+
+        onGround = Physics2D.Raycast(transform.position + RayCastOffset, Vector2.down, GroundLength, GroundLayer)
+    || Physics2D.Raycast(transform.position - RayCastOffset, Vector2.down, GroundLength, GroundLayer);
+
+        if(onGround)
+        {
+            // multiple jumps?
+            if(!wasGrounded)
+            {
+                // reset the jump. You have landed! By the next physics tick, was grounded will be true!
+                availableJumps = MaxJumps;
+                multipleJump = false;
+            }
+        }
+        else
+        {
+            if (wasGrounded)
+                StartCoroutine(CoyoteJumpDelay());
+        }
+    
+    }
+
+    IEnumerator CoyoteJumpDelay()
+    {
+        CoyoteJumpActive = true;
+        print("Activating Coyote");
+        yield return new WaitForSeconds(CoyoteTime);
+        CoyoteJumpActive = false;
+    } 
+    public float GetJumpTimer()
+    {
+        return JumpBufferTimer;
+    }
+
+    #endregion
+
+    #region WillNotBeNeededForNow
+    private void OnDisable()        // this was just in case we happen to delete a tile while a character is on it.
     {
         Invoke("EnableAgain", 0.05f);
     }
@@ -114,6 +180,8 @@ public class Movement : MonoBehaviour
         transform.parent = null;
         gameObject.SetActive(true);
     }
+
+    #endregion
 
     private void CreateDust()
     {
@@ -147,7 +215,7 @@ public class Movement : MonoBehaviour
         }
     }
 
-
+    #region movement
     private void HorizontalMovement()
     {
         float MaxSpeed = ManageMaxSpeed();
@@ -206,12 +274,7 @@ public class Movement : MonoBehaviour
     {
         return (FacingRight) ? 1 : -1;
     }
-    public void Jump()
-    {
-        rb.velocity = new Vector2(rb.velocity.x, 0);
-        rb.AddForce(Vector2.up * JumpImpulse, ForceMode2D.Impulse);
-        JumpTimer = 0;
-    }
+
 
     private void ModifyPhysics()
     {
@@ -247,6 +310,8 @@ public class Movement : MonoBehaviour
         MaxWalkSpeed = OriginalWalkSpeed;
         MaxRunSpeed = OriginalRunSpeed;
     }
+
+    #endregion
     private void OnDrawGizmos()
     {
         if(DrawGroundCheck)
