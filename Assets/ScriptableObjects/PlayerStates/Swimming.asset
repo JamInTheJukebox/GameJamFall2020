@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8644236da73c2c41aefbbcdae77c815, type: 3}
+  m_Name: Swimming
+  m_EditorClassIdentifier: 
+  MaxWalkSpeed: 2.5
+  WalkAcceleration: 7
+  MaxRunSpeed: 5
+  RunAcceleration: 10
+  JumpImpulse: 2
+  GravityScale: 0.4
+  MaxFallSpeed: 3
+  SpecialSpeed: {x: 0, y: 0}
+  MaxYSpeed: 6

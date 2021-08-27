@@ -14,8 +14,6 @@ public class SpecialCharacterMovement : MonoBehaviour
 
     [SerializeField] LayerMask GroundLayer = 1 << 8;
 
-    private float JumpImpulse = 15f;
-
     private E_CurrentMode m_CurrentSpecialMove; // Member variable that stores the current state that the player is in
     public E_CurrentMode CurrentSpecialMove
     {
@@ -49,9 +47,7 @@ public class SpecialCharacterMovement : MonoBehaviour
     public Vector2 WallJumpForce;                    // The force that players will bounce off the wall with.
     
     [Header("Climbing")]
-    [SerializeField] LayerMask LadderLayer = 1 << 9;        // Used only if the climbable surface has no ceiling. Climbing above the ladder leads to bugs(Player slowly falling.
-                                                            // The player should stop when they reach the top.
-    [SerializeField] string LadderTag = "Climbable";        
+    [SerializeField] LayerMask LadderLayer = 1 << 9;        // Used only if the climbable surface has no ceiling. Climbing above the ladder leads to bugs(Player slowly falling.                                                            // The player should stop when they reach the top.
     public Vector2 ClimbSpeed = new Vector2(0.7f,1);
     private bool Climbing_Initialized;
     private bool ReadyToClimb = false;                      // If the player is colliding with a ladder, this will be set to true.
@@ -61,6 +57,8 @@ public class SpecialCharacterMovement : MonoBehaviour
     private bool Ladder_HasTop = true;
     private Transform LadderPos;
     private bool Jumping = false;
+    private float LadderJumpImpulse = 15f;
+
 
     [Header("ClimbDown")]                                   // When you want to climb down from a platform
     public Transform BottomLadderCheck;
@@ -75,6 +73,8 @@ public class SpecialCharacterMovement : MonoBehaviour
     private int LedgeJumpDir;
     private bool CanLedgeGrabAgain = true;
     public float TimeToRefreshLedgegrab;                // To prevent Ledgegrabs from being abused
+    [Header("Swimming")]
+    [SerializeField] PlayerState SwimmingState;
 
     private SpriteRenderer SpritePNG;
 
@@ -85,7 +85,6 @@ public class SpecialCharacterMovement : MonoBehaviour
 
     private float WallJumpBufferTimer;
     private float JumpDelay = 0.2f;
-
     private void PlayerStateChanged()
     {
         switch((int)CurrentSpecialMove)
@@ -108,7 +107,7 @@ public class SpecialCharacterMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         CharMovement = GetComponent<Movement>();
-        JumpImpulse = CharMovement.JumpImpulse;
+        LadderJumpImpulse = CharMovement.GetDefaultPlayerState().GetJumpImpulse();
         PlayerLayer = gameObject.layer;
         SpritePNG = GetComponent<SpriteRenderer>();
     }
@@ -143,7 +142,7 @@ public class SpecialCharacterMovement : MonoBehaviour
                 Climbing_Initialized = false;
                 Jumping = true;
                 CurrentSpecialMove = 0;
-                SetYVelocity(Vector2.up * JumpImpulse);
+                SetYVelocity(Vector2.up * LadderJumpImpulse);
             }
             if (!Jumping)
             {
@@ -174,15 +173,28 @@ public class SpecialCharacterMovement : MonoBehaviour
                 Invoke("ResetLedgeGrab", TimeToRefreshLedgegrab);
             }
         }
+        if(currentMode == 4)        // swimming
+        {
+            if (Movement.PlayerInput.JumpTriggered())
+            {
+                Swim(Vector2.up * SwimmingState.GetJumpImpulse());
+            }
+            
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == LadderTag && collision.GetComponent<ClimbableSurface>() != null)
+        if(collision.tag == Tags.CLIMBABLE && collision.GetComponent<ClimbableSurface>() != null)
         {
             ReadyToClimb = true;
             Climb_Init(collision);
             SpritePNG.sortingOrder = 4;
+        }
+        else if(collision.tag == Tags.WATER)
+        {
+            CurrentSpecialMove = E_CurrentMode.Swimming;
+            CharMovement.ChangePlayerState(SwimmingState);
         }
     }
 
@@ -208,7 +220,7 @@ public class SpecialCharacterMovement : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.tag == LadderTag)
+        if(collision.tag == Tags.CLIMBABLE)
         {
             ReadyToClimb = false;
             CurrentSpecialMove = 0;
@@ -217,9 +229,14 @@ public class SpecialCharacterMovement : MonoBehaviour
             SpritePNG.sortingOrder = 0;
         }
 
-        if (collision.tag == "Ledge")
+        if (collision.tag == Tags.LEDGE)
         {
             CurrentGrabTime = 0;
+        }
+        else if (collision.tag == Tags.WATER)
+        {
+            CurrentSpecialMove = 0;
+            CharMovement.ResetPlayerState();
         }
     }
     #region Walljump state
@@ -351,10 +368,19 @@ public class SpecialCharacterMovement : MonoBehaviour
     }
     #endregion
 
+    #region SwimmingState
+
+    #endregion
     private void SetYVelocity(Vector2 InputForce)
     {
         rb.velocity = new Vector2(rb.velocity.x, 0);
         rb.AddForce(InputForce, ForceMode2D.Impulse);
+    }
+    private void Swim(Vector2 InputForce)
+    {
+        rb.AddForce(InputForce, ForceMode2D.Impulse);
+        float clampYVel = Mathf.Clamp(rb.velocity.y, -SwimmingState.GetMaxFallSpeed(), SwimmingState.GetMaxYSpeed());
+        rb.velocity = new Vector2(rb.velocity.x, clampYVel);
     }
 
     private void ResetLedgeGrab()

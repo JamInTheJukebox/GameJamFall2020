@@ -19,7 +19,7 @@ public class Respawn : MonoBehaviour
         if (checkpointPos)
         {
             gameObject.transform.position = checkpointPos.position;
-            CharMovement.ResetSpeed();
+            CharMovement.ResetPlayerState();
             EventLogger.addLog(EventType.CHECKPOINT, checkpointPos.gameObject);
         }
         else

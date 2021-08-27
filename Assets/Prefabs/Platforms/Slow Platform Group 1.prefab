@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7520623985138317596}
-  - component: {fileID: 7520623985138317599}
   - component: {fileID: 7520623985138317601}
   - component: {fileID: 7520623985138317598}
+  - component: {fileID: 7520623985138317599}
   m_Layer: 8
   m_Name: Slow Platform Group 1
   m_TagString: Untagged
@@ -39,19 +39,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7520623985138317599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7520623985138317597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed8e0b1a5b422fe4594b4a0a8871e7ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slowDownBy: 5
 --- !u!50 &7520623985138317601
 Rigidbody2D:
   serializedVersion: 4
@@ -159,6 +146,19 @@ CompositeCollider2D:
       - {x: -0.19047791, y: -0.262558}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
+--- !u!114 &7520623985138317599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7520623985138317597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8e0b1a5b422fe4594b4a0a8871e7ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slowDownBy: 5
 --- !u!1001 &1446737901496317859
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -220,9 +220,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8016018232029214740, guid: 6d620c4a3e0e8944fbaffccf528cb4ea, type: 3}
       propertyPath: m_Name
-      value: slow platform (3)
+      value: SlowPlatform
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5873424603694687511, guid: 6d620c4a3e0e8944fbaffccf528cb4ea, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6d620c4a3e0e8944fbaffccf528cb4ea, type: 3}
 --- !u!4 &3005790926466268982 stripped
 Transform:
@@ -295,9 +296,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8016018232029214740, guid: 6d620c4a3e0e8944fbaffccf528cb4ea, type: 3}
       propertyPath: m_Name
-      value: slow platform (5)
+      value: SlowPlatform
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5873424603694687511, guid: 6d620c4a3e0e8944fbaffccf528cb4ea, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6d620c4a3e0e8944fbaffccf528cb4ea, type: 3}
 --- !u!4 &2568490712344310768 stripped
 Transform:
@@ -370,9 +372,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8016018232029214740, guid: 6d620c4a3e0e8944fbaffccf528cb4ea, type: 3}
       propertyPath: m_Name
-      value: slow platform (7)
+      value: SlowPlatform
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5873424603694687511, guid: 6d620c4a3e0e8944fbaffccf528cb4ea, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6d620c4a3e0e8944fbaffccf528cb4ea, type: 3}
 --- !u!4 &561315231780008204 stripped
 Transform:
@@ -445,9 +448,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8016018232029214740, guid: 6d620c4a3e0e8944fbaffccf528cb4ea, type: 3}
       propertyPath: m_Name
-      value: slow platform (6)
+      value: SlowPlatform
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5873424603694687511, guid: 6d620c4a3e0e8944fbaffccf528cb4ea, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6d620c4a3e0e8944fbaffccf528cb4ea, type: 3}
 --- !u!4 &6348727425885993160 stripped
 Transform:
@@ -520,9 +524,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8016018232029214740, guid: 6d620c4a3e0e8944fbaffccf528cb4ea, type: 3}
       propertyPath: m_Name
-      value: slow platform (2)
+      value: SlowPlatform
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5873424603694687511, guid: 6d620c4a3e0e8944fbaffccf528cb4ea, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6d620c4a3e0e8944fbaffccf528cb4ea, type: 3}
 --- !u!4 &6195810915955915451 stripped
 Transform:
@@ -595,9 +600,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8016018232029214740, guid: 6d620c4a3e0e8944fbaffccf528cb4ea, type: 3}
       propertyPath: m_Name
-      value: slow platform (4)
+      value: SlowPlatform
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5873424603694687511, guid: 6d620c4a3e0e8944fbaffccf528cb4ea, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6d620c4a3e0e8944fbaffccf528cb4ea, type: 3}
 --- !u!4 &5261643197067542571 stripped
 Transform:

@@ -9,18 +9,11 @@ public class Movement : MonoBehaviour
     private Rigidbody2D rb;
     private SpecialCharacterMovement SpecMove;
     public ParticleSystem DustParticle;
-
+    [SerializeField] PlayerState DefaultPlayerState;
+    [SerializeField] PlayerState CurrentPlayerState;
     public float LinearDrag = 0.6f;
-    
+
     [Header("Walking/Running")]
-    public float WalkAcceleration = 5f;
-    public float MaxWalkSpeed = 4f;
-
-    public float RunAcceleration = 10f;     // how fast you speed up.
-    public float MaxRunSpeed = 10;
-
-    private float OriginalWalkSpeed = 4;
-    private float OriginalRunSpeed = 7;
 
     private float Dir = 0;
     public E_MovementType Movement_Type = E_MovementType.Linear;
@@ -37,11 +30,9 @@ public class Movement : MonoBehaviour
     bool onGround = false;
     public float GroundLength = 0.6f;
     [SerializeField] Vector3 RayCastOffset = Vector3.zero;
-    public float JumpImpulse = 15f;
-    [SerializeField] float gravity = 1;
+
     [SerializeField] float FallMultiplier = 4;
     [SerializeField] float JumpDelay = 0.25f;
-    [SerializeField] float MaxFallSpeed = 10f;
 
     [SerializeField] int MaxJumps = 1;
     int availableJumps = 1;
@@ -75,24 +66,25 @@ public class Movement : MonoBehaviour
         }
 
         CreateDust();
-        
+
     }
 
     private void FixedUpdate()
     {
         GroundCheck();
         // You can easily detach
-        if(SpecMove.CurrentSpecialMove == 0) // Applicable ONLY when the player is not climbing or WallJumping
+        if (SpecMove.CurrentSpecialMove == 0 || (int)SpecMove.CurrentSpecialMove == 4) // Applicable ONLY when the player is not climbing or WallJumping
         {
             HorizontalMovement();
-            ModifyPhysics();
+            if(SpecMove.CurrentSpecialMove == 0)
+                ModifyPhysics();
         }
 
         HandleJumping();
 
-        if (rb.velocity.y <= -MaxFallSpeed)
+        if (rb.velocity.y <= -CurrentPlayerState.GetMaxFallSpeed())
         {
-            rb.velocity = new Vector2(rb.velocity.x, -MaxFallSpeed);
+            rb.velocity = new Vector2(rb.velocity.x, -CurrentPlayerState.GetMaxFallSpeed());
         }
     }
     #region Jumping
@@ -123,11 +115,10 @@ public class Movement : MonoBehaviour
 
     public void Jump()
     {
-        print("Jumping)");
         availableJumps--;
         rb.velocity = new Vector2(rb.velocity.x, 0);
-        rb.AddForce(Vector2.up * JumpImpulse, ForceMode2D.Impulse);
-        JumpBufferTimer = 0;// minus jump?      // only reset when
+        rb.AddForce(Vector2.up * CurrentPlayerState.GetJumpImpulse(), ForceMode2D.Impulse);
+        JumpBufferTimer = 0;
     }
 
     private void GroundCheck()
@@ -186,7 +177,7 @@ public class Movement : MonoBehaviour
     private void CreateDust()
     {
         bool cond1 = (int)SpecMove.CurrentSpecialMove == 1;
-        bool cond2 = rb.velocity.magnitude > MaxWalkSpeed;
+        bool cond2 = rb.velocity.magnitude > CurrentPlayerState.GetMaxWalkSpeed();
 
         if(cond1 | cond2)
         {
@@ -219,20 +210,24 @@ public class Movement : MonoBehaviour
     private void HorizontalMovement()
     {
         float MaxSpeed = ManageMaxSpeed();
-
-        float MoveSpeed = PlayerInput.Running ? RunAcceleration : WalkAcceleration;
+        float Acceleration = PlayerInput.Running ? CurrentPlayerState.GetRunAcceleration() : CurrentPlayerState.GetWalkAcceleration();
+        if((int)SpecMove.CurrentSpecialMove == 4)
+        {
+            MaxSpeed = CurrentPlayerState.GetMaxWalkSpeed();
+            Acceleration = CurrentPlayerState.GetRunAcceleration();
+        }
         if (Movement_Type == E_MovementType.Linear)
         {
             if (PlayerInput.RunTriggered())
             {
-                MoveSpeed = MaxSpeed;
+                Acceleration = MaxSpeed;
             }
-            Vector2 newMove = new Vector2(Dir * MoveSpeed, rb.velocity.y);
+            Vector2 newMove = new Vector2(Dir * Acceleration, rb.velocity.y);
             rb.velocity = newMove;
         }
         else if (Movement_Type == E_MovementType.Force)                                 // Force-Based movement will be necessary for adding hazards that slow or speed you up.
         {
-            Vector2 AccumulativeForce = Vector2.right * MoveSpeed * Dir;
+            Vector2 AccumulativeForce = Vector2.right * Acceleration * Dir;
             if (Mathf.Abs(rb.velocity.x) >= MaxSpeed)
             {
                 rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * MaxSpeed, rb.velocity.y);
@@ -252,15 +247,15 @@ public class Movement : MonoBehaviour
     {
         if(PlayerInput.Running)
         {
-            return MaxRunSpeed;
+            return CurrentPlayerState.GetMaxRunSpeed();
         }
         else
         {
-            if(Mathf.Abs(rb.velocity.x) > MaxWalkSpeed && !onGround)
+            if(Mathf.Abs(rb.velocity.x) > CurrentPlayerState.GetMaxWalkSpeed() && !onGround)
             {
-                return MaxRunSpeed;
+                return CurrentPlayerState.GetMaxRunSpeed();
             }
-            else { return MaxWalkSpeed; }
+            else { return CurrentPlayerState.GetMaxWalkSpeed(); }
         }
     }
 
@@ -292,6 +287,7 @@ public class Movement : MonoBehaviour
         }
         else
         {
+            float gravity = CurrentPlayerState.GetGravityScale();
             rb.gravityScale = gravity;
             rb.drag = LinearDrag * 0.15f;
             if (rb.velocity.y < 0)
@@ -304,13 +300,23 @@ public class Movement : MonoBehaviour
             }
         }
     }
-
-    public void ResetSpeed()
+    
+    public void ChangePlayerState(PlayerState newPlayerState)
     {
-        MaxWalkSpeed = OriginalWalkSpeed;
-        MaxRunSpeed = OriginalRunSpeed;
+        CurrentPlayerState = newPlayerState;
+        rb.gravityScale = newPlayerState.GetGravityScale();
+    }
+    // TODO: change player speed for x seconds?
+    public void ResetPlayerState()
+    {
+        CurrentPlayerState = DefaultPlayerState;
+        rb.gravityScale = DefaultPlayerState.GetGravityScale();
     }
 
+    public PlayerState GetDefaultPlayerState()
+    {
+        return DefaultPlayerState;
+    }
     #endregion
     private void OnDrawGizmos()
     {
