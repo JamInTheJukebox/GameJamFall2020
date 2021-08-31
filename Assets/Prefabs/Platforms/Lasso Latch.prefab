@@ -91,7 +91,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 769804548105295796}
-  m_Layer: 12
+  m_Layer: 16
   m_Name: CrossPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -207,7 +207,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6551788968760967584}
-  m_Layer: 12
+  m_Layer: 16
   m_Name: Lasso Latch
   m_TagString: Lasso_Latch
   m_Icon: {fileID: 0}
@@ -365,8 +365,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6551788969745883876}
   - component: {fileID: 6551788969745883878}
-  - component: {fileID: 6551788969745883877}
-  m_Layer: 12
+  - component: {fileID: 7179281457005005851}
+  m_Layer: 16
   m_Name: Latch
   m_TagString: Lasso_Latch
   m_Icon: {fileID: 0}
@@ -438,8 +438,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &6551788969745883877
-CircleCollider2D:
+--- !u!61 &7179281457005005851
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -451,9 +451,19 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.21042153, y: -0.00000016789255}
+  m_Offset: {x: -0.123580255, y: 0.010387003}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.23290598, y: 0.489613}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.2895786
+  m_Size: {x: 0.6673468, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &8281359345569027087
 GameObject:
   m_ObjectHideFlags: 0

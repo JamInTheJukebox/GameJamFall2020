@@ -4,120 +4,134 @@ using UnityEngine;
 
 public class Lasso : MonoBehaviour
 {
+    public ThrowLasso grapplingGun;
+
     public Vector2 Force;
     public float MaximumDistance;
-    private float TotalDistanceTraveled;
     [HideInInspector] public Transform Parent;
     [HideInInspector] public Transform Latch;
-    private Vector2 LastPos;
     private LineRenderer Lasso_Segment;
-    private DistanceJoint2D ParentJoint;
-    private bool TargetHit = false;
+    private int percision = 120;
+    private bool isGrappling = false;
+    /*
+     *     [Header("General refrences:")]
+    public GrapplingGun grapplingGun;
+    [SerializeField] LineRenderer m_lineRenderer;
+
+    [Header("General Settings:")]
+    [SerializeField] private int percision = 20;
+    [Range(0, 100)][SerializeField] private float straightenLineSpeed = 4;
+
+    [Header("Animation:")]
+    public AnimationCurve ropeAnimationCurve;
+    [SerializeField] [Range(0.01f, 4)] private float WaveSize = 20;
+    float waveSize;
+
+    [Header("Rope Speed:")]
+    public AnimationCurve ropeLaunchSpeedCurve;
+    [SerializeField] [Range(1, 50)] private float ropeLaunchSpeedMultiplayer = 4;
+
+    float moveTime = 0;
+
+    [SerializeField]public bool isGrappling = false;
+    
+    bool drawLine = true;
+    bool straightLine = true;
+     * */
+    float moveTime = 0;
 
     private void Awake()
     {
-        LastPos = transform.position;
         Lasso_Segment = GetComponent<LineRenderer>();
+        Lasso_Segment.enabled = false;
+        Lasso_Segment.positionCount = percision;
+    }
+
+    private void OnEnable()
+    {
+        moveTime = 0;
+        Lasso_Segment.enabled = true;
+        Lasso_Segment.positionCount = percision;
+        //waveSize = WaveSize;
+        //straightLine = false;
+        LinePointToFirePoint();
+    }
+
+    private void OnDisable()
+    {
+        Lasso_Segment.enabled = false;
+        isGrappling = false;
+    }
+
+    void LinePointToFirePoint()
+    {
+        for (int i = 0; i < percision; i++)
+        {
+            Lasso_Segment.SetPosition(i, grapplingGun.transform.position);
+        }
+    }
+
+    void Update()
+    {
+        moveTime += Time.deltaTime;
+
+        DrawRope();
         
     }
 
-    private void Update()
+    void DrawRope()
     {
-        if (!TargetHit)
+        /*
+        if (!straightLine)
         {
-            RecordDistance();
-
-            if (TotalDistanceTraveled > MaximumDistance)
+            if (m_lineRenderer.GetPosition(percision - 1).x != grapplingGun.grapplePoint.x)
             {
-                if(Parent != null)
-                    Parent.GetComponent<ThrowLasso>().ResetLasso();
-                Destroy(gameObject);
+                DrawRopeWaves();
+            }
+            else
+            {
+                straightLine = true;
             }
         }
         else
         {
-            SetPostions();
-            if(ParentJoint != null && Latch != null)
-            {
-                ParentJoint.connectedAnchor = Latch.position;
-            }
-            else if(ParentJoint != null && Latch == null)       // a rocket
-            {
-                DestroyLasso();
-            }
-        }
-    }
-
-    public void Shoot(float Dir)
-    {
-        Vector2 ForceDir = new Vector2(Force.x * Dir, Force.y);
-        GetComponent<Rigidbody2D>().AddForce(ForceDir, ForceMode2D.Impulse);
-    }
-
-    public void Shoot(Vector2 Dir)
-    {
-        Vector2 ForceDir = new Vector2(Force.x * Dir.x, Force.y * Dir.y);
-        GetComponent<Rigidbody2D>().AddForce(ForceDir, ForceMode2D.Impulse);
-    }
-    private void RecordDistance()
-    {
-        TotalDistanceTraveled += Vector2.Distance(LastPos, transform.position);
-        LastPos = transform.position;
-    }
-
-    public void DestroyLasso()
-    {
-        Parent.GetComponent<ThrowLasso>().ResetLasso();
-        Destroy(gameObject);
-        return;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Lasso_Latch")
+        */
+        if (!isGrappling)
         {
-            var ParentComp = Parent.GetComponent<ThrowLasso>();
-            if (!ParentComp.VerifyLasso()) { Destroy(gameObject); return; }
-            //if(Vector2.Distance(Parent.position,collision.transform.position) > 20) { DestroyLasso(); }
-            float DragMagnitude = 2.5f;
-            Destroy(GetComponent<TrailRenderer>());
-            Destroy(GetComponent<SpriteRenderer>());
-            Destroy(GetComponent<Rigidbody2D>());
-            Destroy(GetComponent<CircleCollider2D>());
-            TargetHit = true;
-            ParentComp.HangingOnLasso = true;
-            if (collision.transform.name.ToLower().Contains("rocket"))
-            {
-                DragMagnitude = 1;
-            }
-            ParentComp.LatchDragFactor = DragMagnitude;              // drag in a rocket looks wierd!
-
-            ParentJoint = Parent.gameObject.AddComponent<DistanceJoint2D>();
-            ParentJoint.maxDistanceOnly = true;
-            ParentJoint.enableCollision = true;
-            ParentJoint.breakForce = 600f;
-            Latch = collision.transform;
-            ParentJoint.connectedAnchor = Latch.position;
-            SetPostions();
+            grapplingGun.Grapple(); // we dont have this yet.
+            isGrappling = true;
+        }
+        /*
+        if (waveSize > 0)
+        {
+            waveSize -= Time.deltaTime * straightenLineSpeed;
+            DrawRopeWaves();
         }
         else
-        {
-            Destroy(gameObject);            // failed to hit target.
-        }
+        {*/
+            //waveSize = 0;
+        DrawRopeNoWaves();
+        //}
+        //}
     }
-
-    private void SetPostions()
+    /*
+    void DrawRopeWaves()
     {
-        if(Parent == null | Latch == null)
+        for (int i = 0; i < percision; i++)
         {
-            Debug.LogWarning("Lasso.cs: Error. Either parent or latch are null");
-            return;
+            float delta = (float)i / ((float)percision - 1f);
+            Vector2 offset = Vector2.Perpendicular(grapplingGun.DistanceVector).normalized * ropeAnimationCurve.Evaluate(delta) * waveSize;
+            Vector2 targetPosition = Vector2.Lerp(grapplingGun.firePoint.position, grapplingGun.grapplePoint, delta) + offset;
+            Vector2 currentPosition = Vector2.Lerp(grapplingGun.firePoint.position, targetPosition, ropeLaunchSpeedCurve.Evaluate(moveTime) * ropeLaunchSpeedMultiplayer);
+
+            m_lineRenderer.SetPosition(i, currentPosition);
         }
-        Vector3[] Pos = new Vector3[2]
-        {
-                new Vector3(Parent.position.x,Parent.position.y,0),
-                new Vector3(Latch.position.x, Latch.position.y,0)
-        };
-        Lasso_Segment.SetPositions(Pos);
+    }*/
+
+    void DrawRopeNoWaves()
+    {
+        Lasso_Segment.positionCount = 2;
+        Lasso_Segment.SetPosition(0, grapplingGun.transform.position);
+        Lasso_Segment.SetPosition(1, grapplingGun.GetPrioritizedTarget().position);
     }
 }

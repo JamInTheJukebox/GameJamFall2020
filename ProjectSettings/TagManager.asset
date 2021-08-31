@@ -28,8 +28,8 @@ TagManager:
   - Lasso
   - Occulsion
   - PlayerRange
-  - 
-  - 
+  - LassoDetector
+  - LassoHook
   - 
   - 
   - 

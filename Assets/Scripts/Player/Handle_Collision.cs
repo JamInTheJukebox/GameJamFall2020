@@ -33,7 +33,7 @@ public class Handle_Collision : MonoBehaviour
             if (name.Contains("lasso"))
             {
                 Destroy(collision.gameObject);
-                GetComponent<ThrowLasso>().enabled = true;
+                GetComponentInChildren<ThrowLasso>().enabled = true;        // TODO: Change this
                 TurnOnLasso();
                 // only slot machine disables this.s
             }

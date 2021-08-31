@@ -75,7 +75,7 @@ public class CharacterAnimation : MonoBehaviour
         AirMove = GetComponent<Movement>();
         rb = GetComponent<Rigidbody2D>();
         SpecialMove = GetComponent<SpecialCharacterMovement>();
-        LassoMove = GetComponent<ThrowLasso>();
+        LassoMove = GetComponentInChildren<ThrowLasso>();
     }
 
     private void Update()

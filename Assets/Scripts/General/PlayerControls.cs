@@ -175,6 +175,39 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""USB_Gamepad"",
+                    ""id"": ""3a3e19fa-bcb5-4af2-b62d-de1890f81591"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Horizontal"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""e6c5a396-a1ec-41c5-98f6-a64b51b0e02e"",
+                    ""path"": ""<HID::USB Gamepad >/stick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Horizontal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""39477444-5419-41ba-8a36-3b7b86b549cf"",
+                    ""path"": ""<HID::USB Gamepad >/stick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Horizontal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": ""Gamepad"",
                     ""id"": ""ae33c894-bc18-4060-a2e3-1fee93e988ac"",
                     ""path"": ""1DAxis"",
@@ -241,6 +274,39 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""USB_Gamepad"",
+                    ""id"": ""92e30b47-1c41-4170-9bdc-aac8c616748c"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""87066a27-dbc8-4e97-9105-4bd7ed13246e"",
+                    ""path"": ""<HID::USB Gamepad >/stick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""8e4f9704-72c8-499d-b817-4e08a19794c2"",
+                    ""path"": ""<HID::USB Gamepad >/stick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""9566db01-2890-45c4-a33f-cbec02366199"",
                     ""path"": ""<Gamepad>/rightTrigger"",
@@ -275,6 +341,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""64332c1f-645e-40e0-b391-ef419c289c39"",
+                    ""path"": ""<HID::USB Gamepad >/button5"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lasso_T"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4d4e2aae-9875-4d05-8076-14acea73db68"",
+                    ""path"": ""<HID::USB Gamepad >/button6"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lasso_T"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""90f09c27-02ac-47d9-9091-c95eb3b59b62"",
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": ""Press"",
@@ -288,6 +376,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""60e3d37b-ebbd-4d46-86ed-992346e942f7"",
                     ""path"": ""<Keyboard>/space"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump_T"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a9b714e-3e67-4957-9550-c27240c604e3"",
+                    ""path"": ""<HID::USB Gamepad >/button3"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
@@ -341,6 +440,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""b4ac8495-97f7-4177-8408-119078ee040a"",
+                    ""path"": ""<HID::USB Gamepad >/button4"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run_T"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""6dd61d60-a98d-4594-8b08-bdcf314df1c9"",
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
@@ -354,6 +464,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""2f311802-6fed-4aaf-b99a-e71761a4fda7"",
                     ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2f7dd6e0-5075-4c63-991c-592d830db976"",
+                    ""path"": ""<HID::USB Gamepad >/button4"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -385,6 +506,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""019fa9c8-2d35-47d0-a0b8-62b7fbece161"",
+                    ""path"": ""<HID::USB Gamepad >/button3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""35f1ca8a-8149-4004-88b1-0fbed767458f"",
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": ""Press(behavior=1)"",
@@ -398,6 +530,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""3939fc0f-e7c8-4a50-bc5d-f72abb129303"",
                     ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run_TR"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""44296d4c-fc6c-4fad-8c6f-cd54d70368b3"",
+                    ""path"": ""<HID::USB Gamepad >/button4"",
                     ""interactions"": ""Press(behavior=1)"",
                     ""processors"": """",
                     ""groups"": """",
@@ -431,6 +574,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""adeb3e81-689b-46e6-a7e2-716841a0dae5"",
                     ""path"": ""<DualShockGamepad>/start"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""089efb76-1084-4d1b-aa74-0f1333d3951c"",
+                    ""path"": ""<HID::USB Gamepad >/button10"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",

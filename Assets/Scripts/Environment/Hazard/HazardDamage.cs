@@ -33,7 +33,7 @@ public class HazardDamage : MonoBehaviour
     {
         if(FindObjectOfType<Lasso>() != null)
         {
-            FindObjectOfType<Lasso>().DestroyLasso();
+            //FindObjectOfType<Lasso>().DestroyLasso();
         }
     }
 }
