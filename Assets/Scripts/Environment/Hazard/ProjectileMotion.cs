@@ -72,8 +72,4 @@ public class ProjectileMotion : MonoBehaviour
             Target = null;
         }
     }
-    private void OnDestroy()
-    {
-        // play particle effect here
-    }
 }

@@ -14,6 +14,10 @@ public class Respawn : MonoBehaviour
 
     public void respawnPlayer()
     {
+        if(GetComponentInChildren<ThrowLasso>().enabled)
+        {
+            GetComponentInChildren<ThrowLasso>().ResetLasso();
+        }
         Transform checkpointPos = EventLogger.undoChanges();
 
         if (checkpointPos)

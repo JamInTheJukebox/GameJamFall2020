@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3876468994526748402}
   - component: {fileID: 3876468994526748400}
-  - component: {fileID: 3876468994526748403}
-  m_Layer: 12
+  - component: {fileID: 1347384544871051563}
+  m_Layer: 16
   m_Name: Latch_rocket
   m_TagString: Lasso_Latch
   m_Icon: {fileID: 0}
@@ -83,8 +83,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &3876468994526748403
-CircleCollider2D:
+--- !u!61 &1347384544871051563
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -96,9 +96,19 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.21042153, y: -0.00000016789255}
+  m_Offset: {x: -0.36, y: 0.010387003}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.23290598, y: 0.489613}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.2895786
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &6491981994086573210
 GameObject:
   m_ObjectHideFlags: 0

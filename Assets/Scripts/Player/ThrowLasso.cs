@@ -10,10 +10,14 @@ public class ThrowLasso : MonoBehaviour
     public Lasso grappleLasso;
 
     [Header("Lasso")]
+    [SerializeField] float refreshTime;
+    bool refreshed;
     private bool ThrewLasso;
     [HideInInspector] public bool HangingOnLasso;
-    public float MaxSegmentLength = 10f;
-    public float MinSegmentLength = 0f;
+    public float MaxSegmentLength = 5f;     // make this variable dependent on a ray that shoots out of the latch>
+    private float CurrentMaxSegmentLength;
+    
+    public float MinSegmentLength = 0.3f;
     public float RetractVelocity = 0.1f;
     private float Y_Dir;
     [HideInInspector] public float LatchDragFactor = 2.5f;
@@ -24,8 +28,9 @@ public class ThrowLasso : MonoBehaviour
     [Tooltip("Make sure we do not descend onto water.")]
     [SerializeField] Transform FeetPosition;
     [SerializeField] float RadiusCheck;
-    bool ApproachingWater;
-    bool ApproachingLand;
+    [SerializeField] LayerMask LayersToAvoid;
+    bool IsApproachingGroundOrWater;
+
     List<GameObject> DiscoveredLatches = new List<GameObject>();       // manage all the targets on screen.
     GameObject PriorityTarget;  // the object we will latch on to.
     // References
@@ -34,54 +39,33 @@ public class ThrowLasso : MonoBehaviour
     private SpecialCharacterMovement SpecialMove;
     private Rigidbody2D Char_rb;
 
-    
-    /*    
-     *    
-    [Header("Main Camera")]
-    public Camera m_camera;
-
-    [Header("Transform Refrences:")]
-    public Transform gunHolder;
-    public Transform gunPivot;
-    public Transform firePoint;
-
-    [Header("Rotation:")]
-    [SerializeField] private bool rotateOverTime = true;
-    [Range(0, 80)] [SerializeField] private float rotationSpeed = 4;
-
-    [Header("Distance:")]
-    [SerializeField] private bool hasMaxDistance = true;
-    [SerializeField] private float maxDistance = 4;
-
-    [Header("Launching")]
-    [SerializeField] private bool launchToPoint = true;
-    [SerializeField] private LaunchType Launch_Type = LaunchType.Transform_Launch;
-    [Range(0, 5)] [SerializeField] private float launchSpeed = 5;
-
-    [Header("No Launch To Point")]
-    [SerializeField] private bool autoCongifureDistance = false;
-    [SerializeField] private float targetDistance = 3;
-    [SerializeField] private float targetFrequency = 3;*/
     private void Awake()
     {
         this.enabled = false;
+        // components
         CharMovement = GetComponentInParent<Movement>();
         SpecialMove = CharMovement.GetComponent<SpecialCharacterMovement>();
         Char_rb = CharMovement.GetComponent<Rigidbody2D>();
+        // pointer
         LassoPointerObj = Instantiate(LassoPointerPrefab).transform;
         LassoPointerObj.gameObject.SetActive(false);
         grappleLasso.enabled = false;
+        // refresh
+        refreshed = true;
     }
 
     private void Update()
     {
-        if (!CanThrowLasso()) { return; }
+        if (!CanThrowLasso() || !refreshed) { return; }
 
-        if(!grappleLasso.enabled)
+        if(!grappleLasso.enabled)       // only look for new targets when the grapple isn't enabled.
             SetPrioritizedTarget();
 
-        if(GetPrioritizedTarget() == null) { return; }
-
+        if (GetPrioritizedTarget() == null)
+        {
+            if (HangingOnLasso) { ResetLasso(); }
+            return;      // do not give the player the ability to press C if we do not have anything to target.
+        }
         Y_Dir = Movement.PlayerInput.Vertical;
         if (Movement.PlayerInput.LassoTriggered())
         {
@@ -89,6 +73,14 @@ public class ThrowLasso : MonoBehaviour
             {
                 grappleLasso.enabled = true;
                 HangingOnLasso = true;
+                ResetPointerPosition();     // hide animation??
+                if (Char_rb.velocity.y > 0)      // player will slow down if they are moving up
+                {
+                    Char_rb.velocity = new Vector2(Char_rb.velocity.x, -0.1f);
+                }
+
+                // Cast a ray straight downwards. Set the max distance.
+                SetMaxDistance();
             }
             else
                 ResetLasso();
@@ -100,11 +92,23 @@ public class ThrowLasso : MonoBehaviour
         }
     }
 
+    private void SetMaxDistance()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(GetPrioritizedTarget().position, Vector2.down, MaxSegmentLength, 1 << 8);
+        float _distance = hit.distance - 0.3710088f;
+        if (_distance > 1 && _distance < MaxSegmentLength)
+            CurrentMaxSegmentLength = hit.distance - 0.3710088f;
+        else { CurrentMaxSegmentLength = MaxSegmentLength; }
+    }
+
     private void HangOnLasso()
     {
         if (CharJoint == null)
         {
-            if (CharMovement.GetComponent<DistanceJoint2D>() == null) { CharJoint = CharMovement.gameObject.AddComponent<DistanceJoint2D>(); }
+            if (CharMovement.GetComponent<DistanceJoint2D>() == null) {
+                CharJoint = CharMovement.gameObject.AddComponent<DistanceJoint2D>();
+                CharJoint.enableCollision = true;
+            }
             else
                 CharJoint = CharMovement.GetComponent<DistanceJoint2D>();
             CharJoint.autoConfigureDistance = true;
@@ -115,34 +119,48 @@ public class ThrowLasso : MonoBehaviour
         else
         {
             CharJoint.connectedAnchor = GetPrioritizedTarget().position;
-            CharJoint.distance = Mathf.Clamp(CharJoint.distance, MinSegmentLength, MaxSegmentLength);
+            CharJoint.distance = Mathf.Clamp(CharJoint.distance, MinSegmentLength, CurrentMaxSegmentLength);
         }
         bool isGrounded = CharMovement.CheckGrounded();
         if (Movement.PlayerInput.JumpTriggered() && !isGrounded)
         {
             Jump();
         }
+        float DeltaTime = Time.deltaTime;
+        IsApproachingGroundOrWater = Physics2D.OverlapCircle(FeetPosition.position, RadiusCheck, LayersToAvoid);
 
         if (Y_Dir != 0 && !isGrounded)
         {
-            CharJoint.distance -= Y_Dir * Time.deltaTime;
+            if(IsApproachingGroundOrWater && Y_Dir < 0)        // DO NOT KEEP GOING DOWN IF YOU ARE TRYING TO GO INTO WATER OR GROUND.
+                CharJoint.distance = CharJoint.distance;
+            else
+                CharJoint.distance -= Y_Dir * DeltaTime;
         }
-        else if (Y_Dir > 0 && isGrounded)
+        if (IsApproachingGroundOrWater)
         {
-            Char_rb.AddForce(new Vector2(0, 1f), ForceMode2D.Impulse);
-            CharJoint.autoConfigureDistance = true;
-            Invoke("TurnOffAutoConfig", 0.1f);
+            CharJoint.distance -= 2 * DeltaTime;
+
+            //Char_rb.AddForce(new Vector2(0, 3f), ForceMode2D.Impulse);
+            ///CharJoint.autoConfigureDistance = true;
+            //Invoke("TurnOffAutoConfig", 0.1f);
         }
     }
 
     private void FixedUpdate()
     {
-        float X_dir = Movement.PlayerInput.Horizontal;
-
-        if (X_dir == 0 && HangingOnLasso)
+        if (HangingOnLasso)
         {
-            Char_rb.drag = LatchDragFactor;
+            float X_dir = Movement.PlayerInput.Horizontal;
+            if (X_dir == 0 && HangingOnLasso)
+            {
+                Char_rb.drag = LatchDragFactor;
+            }
+            else if (IsApproachingGroundOrWater && X_dir != 0)
+            {
+                CharJoint.distance -= Time.deltaTime;
+            }
         }
+
     }
 
     private void TurnOffAutoConfig()
@@ -160,7 +178,6 @@ public class ThrowLasso : MonoBehaviour
         {
             return true;
         }
-        ThrewLasso = false;
         return false;
     }
     public bool VerifyLasso()
@@ -191,7 +208,9 @@ public class ThrowLasso : MonoBehaviour
         HangingOnLasso = false;
         PriorityTarget = null;
         grappleLasso.enabled = false;
-        if(CharJoint != null)
+        refreshed = false;
+        StartCoroutine(StartRefresh());
+        if (CharJoint != null)
             Destroy(CharJoint);
     }
 
@@ -212,6 +231,10 @@ public class ThrowLasso : MonoBehaviour
         {
             if (DiscoveredLatches.Contains(collision.gameObject))
                 DiscoveredLatches.Remove(collision.gameObject);
+            if (!HangingOnLasso && DiscoveredLatches.Count == 0)
+            {
+                ResetPriorityTarget();
+            }
         }
     }
 
@@ -225,14 +248,14 @@ public class ThrowLasso : MonoBehaviour
         // Overall, prioritize (1) x: close, (2) y: far, (3) key items
         if (DiscoveredLatches.Count > 0)
         {
+            LatchNullCheck();
+            if(DiscoveredLatches.Count == 0) { return; }
             float[] priority = new float[DiscoveredLatches.Count];
             for (int i = 0; i < DiscoveredLatches.Count; i++)
             {
                 // check if key item. If key item, return
                 Vector2 Distance = DiscoveredLatches[i].transform.position - transform.position;
                 Distance = new Vector2(Mathf.Abs(Distance.x), Distance.y);
-                //Distance = Distance.normalized;
-                print(Distance);
                 float _priority_x = (Distance.x != 0) ? Mathf.Clamp(1/Distance.x, 0, 100) : 100;
                 float _priority_y = (Distance.y > 0) ? Distance.y*2000 : -2000;      // DO NOT PRIORITIZE LATCHES UNDER YOU.
                 float _priority = _priority_x + _priority_y;
@@ -248,6 +271,7 @@ public class ThrowLasso : MonoBehaviour
                     currentTargetIndex = i;
                 }
             }
+
             if(priority[currentTargetIndex] < 0) { return; }        // DO NOT TARGET A LATCH UNDER YOU.
             PriorityTarget = DiscoveredLatches[currentTargetIndex];
         }
@@ -258,6 +282,16 @@ public class ThrowLasso : MonoBehaviour
         }
         SetPointerPosition(PriorityTarget);
     }
+    private void LatchNullCheck()
+    {
+        for(int i = 0; i < DiscoveredLatches.Count; i++)
+        {
+            if(DiscoveredLatches[i] == null)
+            {
+                DiscoveredLatches.RemoveAt(i);
+            }
+        }
+    }
     public Transform GetPrioritizedTarget()
     {
         if(PriorityTarget == null) { return null; }
@@ -266,54 +300,22 @@ public class ThrowLasso : MonoBehaviour
 
     private void SetPointerPosition(GameObject newLatch)
     {
-        if (LassoPointerObj.parent != newLatch)
-        {
-            LassoPointerObj.gameObject.SetActive(true);
-            LassoPointerObj.parent = newLatch.transform;
-            LassoPointerObj.localPosition = Vector3.zero;
-        }
+        LassoPointerObj.gameObject.SetActive(true);
+        LassoPointerObj.position = newLatch.transform.position;
     }
 
     private void ResetPointerPosition()
     {
-        LassoPointerObj.parent = null;
         LassoPointerObj.gameObject.SetActive(false);
     }
 
-    public void Grapple()
+    public void ResetPriorityTarget()
     {
-        /*
-        if (!launchToPoint && !autoCongifureDistance)
-        {
-            m_springJoint2D.distance = targetDistance;
-            m_springJoint2D.frequency = targetFrequency;
-        }
-
-        if (!launchToPoint)
-        {
-            if (autoCongifureDistance)
-            {
-                m_springJoint2D.autoConfigureDistance = true;
-                m_springJoint2D.frequency = 0;
-            }
-            m_springJoint2D.connectedAnchor = grapplePoint;
-            m_springJoint2D.enabled = true;
-        }
-
-        else
-        {
-            if (Launch_Type == LaunchType.Transform_Launch)
-            {
-                ballRigidbody.gravityScale = 0;
-                ballRigidbody.velocity = Vector2.zero;
-            }
-            if (Launch_Type == LaunchType.Physics_Launch)
-            {
-                m_springJoint2D.connectedAnchor = grapplePoint;
-                m_springJoint2D.distance = 0;
-                m_springJoint2D.frequency = launchSpeed;
-                m_springJoint2D.enabled = true;
-            }
-        }*/
+        PriorityTarget = null;
+    }
+    IEnumerator StartRefresh()
+    {
+        yield return new WaitForSeconds(refreshTime);
+        refreshed = true;
     }
 }

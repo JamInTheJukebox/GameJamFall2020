@@ -11,7 +11,6 @@ public class HazardDamage : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            CheckLasso();
             collision.gameObject.GetComponent<Respawn>().respawnPlayer();
             destroyProjectile();
         }
@@ -27,13 +26,6 @@ public class HazardDamage : MonoBehaviour
         {
             Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
             Destroy(transform.parent.gameObject);
-        }
-    }
-    void CheckLasso()
-    {
-        if(FindObjectOfType<Lasso>() != null)
-        {
-            //FindObjectOfType<Lasso>().DestroyLasso();
         }
     }
 }

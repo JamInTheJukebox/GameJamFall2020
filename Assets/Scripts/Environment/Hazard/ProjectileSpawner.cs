@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class ProjectileSpawner : MonoBehaviour
 {
-    public enum e_ProjectileType { Rocket = 0, Mine = 0};
+    public enum e_ProjectileType { Rocket = 0, Mine = 1};
     [Header("Rocket")]
-    public GameObject Rocket;
-    [SerializeField] float ProjectileSpeed;
+    [SerializeField] GameObject Rocket;
+    [SerializeField] float ProjectileSpeed = 0f;
     public float SpawnWait;          // how long the rocket waits when it is red to shoot.
     public float Standby;          
-    public float Standby2 = 0;        // a second standby in case you want to create patterns.
+    public float AfterFireStandby = 0;        
     private Animator RocketAnim;
-    //private SpriteRenderer RocketSprite;
-
+    [Header("Homing Settings")]
     [SerializeField] bool Homing;
     [SerializeField] float HomingRadius;
-    [SerializeField] float LifeTime = 10f;
+    [SerializeField] float RocketLifetime = 10f;
 
-    public ParticleSystem SmokeCloud;
+    [SerializeField] ParticleSystem SmokeCloud;
     Coroutine CurrentShoot;
     private void Awake()
     {
@@ -26,7 +25,6 @@ public class ProjectileSpawner : MonoBehaviour
     }
     private IEnumerator RocketWait()
     {
-
         while(true)
         {
             yield return new WaitForSeconds(Standby);
@@ -36,7 +34,7 @@ public class ProjectileSpawner : MonoBehaviour
             RocketAnim.SetTrigger("Shoot");
             SmokeCloud.Play();
             ShootRocket();
-            yield return new WaitForSeconds(Standby2);
+            yield return new WaitForSeconds(AfterFireStandby);
         }
     }
 
@@ -44,7 +42,7 @@ public class ProjectileSpawner : MonoBehaviour
     {
         ProjectileMotion g_Rocket = Instantiate(Rocket, transform.position + 0.3f*transform.up, transform.rotation).GetComponent<ProjectileMotion>();
         g_Rocket.transform.Rotate(0, 0, 90);
-        g_Rocket.lifetime = LifeTime;
+        g_Rocket.lifetime = RocketLifetime;
         // g_Rocket.transform.rotation = Angle;
         g_Rocket.speed = ProjectileSpeed;
         g_Rocket.Homing = Homing;
@@ -55,6 +53,7 @@ public class ProjectileSpawner : MonoBehaviour
     {
         if(collision.tag == "Player")
         {
+            print(collision.name + "Is entering");
             CurrentShoot = StartCoroutine(RocketWait());
         }
     }
@@ -63,8 +62,11 @@ public class ProjectileSpawner : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            if (CurrentShoot != null)
+            if (CurrentShoot != null)       // check for other players in range here.
+            {
                 StopCoroutine(CurrentShoot);
+                print(collision.name + "is exiting");
+            }
         }
     }
 }

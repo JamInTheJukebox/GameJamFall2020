@@ -26,7 +26,6 @@ public class Handle_Collision : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print(collision.name);
         if (collision.tag == "Item")
         {
             string name = collision.name.ToLower();
