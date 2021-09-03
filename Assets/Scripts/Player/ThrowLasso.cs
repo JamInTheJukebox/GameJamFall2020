@@ -7,7 +7,7 @@ public class ThrowLasso : MonoBehaviour
     // handle special item collisions here(perks, lasso, etc)
     // you can only shoot a lasso when you are climbing or when you are in the default movement state.
     [Header("Scripts:")]
-    public Lasso grappleLasso;
+    public DrawLasso grappleLasso;
 
     [Header("Lasso")]
     [SerializeField] float refreshTime;
@@ -120,6 +120,7 @@ public class ThrowLasso : MonoBehaviour
         {
             CharJoint.connectedAnchor = GetPrioritizedTarget().position;
             CharJoint.distance = Mathf.Clamp(CharJoint.distance, MinSegmentLength, CurrentMaxSegmentLength);
+            //CharJoint.breakForce = 4f;
         }
         bool isGrounded = CharMovement.CheckGrounded();
         if (Movement.PlayerInput.JumpTriggered() && !isGrounded)
@@ -190,7 +191,7 @@ public class ThrowLasso : MonoBehaviour
         return false;
     }
 
-    private void SpawnLasso(out Lasso Bullet)
+    private void SpawnLasso(out DrawLasso Bullet)
     {
         grappleLasso.gameObject.SetActive(true);
         Bullet = grappleLasso;

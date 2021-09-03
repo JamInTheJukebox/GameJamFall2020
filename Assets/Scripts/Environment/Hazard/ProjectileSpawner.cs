@@ -53,7 +53,6 @@ public class ProjectileSpawner : MonoBehaviour
     {
         if(collision.tag == "Player")
         {
-            print(collision.name + "Is entering");
             CurrentShoot = StartCoroutine(RocketWait());
         }
     }
@@ -65,7 +64,6 @@ public class ProjectileSpawner : MonoBehaviour
             if (CurrentShoot != null)       // check for other players in range here.
             {
                 StopCoroutine(CurrentShoot);
-                print(collision.name + "is exiting");
             }
         }
     }

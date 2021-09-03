@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lasso : MonoBehaviour
+public class DrawLasso : MonoBehaviour
 {
     public ThrowLasso grapplingGun;
 
@@ -14,27 +14,27 @@ public class Lasso : MonoBehaviour
     private bool isGrappling = false;
     [Header("Draw Settings")]
     public bool DrawRopeStraight = true;
-    [SerializeField] int percision = 120;
-    [Range(0, 100)] [SerializeField] private float straightenLineSpeed = 4;     // speed that it takes to straighten out the rope.
+    [SerializeField] int precision = 30;
+    [Range(0, 100)] [SerializeField] private float straightenLineSpeed = 3.1f;     // speed that it takes to straighten out the rope.
 
     [Header("Animation:")]
     public AnimationCurve ropeAnimationCurve;
-    [SerializeField] [Range(0.01f, 4)] private float WaveSize = 20;
+    [SerializeField] [Range(0.01f, 4)] private float WaveSize = 1.1f;
     float _waveSize;
-    [SerializeField] float MinimumDistanceForRopeAnimation;
     float moveTime = 0;
+
     private void Awake()
     {
         Lasso_LineRenderer = GetComponent<LineRenderer>();
         Lasso_LineRenderer.enabled = false;
-        Lasso_LineRenderer.positionCount = percision;
+        Lasso_LineRenderer.positionCount = precision;
     }
 
     private void OnEnable()
     {
         moveTime = 0;
         Lasso_LineRenderer.enabled = true;
-        Lasso_LineRenderer.positionCount = percision;
+        Lasso_LineRenderer.positionCount = precision;
         _waveSize = WaveSize;
         DrawRopeStraight = true;
         LinePointToFirePoint();
@@ -49,7 +49,7 @@ public class Lasso : MonoBehaviour
 
     void LinePointToFirePoint()
     {
-        for (int i = 0; i < percision; i++)
+        for (int i = 0; i < precision; i++)
         {
             Lasso_LineRenderer.SetPosition(i, grapplingGun.transform.position);
         }
@@ -71,9 +71,8 @@ public class Lasso : MonoBehaviour
             isGrappling = true;
             // modify waveSize here.
             float _distance = Vector2.Distance(grapplingGun.GetPrioritizedTarget().position, (Vector2)transform.position);
-            print(_distance);
             _waveSize = Mathf.Clamp(WaveSize * _distance / 5,0,WaveSize);
-            
+            //print("new Wavesize" + _waveSize);
             // don't bother drawing curves if the rope isn't long enough.
         }
         if (_waveSize > 0)
@@ -92,10 +91,10 @@ public class Lasso : MonoBehaviour
     void DrawRopeWaves()
     {
         Vector2 grapplePoint = grapplingGun.GetPrioritizedTarget().position;
-        for (int i = 0; i < percision; i++)
+        for (int i = 0; i < precision; i++)
         {
             Vector2 DistanceVector = (Vector2)(grapplePoint - (Vector2)grapplingGun.transform.position);
-            float delta = (float)i / ((float)percision - 1f);
+            float delta = (float)i / ((float)precision - 1f);
             Vector2 offset = Vector2.Perpendicular(DistanceVector).normalized * ropeAnimationCurve.Evaluate(delta) * _waveSize;
             Vector2 targetPosition = Vector2.Lerp(grapplingGun.transform.position, grapplePoint, delta) + offset;
             Lasso_LineRenderer.SetPosition(i, targetPosition);
