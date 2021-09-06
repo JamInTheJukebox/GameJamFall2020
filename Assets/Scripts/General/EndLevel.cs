@@ -22,9 +22,9 @@ public class EndLevel : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            TimerUI.stopTimer = true;
-            time.text = TimerUI.timeText;
-            leaderboardTime.text = TimerUI.timeText;
+            //TimerUI.stopTimer = true;
+            //time.text = TimerUI.timeText;
+            //leaderboardTime.text = TimerUI.timeText;
             if (ItemTracker.count.ContainsKey(ItemType.COIN))
             {
                 string countText = ItemTracker.count[ItemType.COIN].ToString();

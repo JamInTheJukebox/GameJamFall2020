@@ -43,7 +43,7 @@ public class Leaderboard : MonoBehaviour
         highscoreEntries = JsonUtility.FromJson<Highscores>(prevScores).entries;
         if (newLevel)
         {
-            highscoreEntries.Add(new HighscoreEntry { time = TimerUI.timeFloat, name = "" });
+            highscoreEntries.Add(new HighscoreEntry { time = 0f, name = "" });/*time = TimerUI.timeFloat*/
             newLevel = false;
         }
         highscoreEntries = highscoreEntries.OrderBy(o => o.time).ToList();

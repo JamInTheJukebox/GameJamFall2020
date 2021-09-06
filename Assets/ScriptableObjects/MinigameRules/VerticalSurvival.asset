@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7a21181d485e4e4d9819ea1cc270c15, type: 3}
+  m_Name: VerticalSurvival
+  m_EditorClassIdentifier: 
+  _playerPanelOrientation: 4
+  _objectiveItem: 1
+  _globalTimeOrientation: 2
+  _globalTimeCountingMode: 1
+  MaxTime: 100
+  useMinutes: 0
+  useSeconds: 1
+  useMilliseconds: 0

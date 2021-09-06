@@ -51,14 +51,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": ""Press""
                 },
                 {
-                    ""name"": ""LassoDir_T"",
-                    ""type"": ""Button"",
-                    ""id"": ""ebca8ca3-ceb0-4e14-a937-4e3382fa9f59"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Press""
-                },
-                {
                     ""name"": ""Run_T"",
                     ""type"": ""Button"",
                     ""id"": ""d8750c34-2490-40a0-ad14-194645030a17"",
@@ -99,9 +91,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""LassoDirY"",
+                    ""name"": ""ChangeWeapon"",
                     ""type"": ""Button"",
-                    ""id"": ""80763791-144f-4191-8d81-12bc607f700a"",
+                    ""id"": ""1e71f116-3e09-48c3-b02f-1aedc4914bb0"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -396,28 +388,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f63a989a-9dcc-4571-901f-3fc8430e4491"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
-                    ""interactions"": ""Press"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LassoDir_T"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f7b17310-7f6c-4690-b950-bb641b35f317"",
-                    ""path"": ""<Keyboard>/v"",
-                    ""interactions"": ""Press"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LassoDir_T"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""cd1f3967-ea8d-4a5d-8ec4-3d4ac411c506"",
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": ""Press"",
@@ -593,15 +563,70 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""0961f90f-31d9-4562-9818-e09eb73b0c82"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""name"": ""Keyboard"",
+                    ""id"": ""3fdff001-4202-4e4a-8887-8e12493cfeb1"",
+                    ""path"": ""1DAxis"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""LassoDirY"",
-                    ""isComposite"": false,
+                    ""action"": ""ChangeWeapon"",
+                    ""isComposite"": true,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""34a39def-9792-42cb-b942-9d7c091293ef"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""1e8c2561-c4ab-49ab-946e-44257ff9850b"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""USB_Gamepad"",
+                    ""id"": ""1d5871f6-6dbf-47f2-97fd-1da2de306cdd"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeWeapon"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""566234c1-4b3c-4d0e-a00a-cddec25ccea0"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""f3d84f42-ff6f-4989-b18b-41edf531b5b3"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -614,13 +639,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Player_Vertical = m_Player.FindAction("Vertical", throwIfNotFound: true);
         m_Player_Jump_T = m_Player.FindAction("Jump_T", throwIfNotFound: true);
         m_Player_Lasso_T = m_Player.FindAction("Lasso_T", throwIfNotFound: true);
-        m_Player_LassoDir_T = m_Player.FindAction("LassoDir_T", throwIfNotFound: true);
         m_Player_Run_T = m_Player.FindAction("Run_T", throwIfNotFound: true);
         m_Player_Run_TR = m_Player.FindAction("Run_TR", throwIfNotFound: true);
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
-        m_Player_LassoDirY = m_Player.FindAction("LassoDirY", throwIfNotFound: true);
+        m_Player_ChangeWeapon = m_Player.FindAction("ChangeWeapon", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -674,13 +698,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Vertical;
     private readonly InputAction m_Player_Jump_T;
     private readonly InputAction m_Player_Lasso_T;
-    private readonly InputAction m_Player_LassoDir_T;
     private readonly InputAction m_Player_Run_T;
     private readonly InputAction m_Player_Run_TR;
     private readonly InputAction m_Player_Run;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Pause;
-    private readonly InputAction m_Player_LassoDirY;
+    private readonly InputAction m_Player_ChangeWeapon;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -689,13 +712,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Vertical => m_Wrapper.m_Player_Vertical;
         public InputAction @Jump_T => m_Wrapper.m_Player_Jump_T;
         public InputAction @Lasso_T => m_Wrapper.m_Player_Lasso_T;
-        public InputAction @LassoDir_T => m_Wrapper.m_Player_LassoDir_T;
         public InputAction @Run_T => m_Wrapper.m_Player_Run_T;
         public InputAction @Run_TR => m_Wrapper.m_Player_Run_TR;
         public InputAction @Run => m_Wrapper.m_Player_Run;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
-        public InputAction @LassoDirY => m_Wrapper.m_Player_LassoDirY;
+        public InputAction @ChangeWeapon => m_Wrapper.m_Player_ChangeWeapon;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -717,9 +739,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Lasso_T.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLasso_T;
                 @Lasso_T.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLasso_T;
                 @Lasso_T.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLasso_T;
-                @LassoDir_T.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLassoDir_T;
-                @LassoDir_T.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLassoDir_T;
-                @LassoDir_T.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLassoDir_T;
                 @Run_T.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun_T;
                 @Run_T.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun_T;
                 @Run_T.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun_T;
@@ -735,9 +754,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
-                @LassoDirY.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLassoDirY;
-                @LassoDirY.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLassoDirY;
-                @LassoDirY.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLassoDirY;
+                @ChangeWeapon.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeWeapon;
+                @ChangeWeapon.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeWeapon;
+                @ChangeWeapon.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeWeapon;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -754,9 +773,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Lasso_T.started += instance.OnLasso_T;
                 @Lasso_T.performed += instance.OnLasso_T;
                 @Lasso_T.canceled += instance.OnLasso_T;
-                @LassoDir_T.started += instance.OnLassoDir_T;
-                @LassoDir_T.performed += instance.OnLassoDir_T;
-                @LassoDir_T.canceled += instance.OnLassoDir_T;
                 @Run_T.started += instance.OnRun_T;
                 @Run_T.performed += instance.OnRun_T;
                 @Run_T.canceled += instance.OnRun_T;
@@ -772,9 +788,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
-                @LassoDirY.started += instance.OnLassoDirY;
-                @LassoDirY.performed += instance.OnLassoDirY;
-                @LassoDirY.canceled += instance.OnLassoDirY;
+                @ChangeWeapon.started += instance.OnChangeWeapon;
+                @ChangeWeapon.performed += instance.OnChangeWeapon;
+                @ChangeWeapon.canceled += instance.OnChangeWeapon;
             }
         }
     }
@@ -785,12 +801,11 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnVertical(InputAction.CallbackContext context);
         void OnJump_T(InputAction.CallbackContext context);
         void OnLasso_T(InputAction.CallbackContext context);
-        void OnLassoDir_T(InputAction.CallbackContext context);
         void OnRun_T(InputAction.CallbackContext context);
         void OnRun_TR(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
-        void OnLassoDirY(InputAction.CallbackContext context);
+        void OnChangeWeapon(InputAction.CallbackContext context);
     }
 }

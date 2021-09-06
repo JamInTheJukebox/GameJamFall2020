@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PauseUI : MonoBehaviour
 {
+    [SerializeField] GameObject FadeScreenPanel;
+
     public Respawn playerRespawn;
     private Animator Pause_Anim;
     private bool CanPauseAgain = true;
@@ -39,8 +41,7 @@ public class PauseUI : MonoBehaviour
     {
         Time.timeScale = newState;
         Pause_Anim.SetInteger("Paused", newState);
-        //Invoke("EnablePausing",0.2f);
-       // CanPauseAgain = newState == 1;
+        FadeScreenPanel.SetActive(!System.Convert.ToBoolean(newState));
     }
 
     public void SetUnpaused(int newState)
@@ -56,7 +57,7 @@ public class PauseUI : MonoBehaviour
     public void RestartLevel()
     {
         ItemTracker.count.Clear();
-        TimerUI.stopTimer = false;
+        //TimerUI.stopTimer = false;
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }

@@ -58,7 +58,8 @@ public class ThrowLasso : MonoBehaviour
     {
         if (!CanThrowLasso() || !refreshed) { return; }
 
-        if(!grappleLasso.enabled)       // only look for new targets when the grapple isn't enabled.
+
+        if (!grappleLasso.enabled)       // only look for new targets when the grapple isn't enabled.
             SetPrioritizedTarget();
 
         if (GetPrioritizedTarget() == null)
@@ -118,6 +119,12 @@ public class ThrowLasso : MonoBehaviour
         }
         else
         {
+            if(CharJoint.reactionForce.magnitude > 150f && Vector2.Distance(transform.position, GetPrioritizedTarget().position) > 6f)
+            {
+                print(Vector2.Distance(transform.position, GetPrioritizedTarget().position));
+                ResetLasso();
+                return;
+            }      // break the lasso and reset the component
             CharJoint.connectedAnchor = GetPrioritizedTarget().position;
             CharJoint.distance = Mathf.Clamp(CharJoint.distance, MinSegmentLength, CurrentMaxSegmentLength);
             //CharJoint.breakForce = 4f;

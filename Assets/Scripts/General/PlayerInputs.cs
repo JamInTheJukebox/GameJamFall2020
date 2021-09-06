@@ -26,7 +26,6 @@ public class PlayerInputs : MonoBehaviour
         Controls.Player.Horizontal.canceled += ctx => { Horizontal = 0; };
         Controls.Player.Vertical.canceled += ctx => { Vertical = 0; };
 
-        //dControls.Player. += ctx => { Vertical = 0; };
         Controls.Player.Run.started += ctx => { Running = true; };
         Controls.Player.Run.canceled += ctx => { Running = false; };
 
@@ -50,22 +49,16 @@ public class PlayerInputs : MonoBehaviour
         return Controls.Player.Lasso_T.triggered;
     }
 
-    public bool LassoDirTriggered()
-    {
-        return Controls.Player.LassoDir_T.triggered;
-    }
     public bool RunStopTriggered()
     {
         return Controls.Player.Run_TR.triggered;
     }
+
     public bool PauseTriggered()
     {
         return Controls.Player.Pause.triggered;
     }
-    public bool Lasso_Y_Triggered()
-    {
-        return Controls.Player.LassoDirY.triggered;
-    }
+
     private void OnEnable()
     {
         Controls.Player.Enable();
