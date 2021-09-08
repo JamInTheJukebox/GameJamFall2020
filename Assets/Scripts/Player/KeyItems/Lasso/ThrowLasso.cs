@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThrowLasso : MonoBehaviour
+public class ThrowLasso : KeyItem
 {
     // handle special item collisions here(perks, lasso, etc)
     // you can only shoot a lasso when you are climbing or when you are in the default movement state.
@@ -12,7 +12,6 @@ public class ThrowLasso : MonoBehaviour
     [Header("Lasso")]
     [SerializeField] float refreshTime;
     bool refreshed;
-    private bool ThrewLasso;
     [HideInInspector] public bool HangingOnLasso;
     public float MaxSegmentLength = 5f;     // make this variable dependent on a ray that shoots out of the latch>
     private float CurrentMaxSegmentLength;
@@ -54,6 +53,27 @@ public class ThrowLasso : MonoBehaviour
         refreshed = true;
     }
 
+    public override void EnableItem()
+    {
+        base.EnableItem();
+        this.enabled = true;
+    }
+
+    public override void DisableItem()
+    {
+        base.DisableItem();
+    }
+
+    public override void ResetItem()
+    {
+        //base.ResetItem();
+        ResetLasso();
+    }
+    public override bool UsingItem()
+    {
+        //base.UsingItem();
+        return HangingOnLasso;
+    }
     private void Update()
     {
         if (!CanThrowLasso() || !refreshed) { return; }

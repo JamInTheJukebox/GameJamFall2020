@@ -10,7 +10,7 @@ public class SpecialCharacterMovement : MonoBehaviour
     private float Y_Dir;                        // Raw Y input
     private Movement CharMovement;              // For retreiving the OnGround bool
     private bool OnGround;                      // Determines a variety of methods to escape from special moves.
-    private LayerMask PlayerLayer;              
+    private LayerMask PlayerLayer;
 
     [SerializeField] LayerMask GroundLayer = 1 << 8;
 
@@ -82,9 +82,10 @@ public class SpecialCharacterMovement : MonoBehaviour
     [SerializeField] bool DrawWallCheck = false;
     [SerializeField] bool DrawLadderCeilCheck = false;
     [SerializeField] bool DrawBottomLadderCheck = false;
-
+    public bool AutoWallJump;
     private float WallJumpBufferTimer;
     private float JumpDelay = 0.2f;
+    
     private void PlayerStateChanged()
     {
         switch((int)CurrentSpecialMove)
@@ -193,6 +194,11 @@ public class SpecialCharacterMovement : MonoBehaviour
         }
         else if(collision.tag == Tags.WATER)
         {
+            if(CharMovement.abilityWheel.CurrentItem.UsingItem())
+            {
+                CharMovement.abilityWheel.CurrentItem.ResetItem();
+            }
+            // check if lasso. If lasso, please detach.
             CurrentSpecialMove = E_CurrentMode.Swimming;
             CharMovement.ChangePlayerState(SwimmingState);
         }
@@ -243,15 +249,16 @@ public class SpecialCharacterMovement : MonoBehaviour
     private void WallJump()
     {
         isTouchingWall = Physics2D.OverlapCircle(WallCheck.position, WallCheckRadius, GroundLayer);
-        if (!isSlidingOnWall && isTouchingWall && !OnGround && Dir != 0 && rb.velocity.y < -0.1f)
+        if ((!isSlidingOnWall || AutoWallJump) && isTouchingWall && !OnGround && (Dir != 0 || AutoWallJump) && rb.velocity.y < -0.1f)
         {
             // if the playeris trying to slide down the wall, set isSlidingOnWall to true.
             CurrentSpecialMove = E_CurrentMode.WallSliding;
             isSlidingOnWall = true;
         }
-        if (isSlidingOnWall)
+        if (isSlidingOnWall && Dir != 0)
         {
             // if the player is trying to break free from wall.
+           
             float WallJumpDir = (WallCheck.position - transform.position).x;
             int WallJumpDirection = (int)(WallJumpDir / Mathf.Abs(WallJumpDir));
             if ((int)Dir != Mathf.Sign(WallJumpDirection))  
@@ -287,6 +294,8 @@ public class SpecialCharacterMovement : MonoBehaviour
             //print(WallJumpDir);
             rb.AddForce(WallJumpForce.x * WallJumpDir * Vector2.right, ForceMode2D.Impulse);
             SetYVelocity(Vector2.up*WallJumpForce.y);
+            if (AutoWallJump)
+                CharMovement.FlipDirection();
         }
     }
 

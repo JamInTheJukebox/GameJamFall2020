@@ -11,7 +11,7 @@ public class MasterUI : MonoBehaviour
     [SerializeField] TimerUI globalTimer;
         // serialize field for Pause menu
 
-    private void Awake()
+    private void Start()
     {
         SetUIRules(rulesUI);
     }

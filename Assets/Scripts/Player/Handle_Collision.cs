@@ -26,17 +26,6 @@ public class Handle_Collision : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Item")
-        {
-            string name = collision.name.ToLower();
-            if (name.Contains("lasso"))
-            {
-                Destroy(collision.gameObject);
-                GetComponentInChildren<ThrowLasso>().enabled = true;        // TODO: Change this
-                TurnOnLasso();
-                // only slot machine disables this.s
-            }
-        }
         if(collision.name.ToLower().Contains("tnt"))
             if(collision.GetComponent<BlastBox>())
                 collision.GetComponent<BlastBox>().InitiateDestruction();

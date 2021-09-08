@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8644236da73c2c41aefbbcdae77c815, type: 3}
   m_Name: Slowed
   m_EditorClassIdentifier: 
-  MaxWalkSpeed: 2.5
+  MaxWalkSpeed: 1.5
   WalkAcceleration: 7
-  MaxRunSpeed: 5
+  MaxRunSpeed: 1.5
   RunAcceleration: 10
-  JumpImpulse: 4.95
+  JumpImpulse: 3
   GravityScale: 0.8
   MaxFallSpeed: 10
+  SpecialSpeed: {x: 0, y: 0}
+  MaxYSpeed: 0

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7a21181d485e4e4d9819ea1cc270c15, type: 3}
   m_Name: VerticalSurvival
   m_EditorClassIdentifier: 
-  _playerPanelOrientation: 4
+  _playerPanelOrientation: 1
   _objectiveItem: 1
   _globalTimeOrientation: 2
-  _globalTimeCountingMode: 1
+  _globalTimeCountingMode: -1
   MaxTime: 100
   useMinutes: 0
   useSeconds: 1

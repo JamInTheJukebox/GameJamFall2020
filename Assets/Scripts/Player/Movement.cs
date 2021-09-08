@@ -24,6 +24,10 @@ public class Movement : MonoBehaviour
         Linear = 0,
         Force = 1,
     }
+
+    private float SpeedModifier = 1;
+    private float JumpModifier = 1;
+
     [Space(1)]
     [Header("Jumping")]
     [SerializeField] LayerMask GroundLayer = 1 << 8;
@@ -44,6 +48,7 @@ public class Movement : MonoBehaviour
     [Space(1)]
     [Header("DebugTools")]
     [SerializeField] bool DrawGroundCheck = false;
+    [HideInInspector] public AbilityWheel abilityWheel;
 
     public static PlayerInputs PlayerInput;
 
@@ -52,6 +57,7 @@ public class Movement : MonoBehaviour
         availableJumps = MaxJumps;
         rb = GetComponent<Rigidbody2D>();
         SpecMove = GetComponent<SpecialCharacterMovement>();
+        abilityWheel = GetComponent<AbilityWheel>();
         DustParticle.Stop();
         PlayerInput = GetComponent<PlayerInputs>();
     }
@@ -117,7 +123,7 @@ public class Movement : MonoBehaviour
     {
         availableJumps--;
         rb.velocity = new Vector2(rb.velocity.x, 0);
-        rb.AddForce(Vector2.up * CurrentPlayerState.GetJumpImpulse(), ForceMode2D.Impulse);
+        rb.AddForce(Vector2.up * CurrentPlayerState.GetJumpImpulse() * JumpModifier, ForceMode2D.Impulse);
         JumpBufferTimer = 0;
     }
 
@@ -209,7 +215,7 @@ public class Movement : MonoBehaviour
     #region movement
     private void HorizontalMovement()
     {
-        float MaxSpeed = ManageMaxSpeed();
+        float MaxSpeed = ManageMaxSpeed() * SpeedModifier;
         float Acceleration = PlayerInput.Running ? CurrentPlayerState.GetRunAcceleration() : CurrentPlayerState.GetWalkAcceleration();
         if((int)SpecMove.CurrentSpecialMove == 4)
         {
@@ -259,7 +265,7 @@ public class Movement : MonoBehaviour
         }
     }
 
-    private void FlipDirection()
+    public void FlipDirection()
     {
         FacingRight = !FacingRight;
         transform.rotation = Quaternion.Euler(0, FacingRight ? 0 : 180, 0);
@@ -334,4 +340,72 @@ public class Movement : MonoBehaviour
         return onGround;
     }
 
+    #region Movement Modifiers
+    public void ModifySpeed(float delta, float resetTime)
+    {
+        // play effect here.
+        if(SpeedModifier > 1 && delta < 0|| SpeedModifier < 1 && delta > 0)
+        {
+            SpeedModifier = 1;
+            return;
+        }
+
+        if (IsInvoking("resetSpeedModifier"))
+        {
+            CancelInvoke("resetSpeedModifier");
+        }
+
+        SpeedModifier = 1 + delta; 
+        Invoke("resetSpeedModifier", resetTime);
+    }
+
+    public void ModifyJump(float delta, float resetTime)
+    {
+        // play effect here.
+        if (JumpModifier > 1 && delta < 0 || JumpModifier < 1 && delta > 0)
+        {
+            JumpModifier = 1;
+            return;
+        }
+
+        if (IsInvoking("resetJumpModifier"))
+        {
+            CancelInvoke("resetJumpModifier");
+        }
+
+        JumpModifier = 1 + delta;
+        JumpModifier = Mathf.Clamp(JumpModifier, 0, 10);
+        Invoke("resetJumpModifier", resetTime);
+    }
+
+    public void ModifyJumpCount(float delta, float resetTime)
+    {
+        int newJumps = (int)delta;
+        // play effect here.
+
+        if (IsInvoking("resetJumpCountModifier"))
+        {
+            CancelInvoke("resetJumpCountModifier");
+        }
+
+        MaxJumps = newJumps;
+
+        Invoke("resetJumpCountModifier", resetTime);
+    }
+
+    private void resetSpeedModifier()
+    {
+        SpeedModifier = 1;
+        // reset effect here.
+    }
+
+    private void resetJumpModifier()
+    {
+        JumpModifier = 1;
+    }
+    private void resetJumpCountModifier()
+    {
+        MaxJumps = 1;
+    }
+    #endregion
 }

@@ -81,7 +81,8 @@ public class CharacterAnimation : MonoBehaviour
     private void Update()
     {
         Grounded = AirMove.CheckGrounded();
-        hanging = LassoMove.HangingOnLasso;
+        if(LassoMove)
+            hanging = LassoMove.HangingOnLasso;
 
         CurrentMoveState = (int)SpecialMove.CurrentSpecialMove;
         if(CurrentMoveState == 0)

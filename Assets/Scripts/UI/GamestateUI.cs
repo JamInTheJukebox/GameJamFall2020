@@ -22,6 +22,7 @@ public class GamestateUI : MonoBehaviour
     int debugCount = 0;
     private void Update()
     {
+        /*
         debugCount = Mathf.Clamp(debugCount, 0, 3);
         if (Movement.PlayerInput.JumpTriggered() && debugCount == 0)
         {
@@ -44,6 +45,7 @@ public class GamestateUI : MonoBehaviour
             debugCount++;
             if(debugCount > 3) { debugCount = 0; }
         }
+        */
     }
     #region Player Panel
     public void SetPlayerInfo(PlayerPanelInfo playerInfo)
