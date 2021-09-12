@@ -14,7 +14,12 @@ public class MovementModifier : MonoBehaviour
 
     [SerializeField] propertyModifier[] modifiers = new propertyModifier[1];
     [SerializeField] float ResetTime;
+    ItemSpawner spawner;
 
+    public void SetRespawner(ItemSpawner respawner)
+    {
+        spawner = respawner;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
@@ -35,7 +40,10 @@ public class MovementModifier : MonoBehaviour
                         break;
                 }
             }
-
+            if(spawner != null)
+            {
+                spawner.respawnItem();
+            }
             Destroy(gameObject);
         }
     }

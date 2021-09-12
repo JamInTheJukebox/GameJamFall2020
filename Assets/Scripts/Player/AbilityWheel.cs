@@ -84,4 +84,15 @@ public class AbilityWheel : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
+
+    public bool UsingItem()
+    {
+        if(CurrentItem != null)
+        {
+            if (CurrentItem.UsingItem())
+                return true;
+        }
+
+        return false;
+    }
 }

@@ -133,7 +133,17 @@ public class CharacterAnimation : MonoBehaviour
         {
             CurrentState = "Hanging";
         }
-
+        else if(CurrentMoveState == 4)
+        {
+            if (Grounded)
+            {
+                SetBasicAnimation();
+            }
+            else
+            {
+                // swimming animation
+            }
+        }
     }
 
     private void AirAnimations()

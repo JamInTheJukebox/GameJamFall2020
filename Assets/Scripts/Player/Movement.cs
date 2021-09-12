@@ -156,7 +156,7 @@ public class Movement : MonoBehaviour
     IEnumerator CoyoteJumpDelay()
     {
         CoyoteJumpActive = true;
-        print("Activating Coyote");
+        //print("Activating Coyote");
         yield return new WaitForSeconds(CoyoteTime);
         CoyoteJumpActive = false;
     } 
@@ -219,8 +219,16 @@ public class Movement : MonoBehaviour
         float Acceleration = PlayerInput.Running ? CurrentPlayerState.GetRunAcceleration() : CurrentPlayerState.GetWalkAcceleration();
         if((int)SpecMove.CurrentSpecialMove == 4)
         {
-            MaxSpeed = CurrentPlayerState.GetMaxWalkSpeed();
-            Acceleration = CurrentPlayerState.GetRunAcceleration();
+            if(!onGround)
+            {
+                MaxSpeed = CurrentPlayerState.GetMaxRunSpeed();
+                Acceleration = CurrentPlayerState.GetRunAcceleration();
+            }
+            else
+            {
+                MaxSpeed = CurrentPlayerState.GetMaxWalkSpeed();
+                Acceleration = CurrentPlayerState.GetWalkAcceleration();
+            }
         }
         if (Movement_Type == E_MovementType.Linear)
         {

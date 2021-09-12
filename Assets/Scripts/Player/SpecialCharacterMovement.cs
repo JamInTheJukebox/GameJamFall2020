@@ -75,7 +75,7 @@ public class SpecialCharacterMovement : MonoBehaviour
     public float TimeToRefreshLedgegrab;                // To prevent Ledgegrabs from being abused
     [Header("Swimming")]
     [SerializeField] PlayerState SwimmingState;
-
+    [SerializeField] [Tooltip("Speed you sink when you press down")] float SinkSpeed = 0.5f;
     private SpriteRenderer SpritePNG;
 
     [Header("DebugTools")]
@@ -180,7 +180,10 @@ public class SpecialCharacterMovement : MonoBehaviour
             {
                 Swim(Vector2.up * SwimmingState.GetJumpImpulse());
             }
-            
+            if(Y_Dir < 0)
+            {
+                Sink(Vector2.down * SinkSpeed);
+            }
         }
     }
 
@@ -194,10 +197,11 @@ public class SpecialCharacterMovement : MonoBehaviour
         }
         else if(collision.tag == Tags.WATER)
         {
-            if(CharMovement.abilityWheel.CurrentItem.UsingItem())
+            if(CharMovement.abilityWheel.UsingItem())
             {
                 CharMovement.abilityWheel.CurrentItem.ResetItem();
             }
+
             // check if lasso. If lasso, please detach.
             CurrentSpecialMove = E_CurrentMode.Swimming;
             CharMovement.ChangePlayerState(SwimmingState);
@@ -241,6 +245,9 @@ public class SpecialCharacterMovement : MonoBehaviour
         }
         else if (collision.tag == Tags.WATER)
         {
+            Swim(Vector2.up * 0.7f * SwimmingState.GetJumpImpulse());
+            float clampYVel = Mathf.Clamp(rb.velocity.y, 0.5f, SwimmingState.GetMaxYSpeed());
+            rb.velocity = new Vector2(rb.velocity.x, clampYVel);
             CurrentSpecialMove = 0;
             CharMovement.ResetPlayerState();
         }
@@ -388,6 +395,13 @@ public class SpecialCharacterMovement : MonoBehaviour
     private void Swim(Vector2 InputForce)
     {
         rb.AddForce(InputForce, ForceMode2D.Impulse);
+        float clampYVel = Mathf.Clamp(rb.velocity.y, -SwimmingState.GetMaxFallSpeed(), SwimmingState.GetMaxYSpeed());
+        rb.velocity = new Vector2(rb.velocity.x, clampYVel);
+    }
+
+    private void Sink(Vector2 InputForce)
+    {
+        rb.AddForce(InputForce, ForceMode2D.Force);
         float clampYVel = Mathf.Clamp(rb.velocity.y, -SwimmingState.GetMaxFallSpeed(), SwimmingState.GetMaxYSpeed());
         rb.velocity = new Vector2(rb.velocity.x, clampYVel);
     }

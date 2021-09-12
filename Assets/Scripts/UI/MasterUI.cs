@@ -28,4 +28,8 @@ public class MasterUI : MonoBehaviour
         globalTimer.SetTimerUIInfo(timePanelRule);
     }
 
+    public void SetNewAutoStatus(bool status)
+    {
+        FindObjectOfType<SpecialCharacterMovement>().AutoWallJump = status;
+    }
 }

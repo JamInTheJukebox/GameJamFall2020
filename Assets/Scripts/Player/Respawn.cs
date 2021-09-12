@@ -14,7 +14,7 @@ public class Respawn : MonoBehaviour
 
     public void respawnPlayer()
     {
-        if (CharMovement.abilityWheel.CurrentItem.UsingItem())
+        if (CharMovement.abilityWheel.UsingItem())
         {
             CharMovement.abilityWheel.CurrentItem.ResetItem();
         }
